@@ -2,6 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { AppProvider } from './context/context';
+import { Count } from './components/count';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         </a>
       </header>
       <AppProvider>
+        <Count />
         hi
       </AppProvider>
     </div>

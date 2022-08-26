@@ -3,7 +3,7 @@ import reducer, { actionProps, stateProps } from "./reducer";
 
 import React from "react";
 
-const initialState: stateProps = {
+export const initialState: stateProps = {
   count: 5,
   ball: new Set<string>(),
   strike: [],
