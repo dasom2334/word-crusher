@@ -6,7 +6,7 @@ import React from "react";
 export const initialState: stateProps = {
   count: 5,
   ball: new Set<string>(),
-  strike: [],
+  strike: new Array(5).fill(null),
   results: [],
 };
 

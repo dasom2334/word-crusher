@@ -1,14 +1,14 @@
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Count } from "./index";
-import { AppProvider, initialState } from "../../context/context";
+import {
+  AppProvider,
+  initialState,
+  useReducerState,
+} from "../../context/context";
 import { COUNT_MAX, COUNT_MIN } from "../../context/reducer";
 
 describe("Count Component Test", () => {
-  //   const counter = screen.getByRole("contentinfo");
-  //   const upButton = screen.getByText("➕");
-  //   const downButton = screen.getByText("➖");
-  // const counter = screen.getByRole("contentinfo")
   it("count initialize check", () => {
     render(
       <AppProvider>
@@ -18,6 +18,7 @@ describe("Count Component Test", () => {
     expect(screen.getByRole("contentinfo")).toHaveTextContent(
       initialState.count.toString()
     );
+
   });
   it("count up button check", () => {
     render(
@@ -95,8 +96,4 @@ describe("Count Component Test", () => {
       COUNT_MAX.toString()
     );
   });
-});
-describe("Count Component Combination Test", () => {
-  describe("Count With Strike", () => {});
-  describe("Count With Result", () => {});
 });

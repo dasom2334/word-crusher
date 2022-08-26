@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import { AppProvider } from './context/context';
 import { Count } from './components/count';
+import { Strike } from './components/strike';
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
       </header>
       <AppProvider>
         <Count />
-        hi
+        <Strike />
       </AppProvider>
     </div>
   );
