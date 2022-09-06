@@ -1,0 +1,1 @@
+npx ts-node-esm DbGen.ts 3of6game.txt

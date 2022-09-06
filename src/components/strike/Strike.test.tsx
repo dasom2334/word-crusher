@@ -1,15 +1,19 @@
-import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Strike } from "./Strike";
 import { Count } from "../count";
 import { AppProvider, initialState } from "../../context/context";
+import { Board } from "../board";
+import { Keyboard } from "../keyboard";
 
 describe("Strike Component Test", () => {
   it("Sync With Count", () => {
     render(
       <AppProvider>
-        <Count />
-        <Strike />
+        <Board>
+          <Count />
+          <Strike />
+          <Keyboard />
+        </Board>
       </AppProvider>
     );
 
@@ -34,4 +38,6 @@ describe("Strike Component Test", () => {
       initialState.count - 1
     );
   });
+
+  it("strike zone with reducer info synced check", () => {});
 });

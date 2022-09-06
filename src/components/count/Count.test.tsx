@@ -1,12 +1,8 @@
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Count } from "./index";
-import {
-  AppProvider,
-  initialState,
-  useReducerState,
-} from "../../context/context";
-import { COUNT_MAX, COUNT_MIN } from "../../context/reducer";
+import { COUNT_MAX, COUNT_MIN } from "../../utils";
+import { AppProvider, initialState } from "../../context/context";
 
 describe("Count Component Test", () => {
   it("count initialize check", () => {

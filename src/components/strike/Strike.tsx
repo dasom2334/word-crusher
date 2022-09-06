@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FocusEvent } from "react";
 import { useReducerState } from "../../context/context";
-import { types } from "../../context/reducer";
+import { reducerTypes } from "../../utils";
 
 interface StrikeProps {}
 
@@ -13,13 +13,13 @@ export const Strike: React.FC<StrikeProps> = ({}) => {
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     const id = parseInt(event.target.getAttribute("data-strike-id") as string);
     values[id] = event.target.value;
-    dispatch({ type: types.strike, strike: values });
+    dispatch({ type: reducerTypes.strike, strike: values });
   };
   const onFocus = (event: FocusEvent<HTMLInputElement>) => {
     const id = parseInt(event.target.getAttribute("data-strike-id") as string);
     values[id] = "";
     event.target.value = "";
-    dispatch({ type: types.strike, strike: values });
+    dispatch({ type: reducerTypes.strike, strike: values });
   };
   for (let i = 0; i < state.count; i++) {
     inputs.push(
