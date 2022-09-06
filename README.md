@@ -1,4 +1,4 @@
-#WORD CRUSHER
+# WORD CRUSHER
 
 word list by 12dicts
 
