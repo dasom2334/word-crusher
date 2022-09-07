@@ -14,12 +14,17 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "sourceMap": true
   },
   "include": ["src", "db"],
   "ts-node": {
     "compilerOptions": {
       "module": "commonjs"
     }
-  }
+  },
+  "@typescript-eslint/no-unused-vars": [
+    "warn",
+    { "varsIgnorePattern": "^_", "argsIgnorePattern": "^_" }
+  ]
 }
