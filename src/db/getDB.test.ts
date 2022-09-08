@@ -3,12 +3,12 @@ import { GetFileLength } from "../utils";
 export {};
 
 describe("Get Words from DB", () => {
-  it("The number of word data and the number of file words must be the same", async () => {
-    let files: string[] = [];
+  it("the number of word data equal to the file line length", async () => {
+    const words = [];
+    const filePath = "";
 
-    files.forEach((file) => {
-      expect(GetFileLength(file)).toBe(GetFileLength(file));
-    });
+    expect(0).toEqual(words.length);
+    // expect(GetFileLength(filePath)).toEqual(words.length);
   });
   it("The searched word must matched the condition", async () => {
     const test_state: stateProps = {
@@ -17,8 +17,14 @@ describe("Get Words from DB", () => {
       strike: ["a", null, null, null, null],
       result: [],
     };
-    const result = [];
+    const result: string[] = [];
 
-    expect().toBe();
+    for (const word of result) {
+      expect(word.match(regexpFromState(test_state))).toEqual(true);
+    }
   });
 });
+
+function regexpFromState(state: stateProps): RegExp {
+  return new RegExp("", "g");
+}

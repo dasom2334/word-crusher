@@ -1,4 +1,5 @@
-
+import readline from "readline";
+import fs from "fs";
 export const COUNT_MAX = 10;
 export const COUNT_MIN = 1;
 export const GENERATED_DB_PREFIX = "words_length_";
@@ -13,3 +14,14 @@ export const ActionTypes = {
   keyboard: "KEYBOARD",
   //   submit: "SUBMIT",
 } as const;
+
+export const GetFileLength = async (filePath: string): Promise<number> => {
+  const rl = readline.createInterface({
+    input: fs.createReadStream(filePath),
+    crlfDelay: Infinity,
+  });
+
+  let count = 0;
+  for await (const _ of rl) count++;
+  return count;
+};

@@ -1,8 +1,7 @@
-import readline from "readline";
 import fs from "fs";
 
 import path from "path";
-import { GENERATED_DB_EXTENSION, ORIGIN_DB } from "../utils";
+import { GENERATED_DB_EXTENSION, GetFileLength, ORIGIN_DB } from "../utils";
 import { GenerateDB } from "./GenerateDB";
 describe("Word DB File Generate", () => {
   it("Make sure every file is not missing a single word", async () => {
@@ -35,23 +34,7 @@ describe("Word DB File Generate", () => {
     expect(originFileLength).toEqual(genedFilesTotalLength);
   });
 });
-
-const GetFileLength = async (filePath: string): Promise<number> => {
-  const rl = readline.createInterface({
-    input: fs.createReadStream(filePath),
-    crlfDelay: Infinity,
-  });
-
-  let count = 0;
-  for await (const _ of rl) {
-    count++;
-  }
-  return count;
-};
-const removedString = (
-  originString: string,
-  ...targetStrings: string[]
-) => {
+const removedString = (originString: string, ...targetStrings: string[]) => {
   let result = originString;
   for (const str of targetStrings) {
     result = result.replace(str, "");
