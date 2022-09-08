@@ -1,12 +1,8 @@
+import readline from "readline";
 import fs from "fs";
+
 import path from "path";
-import {
-  addTwoNumber,
-  GENERATED_DB_EXTENSION,
-  GetFileLength,
-  ORIGIN_DB,
-  removedFromListString,
-} from "../utils";
+import { GENERATED_DB_EXTENSION, ORIGIN_DB } from "../utils";
 import { GenerateDB } from "./GenerateDB";
 describe("Word DB File Generate", () => {
   it("Make sure every file is not missing a single word", async () => {
@@ -19,7 +15,7 @@ describe("Word DB File Generate", () => {
 
     const origin_cnt = await GetFileLength(origin_file_path);
 
-    let lengths: {
+    let gened_files_length: {
       [k in string]: number;
     } = {};
 
@@ -28,12 +24,37 @@ describe("Word DB File Generate", () => {
         .readdirSync(test_dir)
         .filter((file) => file.match(new RegExp(`^${file_prefix}`, "g")))
         .map(async (file) => {
-          lengths[
+          gened_files_length[
             removedFromListString(file, file_prefix, GENERATED_DB_EXTENSION)
           ] = await GetFileLength(path.join(test_dir, file));
         })
     );
-    const gened_cnt = Object.values(lengths).reduce(addTwoNumber, 0);
-    expect(origin_cnt).toEqual(gened_cnt);
+    const gened_files_total_length = Object.values(gened_files_length).reduce(
+      (pre: number, crr: number) => pre + crr
+    );
+    expect(origin_cnt).toEqual(gened_files_total_length);
   });
 });
+
+const GetFileLength = async (file_path: string): Promise<number> => {
+  const rl = readline.createInterface({
+    input: fs.createReadStream(file_path),
+    crlfDelay: Infinity,
+  });
+
+  let count = 0;
+  for await (const _ of rl) {
+    count++;
+  }
+  return count;
+};
+const removedFromListString = (
+  origin_string: string,
+  ...targetStrings: string[]
+) => {
+  let result = origin_string;
+  for (const str of targetStrings) {
+    result = result.replace(str, "");
+  }
+  return result;
+};
