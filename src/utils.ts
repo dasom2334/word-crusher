@@ -1,9 +1,6 @@
 import readline from "readline";
 import fs from "fs";
 
-
-
-
 export const COUNT_MAX = 10;
 export const COUNT_MIN = 1;
 export const GENERATED_DB_PREFIX = "words_length_";
@@ -20,15 +17,25 @@ export const reducerTypes = {
 } as const;
 
 export const GetFileLength = async (file_path: string): Promise<number> => {
-
   const rl = readline.createInterface({
     input: fs.createReadStream(file_path),
     crlfDelay: Infinity,
   });
-  
+
   let count = 0;
   for await (const _ of rl) {
     count++;
   }
   return count;
+};
+export const addTwoNumber = (pre: number, crr: number) => pre + crr;
+export const removedFromListString = (
+  origin_string: string,
+  ...targetStrings: string[]
+) => {
+  let result = origin_string;
+  for (const str of targetStrings) {
+    result = result.replace(str, "");
+  }
+  return result;
 };
