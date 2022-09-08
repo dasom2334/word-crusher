@@ -15,7 +15,10 @@ describe("Get Words from DB", () => {
       count: 5,
       ball: new Set(["y", "q"]),
       strike: ["a", null, null, null, null],
-      results: [],
+      result: [],
     };
+    const result = [];
+
+    expect().toBe();
   });
 });
