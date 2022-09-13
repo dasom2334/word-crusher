@@ -4,18 +4,26 @@ import {
   COUNT_MIN,
   GENERATED_DB_EXTENSION,
   GENERATED_DB_PREFIX,
-  getFileLines,
 } from "../utils";
+import { getFileLines } from "./DBUtils";
 
 export async function getWords(state: stateProps): Promise<string[]> {
-  let result: string[] = [];
-  const fileLines = getFileLines(getFilePath(state.count));
-  for await (const word of fileLines) {
-    if (word.match(makeRegExpByState(state))) {
-      result.push(word);
-    }
-  }
-  return result;
+  // let result: string[] = [];
+  // const words = (await import(getFilePath(state.count))).filter(word => word.match(makeRegExpByState(state)));
+  // const fileLines = getFileLines(getFilePath(state.count));
+  // for await (const word of fileLines) {
+  //   if (word.match(makeRegExpByState(state))) {
+  //     result.push(word);
+  //   }
+  // }
+  // return result;
+  return (await importWords(state)).filter((word: string) =>
+    word.match(makeRegExpByState(state))
+  );
+}
+
+async function importWords(state: stateProps): Promise<string[]> {
+  return (await import(getFilePath(state.count))).default;
 }
 
 function getFilePath(wordLength: number) {

@@ -1,7 +1,8 @@
 import fs from "fs";
 
 import path from "path";
-import { GENERATED_DB_EXTENSION, GetFileLength, ORIGIN_DB } from "../utils";
+import { GENERATED_DB_EXTENSION, ORIGIN_DB } from "../utils";
+import { GetFileLength } from "./DBUtils";
 import { GenerateDB } from "./GenerateDB";
 describe("Word DB File Generate", () => {
   it("Make sure every file is not missing a single word", async () => {
@@ -9,23 +10,23 @@ describe("Word DB File Generate", () => {
     const testDir = `${test_db}s`;
     const filePrefix = `${test_db}_`;
     const originFilePath = path.join(__dirname, ORIGIN_DB);
-    await GenerateDB(originFilePath, path.join(testDir, filePrefix));
-    fs.mkdir(testDir, (err) => null);
+    await GenerateDB(originFilePath, path.join(__dirname, testDir, filePrefix));
+    fs.mkdir(path.join(__dirname, testDir), (err) => null);
 
     const originFileLength = await GetFileLength(originFilePath);
 
     let genedFilesLength: {
       [k in string]: number;
     } = {};
-
     await Promise.all(
       fs
-        .readdirSync(testDir)
+        .readdirSync(path.join(__dirname, testDir))
         .filter((file) => file.match(new RegExp(`^${filePrefix}`, "g")))
         .map(async (file) => {
-          genedFilesLength[
-            removedString(file, filePrefix, GENERATED_DB_EXTENSION)
-          ] = await GetFileLength(path.join(testDir, file));
+          const words: string[] = (
+            await import(path.join(__dirname, testDir, file))
+          ).default;
+          genedFilesLength[words[0].length] = words.length;
         })
     );
     const genedFilesTotalLength = Object.values(genedFilesLength).reduce(

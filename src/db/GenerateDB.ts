@@ -1,6 +1,7 @@
 // import readline from readline;
 import fs from "fs";
-import { GENERATED_DB_EXTENSION, getFileLines } from "../utils";
+import { GENERATED_DB_EXTENSION } from "../utils";
+import { getFileLines } from "./DBUtils";
 
 export async function GenerateDB(filePath: string, filePrefix: string) {
   const fileLines = getFileLines(filePath);
@@ -12,6 +13,7 @@ export async function GenerateDB(filePath: string, filePrefix: string) {
   for await (const word of fileLines) {
     writeWordToStreamListByWordLength(word, newStreamList, filePrefix);
   }
+  await wrapUpNewStream(newStreamList);
 }
 function writeWordToStreamListByWordLength(
   word: string,
@@ -19,12 +21,30 @@ function writeWordToStreamListByWordLength(
   filePrefix: string
 ) {
   const wordLength = word.length.toString();
-  if (!(wordLength in newStreamList)) {
-    newStreamList[wordLength] = fs.createWriteStream(
-      `${filePrefix}${wordLength}${GENERATED_DB_EXTENSION}`
-    );
+  prepareNewStream(wordLength, newStreamList, filePrefix);
+  newStreamList[wordLength].write(`"${word}",\r\n`, checkErrorThrow);
+}
+
+function prepareNewStream(
+  wordLength: string,
+  newStreamList: { [x: string]: fs.WriteStream },
+  filePrefix: string
+) {
+  if (wordLength in newStreamList) return;
+
+  newStreamList[wordLength] = fs.createWriteStream(
+    `${filePrefix}${wordLength}${GENERATED_DB_EXTENSION}`
+  );
+  newStreamList[wordLength].write(
+    `export default [\r\n`,
+    checkErrorThrow
+  );
+}
+
+function wrapUpNewStream(newStreamList: { [x: string]: fs.WriteStream }) {
+  for (const wordLength in newStreamList) {
+    newStreamList[wordLength].write("];", checkErrorThrow);
   }
-  newStreamList[wordLength].write(word + "\r\n", checkErrorThrow);
 }
 
 function checkErrorThrow(err: Error | undefined | null) {

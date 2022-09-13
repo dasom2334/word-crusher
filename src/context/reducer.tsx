@@ -12,12 +12,12 @@ const reducer = (state: stateProps, action: actionProps): stateProps => {
       if (state.strike === undefined) {
         return { ...state };
       }
-      return { ...state, strike: action.strike as (string | null)[] };
+      return { ...state, strike: action.strike as stateProps["strike"] };
     case ActionTypes.ball:
       if (state.ball === undefined) {
         return { ...state };
       }
-      return { ...state, ball: action.ball as Set<string> };
+      return { ...state, ball: action.ball as stateProps["ball"] };
     default:
       throw new Error(`Unhandled action type ${action.actionType}`);
   }
