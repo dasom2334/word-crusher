@@ -15,13 +15,16 @@ export const ActionTypes = {
   //   submit: "SUBMIT",
 } as const;
 
-export const GetFileLength = async (filePath: string): Promise<number> => {
-  const rl = readline.createInterface({
+export async function GetFileLength(filePath: string): Promise<number> {
+  const fileLine = getFileLines(filePath);
+  let count = 0;
+  for await (const _ of fileLine) count++;
+  return count;
+}
+
+export function getFileLines(filePath: string) {
+  return readline.createInterface({
     input: fs.createReadStream(filePath),
     crlfDelay: Infinity,
   });
-
-  let count = 0;
-  for await (const _ of rl) count++;
-  return count;
-};
+}

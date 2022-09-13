@@ -1,30 +1,29 @@
 import { GetFileLength } from "../utils";
+import { getWords } from "./getDB";
 
 export {};
 
 describe("Get Words from DB", () => {
-  it("the number of word data equal to the file line length", async () => {
-    const words = [];
-    const filePath = "";
-
-    expect(0).toEqual(words.length);
-    // expect(GetFileLength(filePath)).toEqual(words.length);
-  });
   it("The searched word must matched the condition", async () => {
-    const test_state: stateProps = {
+    let test_state: stateProps = {
       count: 5,
-      ball: new Set(["y", "q"]),
-      strike: ["a", null, null, null, null],
+      ball: new Set(),
+      strike: [null, null, null, null, null],
       result: [],
     };
-    const result: string[] = [];
+    const word = "krone";
+    let result: string[] = await getWords(test_state);
 
-    for (const word of result) {
-      expect(word.match(regexpFromState(test_state))).toEqual(true);
-    }
+    expect(result.includes(word)).toEqual(true);
+    test_state.ball = new Set(...word);
+    result = await getWords(test_state);
+    expect(result.includes(word)).toEqual(true);
+    test_state.ball.clear();
+    test_state.strike = word.split("");
+    result = await getWords(test_state);
+    expect(result[0]).toEqual(word);
+    test_state.strike[0] = "z";
+    result = await getWords(test_state);
+    expect(result.includes(word)).toEqual(false);
   });
 });
-
-function regexpFromState(state: stateProps): RegExp {
-  return new RegExp("", "g");
-}
