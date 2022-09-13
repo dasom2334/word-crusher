@@ -7,7 +7,6 @@ export const initialState: stateProps = {
   count: 5,
   ball: new Set<string>(),
   strike: new Array(5).fill(null),
-  result: [],
 };
 
 const ReducerContext = createContext<{

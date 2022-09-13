@@ -1,4 +1,3 @@
-import { GetFileLength } from "../utils";
 import { getWords } from "./getDB";
 
 export {};
@@ -9,7 +8,6 @@ describe("Get Words from DB", () => {
       count: 5,
       ball: new Set(),
       strike: [null, null, null, null, null],
-      result: [],
     };
     const word = "krone";
     let result: string[] = await getWords(test_state);

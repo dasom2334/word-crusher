@@ -2,7 +2,7 @@ type stateProps = {
   count: number;
   strike: (string | null)[];
   ball: Set<string>;
-  result: string[];
+  result?: string[];
 };
 
 type actionProps = {
