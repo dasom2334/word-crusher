@@ -44,8 +44,10 @@ describe("Strike Component Test", () => {
     expect(input).toHaveValue("h");
     userEvent.type(input, "{backspace}fffff");
     expect(input).toHaveValue("f");
-    userEvent.type(input, "{backspace}헬로헬로");
+    userEvent.type(input, "{backspace}헬로헬로57688)(**^*&%");
     expect(input).toHaveValue("");
+    userEvent.type(input, "{backspace}헬로헬로57688)(**^*&%sdf");
+    expect(input).toHaveValue("s");
   });
   it("Remove value from strike input when focusing", () => {
     render(
