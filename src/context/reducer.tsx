@@ -20,10 +20,9 @@ const reducer = (state: stateProps, action: actionProps): stateProps => {
       return { ...state, count: state.count + 1 };
     case ActionTypes.count_down:
       if (state.count <= COUNT_MIN) return { ...state };
-      // const requiredLength = fixRequireCount(state, action);
       return {
         ...state,
-        count: state.count - 1,
+        count: fixRequireCount(state, { ...action, count: state.count - 1 }),
       };
     case ActionTypes.strike:
       if (state.strike === undefined) {
