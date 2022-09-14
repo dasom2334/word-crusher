@@ -1,4 +1,3 @@
-import path from "path";
 import {
   COUNT_MAX,
   COUNT_MIN,
@@ -21,10 +20,7 @@ function getFilePath(wordLength: number) {
     throw new Error("Word length out of range.");
   }
 
-  return path.join(
-    __dirname,
-    `${GENERATED_DB_PREFIX}${wordLength}${GENERATED_DB_EXTENSION}`
-  );
+  return `./${GENERATED_DB_PREFIX}${wordLength}${GENERATED_DB_EXTENSION}`;
 }
 
 function makeRegExpByState(state: stateProps): RegExp {

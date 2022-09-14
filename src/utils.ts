@@ -1,4 +1,4 @@
-export const COUNT_MAX = 10;
+export const COUNT_MAX = 22;
 export const COUNT_MIN = 1;
 export const GENERATED_DB_PREFIX = "words_length_";
 // export const GENERATED_DB_EXTENSION = ".txt";
@@ -13,3 +13,12 @@ export const ActionTypes = {
   keyboard: "KEYBOARD",
   submit: "SUBMIT",
 } as const;
+
+
+export function isLenthOverThenOne (value:string) {
+  return value.length > 1;
+}
+
+export function isIncludesNotAlphabet (value:string) {
+  return /[^a-z]+/.test(value);
+}

@@ -1,17 +1,8 @@
 import React, { ChangeEvent, FocusEvent } from "react";
 import { useReducerState } from "../../context/context";
-import { ActionTypes } from "../../utils";
+import { ActionTypes, isIncludesNotAlphabet, isLenthOverThenOne } from "../../utils";
 
 interface StrikeProps {}
-
-function isLenthOverThenOne (value:string) {
-  return value.length > 1;
-}
-
-function isIncludesNotAlphabet (value:string) {
-  return /[^a-z]+/.test(value);
-}
-
 export const Strike: React.FC<StrikeProps> = ({}) => {
   const { state, dispatch } = useReducerState();
   let inputs = [];
