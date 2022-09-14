@@ -4,17 +4,34 @@ import { ActionTypes } from "../../utils";
 
 interface StrikeProps {}
 
+function isLenthOverThenOne (value:string) {
+  return value.length > 1;
+}
+
+function isIncludesNotAlphabet (value:string) {
+  return /[^a-z]+/.test(value);
+}
+
 export const Strike: React.FC<StrikeProps> = ({}) => {
   const { state, dispatch } = useReducerState();
   let inputs = [];
   let values = state.strike;
-
-  //   const set = new Set<string>(...[]);
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     const id = parseInt(event.target.getAttribute("data-strike-id") as string);
+    if (isLenthOverThenOne(event.target.value)) {
+      event.target.value = values[id] || "";
+      return;
+    }
+    if (isIncludesNotAlphabet(event.target.value)) {
+      event.target.value = values[id] || "";
+      return;
+    }
     values[id] = event.target.value;
     dispatch({ actionType: ActionTypes.strike, strike: values });
   };
+
+
+
   const onFocus = (event: FocusEvent<HTMLInputElement>) => {
     const id = parseInt(event.target.getAttribute("data-strike-id") as string);
     values[id] = "";

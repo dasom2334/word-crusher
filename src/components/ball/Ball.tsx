@@ -8,7 +8,7 @@ export const Ball: React.FC<BallProps> = ({}) => {
   const { state, dispatch } = useReducerState();
   const allows = ''
   const onChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    console.log(event);
+    // console.log(event);
     const balls = new Set(event.target.value.split(""));
     event.target.value = [...balls].join("");
 

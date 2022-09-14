@@ -1,4 +1,3 @@
-
 export const COUNT_MAX = 10;
 export const COUNT_MIN = 1;
 export const GENERATED_DB_PREFIX = "words_length_";
@@ -12,5 +11,5 @@ export const ActionTypes = {
   strike: "STRIKE",
   ball: "BALL",
   keyboard: "KEYBOARD",
-  //   submit: "SUBMIT",
+  submit: "SUBMIT",
 } as const;

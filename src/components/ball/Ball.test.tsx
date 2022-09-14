@@ -6,7 +6,7 @@ import { Strike } from "../strike";
 import { Keyboard } from "../keyboard";
 import { Ball } from "./Ball";
 
-describe("Strike Ball Test", () => {
+describe("Ball Component test", () => {
   it("Sync With Count", () => {
     render(
       <AppProvider>

@@ -74,7 +74,7 @@ describe("Count Component Test", () => {
       </AppProvider>
     );
     const downButton = screen.getByText("➖");
-    for (let i = 0; i < initialState.count + 100; i++)
+    for (let i = 0; i < initialState.count + 5; i++)
       fireEvent.click(downButton);
     expect(screen.getByRole("contentinfo")).toHaveTextContent(
       COUNT_MIN.toString()
@@ -87,7 +87,7 @@ describe("Count Component Test", () => {
       </AppProvider>
     );
     const upButton = screen.getByText("➕");
-    for (let i = 0; i < COUNT_MAX + 100; i++) fireEvent.click(upButton);
+    for (let i = 0; i < COUNT_MAX + 5; i++) fireEvent.click(upButton);
     expect(screen.getByRole("contentinfo")).toHaveTextContent(
       COUNT_MAX.toString()
     );

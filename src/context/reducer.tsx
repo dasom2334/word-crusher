@@ -1,3 +1,4 @@
+import { getWords } from "../db/getDB";
 import { COUNT_MAX, COUNT_MIN, ActionTypes } from "../utils";
 
 const reducer = (state: stateProps, action: actionProps): stateProps => {
@@ -18,6 +19,10 @@ const reducer = (state: stateProps, action: actionProps): stateProps => {
         return { ...state };
       }
       return { ...state, ball: action.ball as stateProps["ball"] };
+    case ActionTypes.submit:
+      return { ...state, result: getWords(state) };
+    case ActionTypes.keyboard:
+      return { ...state };
     default:
       throw new Error(`Unhandled action type ${action.actionType}`);
   }

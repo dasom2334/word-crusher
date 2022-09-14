@@ -1,11 +1,12 @@
 import { render } from "@testing-library/react";
 import { AppProvider } from "../../context/context";
+import { Board } from "../board";
 import { Count } from "../count";
-import { Keyboard } from "../keyboard";
 import { Strike } from "../strike";
-import { Board } from "./Board";
+import { Keyboard } from "../keyboard";
+import { Result } from "./Result";
 
-describe("Board Component Test", () => {
+describe("Result Component Test", () => {
   it("Sync With Strike", () => {
     render(
       <AppProvider>
