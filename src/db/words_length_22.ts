@@ -1,5 +1,5 @@
 const words = [
-"counterrevolutionaries",
-"electroencephalographs",
+  "counterrevolutionaries",
+  "electroencephalographs",
 ];
 export default words;

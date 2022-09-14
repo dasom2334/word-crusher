@@ -1,5 +1,5 @@
 const words = [
-"electroencephalograms",
-"electroencephalograph",
+  "electroencephalograms",
+  "electroencephalograph",
 ];
 export default words;

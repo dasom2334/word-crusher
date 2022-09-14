@@ -1,4 +1,3 @@
-// import readline from readline;
 import fs from "fs";
 import { GENERATED_DB_EXTENSION } from "../utils";
 import { getFileLines } from "./DBUtils";
@@ -22,7 +21,7 @@ function writeWordToStreamListByWordLength(
 ) {
   const wordLength = word.length.toString();
   prepareNewStream(wordLength, newStreamList, filePrefix);
-  newStreamList[wordLength].write(`"${word}",\r\n`, checkErrorThrow);
+  newStreamList[wordLength].write(`  "${word}",\r\n`, checkErrorThrow);
 }
 
 function prepareNewStream(

@@ -1,6 +1,6 @@
 const words = [
-"a",
-"I",
-"O",
+  "a",
+  "I",
+  "O",
 ];
 export default words;
