@@ -5,18 +5,8 @@ import {
   GENERATED_DB_EXTENSION,
   GENERATED_DB_PREFIX,
 } from "../utils";
-import { getFileLines } from "./DBUtils";
 
 export async function getWords(state: stateProps): Promise<string[]> {
-  // let result: string[] = [];
-  // const words = (await import(getFilePath(state.count))).filter(word => word.match(makeRegExpByState(state)));
-  // const fileLines = getFileLines(getFilePath(state.count));
-  // for await (const word of fileLines) {
-  //   if (word.match(makeRegExpByState(state))) {
-  //     result.push(word);
-  //   }
-  // }
-  // return result;
   return (await importWords(state)).filter((word: string) =>
     word.match(makeRegExpByState(state))
   );
@@ -38,9 +28,10 @@ function getFilePath(wordLength: number) {
 }
 
 function makeRegExpByState(state: stateProps): RegExp {
-  const regexpString =
-    makeRegExpStringByStrike(state) + makeRegExpStringByBall(state) + ".*";
-  return new RegExp(regexpString, "g");
+  return new RegExp(
+    makeRegExpStringByStrike(state) + makeRegExpStringByBall(state) + ".*",
+    "g"
+  );
 }
 
 function makeRegExpStringByStrike(state: stateProps): string {

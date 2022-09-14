@@ -1,4 +1,4 @@
-export default [
+const words = [
 "ad",
 "ah",
 "am",
@@ -60,3 +60,4 @@ export default [
 "ye",
 "yo",
 ];
+export default words;

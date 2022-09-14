@@ -1,4 +1,4 @@
-export default [
+const words = [
 "abaci$",
 "abacus",
 "abased",
@@ -7206,3 +7206,4 @@ export default [
 "zydeco",
 "zygote",
 ];
+export default words;

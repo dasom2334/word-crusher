@@ -1,4 +1,4 @@
-export default [
+const words = [
 "chlorofluorocarbons",
 "counterintelligence",
 "electrocardiographs",
@@ -9,3 +9,4 @@ export default [
 "professionalization",
 "straightforwardness",
 ];
+export default words;

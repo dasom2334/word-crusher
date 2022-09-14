@@ -35,15 +35,15 @@ function prepareNewStream(
   newStreamList[wordLength] = fs.createWriteStream(
     `${filePrefix}${wordLength}${GENERATED_DB_EXTENSION}`
   );
-  newStreamList[wordLength].write(
-    `export default [\r\n`,
-    checkErrorThrow
-  );
+  newStreamList[wordLength].write(`const words = [\r\n`, checkErrorThrow);
 }
 
 function wrapUpNewStream(newStreamList: { [x: string]: fs.WriteStream }) {
   for (const wordLength in newStreamList) {
-    newStreamList[wordLength].write("];", checkErrorThrow);
+    newStreamList[wordLength].write(
+      `];\r\nexport default words;`,
+      checkErrorThrow
+    );
   }
 }
 

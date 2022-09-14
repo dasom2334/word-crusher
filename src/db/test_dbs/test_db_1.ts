@@ -1,5 +1,6 @@
-export default [
+const words = [
 "a",
 "I",
 "O",
 ];
+export default words;

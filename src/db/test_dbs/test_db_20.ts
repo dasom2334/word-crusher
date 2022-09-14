@@ -1,4 +1,4 @@
-export default [
+const words = [
 "counterinsurgencies$",
 "counterrevolutionary",
 "electroencephalogram",
@@ -8,3 +8,4 @@ export default [
 "internationalization",
 "uncharacteristically",
 ];
+export default words;

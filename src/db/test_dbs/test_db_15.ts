@@ -1,4 +1,4 @@
-export default [
+const words = [
 "absentmindedly$",
 "acclimatisation",
 "acclimatization",
@@ -453,3 +453,4 @@ export default [
 "whistleblowers$",
 "whistleblowing$",
 ];
+export default words;

@@ -1,4 +1,4 @@
-export default [
+const words = [
 "abbreviations",
 "abnormalities",
 "abolitionists",
@@ -1966,3 +1966,4 @@ export default [
 "wunderkinder$",
 "yellowjacket$",
 ];
+export default words;

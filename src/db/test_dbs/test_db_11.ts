@@ -1,4 +1,4 @@
-export default [
+const words = [
 "abandonment",
 "abbreviated",
 "abbreviates",
@@ -5391,3 +5391,4 @@ export default [
 "yachtswomen",
 "zealousness",
 ];
+export default words;

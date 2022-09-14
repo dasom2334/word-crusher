@@ -1,4 +1,4 @@
-export default [
+const words = [
 "aah",
 "abs",
 "ace",
@@ -639,3 +639,4 @@ export default [
 "zit",
 "zoo",
 ];
+export default words;

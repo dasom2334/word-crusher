@@ -1,4 +1,4 @@
-export default [
+const words = [
 "abalone",
 "abandon",
 "abashed",
@@ -9656,3 +9656,4 @@ export default [
 "zooming",
 "zygotes",
 ];
+export default words;

@@ -1,4 +1,4 @@
-export default [
+const words = [
 "archconservatives+",
 "characteristically",
 "chlorofluorocarbon",
@@ -27,3 +27,4 @@ export default [
 "transubstantiation",
 "unconstitutionally",
 ];
+export default words;
