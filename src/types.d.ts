@@ -2,6 +2,7 @@ type stateProps = {
   count: number;
   strike: (string | null)[];
   ball: Set<string>;
+  activeElement?: HTMLInputElement | null;
   result?: Promise<string[]>;
 };
 
