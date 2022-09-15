@@ -5,6 +5,7 @@ import { COUNT_MAX, COUNT_MIN } from "../../utils";
 import { AppProvider, initialState } from "../../context/context";
 import { Ball } from "../ball";
 import { Strike } from "../strike";
+import userEvent from "@testing-library/user-event";
 
 describe("Count Component Test", () => {
   it("Count initialize check", () => {
@@ -103,16 +104,16 @@ describe("Count Component Test", () => {
       </AppProvider>
     );
     
-    // const input = screen.getByLabelText("strike_0");
-    // userEvent.type(input, "h");
-    // expect(input).toHaveValue("h");
-    // fireEvent.focus(input);
+    userEvent.type(screen.getByLabelText("strike_0"), "h");
+    userEvent.type(screen.getByLabelText("strike_1"), "h");
+    userEvent.type(screen.getByLabelText("strike_2"), "h");
+      
+    userEvent.type(screen.getByLabelText("ball-tagsinput"), "abcd");
 
-
-    // const downButton = screen.getByText("➖");
-    // for (let i = 0; i < COUNT_MAX + 5; i++) fireEvent.click(upButton);
-    // expect(screen.getByRole("contentinfo")).toHaveTextContent(
-    //   COUNT_MAX.toString()
-    // );
+    const downButton = screen.getByText("➖");
+    for (let i = 0; i < COUNT_MAX; i++) fireEvent.click(downButton);
+    expect(screen.getByRole("contentinfo")).toHaveTextContent(
+      '7'
+    );
   });
 });
