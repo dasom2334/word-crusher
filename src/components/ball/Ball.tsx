@@ -19,11 +19,10 @@ export const Ball: React.FC<BallProps> = ({}) => {
     }
   };
   const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
-      if (isIncludesNotAlphabet(event.currentTarget.value)) {
-        return;
-      }
-
+    if (/^[a-zA-Z]{1}$/.test(event.key)) {
+      if ([...state.ball].includes(event.key)) {
+        // set style!
+      } 
       const balls = new Set([...state.ball, event.currentTarget.value]);
       dispatch({ actionType: ActionTypes.ball, ball: balls });
       event.currentTarget.value = "";
@@ -33,9 +32,10 @@ export const Ball: React.FC<BallProps> = ({}) => {
   return (
     <div className="ball-wrap">
       <div className="ball-tagsinput-wrap">
-        <div className="ball-tags">{state.ball}</div>
+        <div className="ball-tags" data-testid="ball-tags">{state.ball}</div>
         <input
           name="ball-tagsinput"
+          aria-label="ball-tagsinput"
           onKeyDown={onKeyDown}
           onKeyUp={onKeyUp}
           maxLength={1}

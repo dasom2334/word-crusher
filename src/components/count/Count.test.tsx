@@ -3,9 +3,11 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { Count } from "./index";
 import { COUNT_MAX, COUNT_MIN } from "../../utils";
 import { AppProvider, initialState } from "../../context/context";
+import { Ball } from "../ball";
+import { Strike } from "../strike";
 
 describe("Count Component Test", () => {
-  it("count initialize check", () => {
+  it("Count initialize check", () => {
     render(
       <AppProvider>
         <Count />
@@ -16,7 +18,7 @@ describe("Count Component Test", () => {
     );
 
   });
-  it("count up button check", () => {
+  it("Count plus button check", () => {
     render(
       <AppProvider>
         <Count />
@@ -28,7 +30,7 @@ describe("Count Component Test", () => {
       (initialState.count + 1).toString()
     );
   });
-  it("count down button check", () => {
+  it("Count minus button check", () => {
     render(
       <AppProvider>
         <Count />
@@ -40,7 +42,7 @@ describe("Count Component Test", () => {
       (initialState.count - 1).toString()
     );
   });
-  it("count number functional check", () => {
+  it("Count number functional check", () => {
     render(
       <AppProvider>
         <Count />
@@ -67,7 +69,7 @@ describe("Count Component Test", () => {
       (initialState.count - 1).toString()
     );
   });
-  it("count number check minimum value", () => {
+  it("Keep the minimum number", () => {
     render(
       <AppProvider>
         <Count />
@@ -80,7 +82,7 @@ describe("Count Component Test", () => {
       COUNT_MIN.toString()
     );
   });
-  it("count number check maximum value", () => {
+  it("Keep the maximum number", () => {
     render(
       <AppProvider>
         <Count />
@@ -91,5 +93,26 @@ describe("Count Component Test", () => {
     expect(screen.getByRole("contentinfo")).toHaveTextContent(
       COUNT_MAX.toString()
     );
+  });
+  it("Keep the minimum required", () => {
+    render(
+      <AppProvider>
+        <Count />
+        <Strike />
+        <Ball />
+      </AppProvider>
+    );
+    
+    // const input = screen.getByLabelText("strike_0");
+    // userEvent.type(input, "h");
+    // expect(input).toHaveValue("h");
+    // fireEvent.focus(input);
+
+
+    // const downButton = screen.getByText("➖");
+    // for (let i = 0; i < COUNT_MAX + 5; i++) fireEvent.click(upButton);
+    // expect(screen.getByRole("contentinfo")).toHaveTextContent(
+    //   COUNT_MAX.toString()
+    // );
   });
 });

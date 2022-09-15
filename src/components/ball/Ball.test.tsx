@@ -1,25 +1,28 @@
-import React from "react";
-import { fireEvent, render, screen } from "@testing-library/react";
-import { Count } from "../count";
-import { AppProvider, initialState } from "../../context/context";
-import { Strike } from "../strike";
-import { Keyboard } from "../keyboard";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { AppProvider } from "../../context/context";
 import { Ball } from "./Ball";
 
 describe("Ball Component test", () => {
-  it("Sync With Count", () => {
+  it("the same character is not allowed", () => {
     render(
       <AppProvider>
-        <Count />
-        <Strike />
         <Ball />
-        <Keyboard />
       </AppProvider>
     );
+    const input = screen.getByLabelText("ball-tagsinput");
+    userEvent.type(input, "abcdef");
+    userEvent.type(input, "abcdef");
+    expect(screen.getByTestId("ball-tags")).toHaveTextContent("abcdef");
   });
-  it("the same character is not allowed", () => {
-    
+  it("Non-alphabetic strings are not allowed.", () => {
+    render(
+      <AppProvider>
+        <Ball />
+      </AppProvider>
+    );
+    const input = screen.getByLabelText("ball-tagsinput");
+    userEvent.type(input, "가나다라마바사아차카타파바하1234567890~!@#$%^&*()_+-=.");
+    expect(screen.getByTestId("ball-tags")).toHaveTextContent("");
   });
-  it("Non-alphabetic strings are not allowed.", () => {});
 });
-
