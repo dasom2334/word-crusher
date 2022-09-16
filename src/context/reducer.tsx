@@ -32,6 +32,7 @@ const reducer = (state: stateProps, action: actionProps): stateProps => {
         ...state,
         strike: action.strike as stateProps["strike"],
         count: fixRequireCount(state, action),
+        // activeElement: state.activeElement
         activeElement: (action.activeElement)?action.activeElement:state.activeElement
       };
     case ActionTypes.ball:
@@ -42,6 +43,7 @@ const reducer = (state: stateProps, action: actionProps): stateProps => {
         ...state,
         ball: action.ball as stateProps["ball"],
         count: fixRequireCount(state, action),
+        // activeElement: state.activeElement
         activeElement: (action.activeElement)?action.activeElement:state.activeElement
       };
     case ActionTypes.submit:

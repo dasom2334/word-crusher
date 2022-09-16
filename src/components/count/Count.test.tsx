@@ -116,4 +116,5 @@ describe("Count Component Test", () => {
       '7'
     );
   });
-});
+  it("Keep the minimum required With maximum number", () => {});
+  });

@@ -55,5 +55,11 @@ export const Strike: React.FC<StrikeProps> = ({}) => {
       ></input>
     );
   }
-  return <div className="strike_wrap">{inputs}</div>;
+  return (
+    <div className="strike_wrap">
+      <div>{values}</div>
+
+      {inputs}
+    </div>
+  );
 };

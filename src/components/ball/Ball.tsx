@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useRef, useState } from "react";
+import React, { ChangeEvent, FocusEvent, useRef } from "react";
 import { useReducerState } from "../../context/context";
 import {
   ActionTypes,
@@ -13,17 +13,42 @@ export const Ball: React.FC<BallProps> = ({}) => {
 
   const ballInput = useRef(null);
 
-  const onKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const onFocus = (event: FocusEvent<HTMLInputElement>) => {
+    dispatch({
+      actionType: ActionTypes.ball,
+      ball: state.ball,
+      activeElement: ballInput.current,
+    });
+    // if (isLenthOverThenOne(event.currentTarget.value)) {
+    //   event.currentTarget.value = event.currentTarget.value.slice(0, 1);
+    // }
+    // if (isIncludesNotAlphabet(event.currentTarget.value)) {
+    //   event.currentTarget.value = "";
+    // }
+    // if (/^[a-zA-Z]{1}$/.test(event.currentTarget.value)) {
+    //   if ([...state.ball].includes(event.currentTarget.value)) {
+    //     // set style!
+    //   }
+    //   const balls = new Set([...state.ball, event.currentTarget.value]);
+    //   dispatch({
+    //     actionType: ActionTypes.ball,
+    //     ball: balls,
+    //     activeElement: ballInput.current,
+    //   });
+    //   event.currentTarget.value = "";
+    // }
+  };
+  const onChange = (event:ChangeEvent<HTMLInputElement>) => {
+    // const onChange = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    console.log("kyup");
     if (isLenthOverThenOne(event.currentTarget.value)) {
       event.currentTarget.value = event.currentTarget.value.slice(0, 1);
     }
     if (isIncludesNotAlphabet(event.currentTarget.value)) {
       event.currentTarget.value = "";
     }
-    // };
-    // const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (/^[a-zA-Z]{1}$/.test(event.key)) {
-      if ([...state.ball].includes(event.key)) {
+    if (/^[a-zA-Z]{1}$/.test(event.currentTarget.value)) {
+      if ([...state.ball].includes(event.currentTarget.value)) {
         // set style!
       }
       const balls = new Set([...state.ball, event.currentTarget.value]);
@@ -45,8 +70,8 @@ export const Ball: React.FC<BallProps> = ({}) => {
         <input
           name="ball-tagsinput"
           aria-label="ball-tagsinput"
-          // onKeyDown={onKeyDown}
-          onKeyUp={onKeyUp}
+          onFocus={onFocus}
+          onChange={onChange}
           maxLength={1}
           ref={ballInput}
         />

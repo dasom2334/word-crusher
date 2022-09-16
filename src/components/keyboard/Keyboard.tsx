@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { MouseEvent, ChangeEvent } from "react";
 import { useReducerState } from "../../context/context";
 
 interface KeyboardProps {}
@@ -6,10 +6,14 @@ interface KeyboardProps {}
 export const Keyboard: React.FC<KeyboardProps> = ({}) => {
   const { state, dispatch } = useReducerState();
 
-  const onClick = () => {
-    console.log('hello')
-    console.log(state.activeElement)
+  const onClick = (event: MouseEvent<HTMLButtonElement>) => {
     state.activeElement?.focus();
+    var setValue = Object?.getOwnPropertyDescriptor(
+      window.HTMLInputElement.prototype,
+      "value"
+    )?.set;
+    setValue?.call(state.activeElement, event.currentTarget.getAttribute("data-key"));
+    state.activeElement?.dispatchEvent(new Event("change", { bubbles: true }));
   };
 
   const keys = ["qwertyuiop", "asdfghjkl", "zxcvbnm"];
@@ -36,7 +40,7 @@ interface KeyboardButtonProps {
   strikeCount: number;
   isBalled: boolean;
   character: string;
-  clickFunc: () => void;
+  clickFunc: (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
 export const KeyboardButton: React.FC<KeyboardButtonProps> = ({
@@ -47,22 +51,22 @@ export const KeyboardButton: React.FC<KeyboardButtonProps> = ({
 }) => {
   return (
     <span>
-      <button className={isBalled ? "isBalled" : ""} onClick={clickFunc}>
+      <button
+        className={isBalled ? "isBalled" : ""}
+        onClick={clickFunc}
+        data-key={character}
+      >
         {character}
       </button>
-      <KeyStrikeCount strikeCount={strikeCount} character={character} />
+      <KeyStrikeCount strikeCount={strikeCount} />
     </span>
   );
 };
 
 interface KeyStrikeCountProps {
   strikeCount: number;
-  character: string;
 }
 
-const KeyStrikeCount: React.FC<KeyStrikeCountProps> = ({
-  strikeCount,
-  character,
-}) => {
+const KeyStrikeCount: React.FC<KeyStrikeCountProps> = ({ strikeCount }) => {
   return <span className={strikeCount > 0 ? "active" : ""}>{strikeCount}</span>;
 };
