@@ -16,8 +16,9 @@ describe("Ball Component test", () => {
     const input = screen.getByLabelText("ball-tagsinput");
     userEvent.type(input, "abcdef");
     userEvent.type(input, "abcdef");
-    expect(screen.getByTestId("ball-tags")).toHaveTextContent("abcdef");
+    expect(screen.getByRole("contentinfo")).toHaveTextContent("abcdef");
   });
+
   it("Non-alphabetic strings are not allowed.", () => {
     render(
       <AppProvider>
@@ -31,7 +32,7 @@ describe("Ball Component test", () => {
       input,
       "가나다라마바사아차카타파바하1234567890~!@#$%^&*()_+-=."
     );
-    expect(screen.getByTestId("ball-tags")).toHaveTextContent("");
+    expect(screen.getByRole("contentinfo")).toHaveTextContent("");
   });
   it("Click the Remove button to remove the ball", () => {
     render(
@@ -45,11 +46,10 @@ describe("Ball Component test", () => {
     userEvent.type(input, "abcde");
 
     fireEvent.click(screen.getByRole("button", { name: "remove-ball-e" }));
-    expect(screen.getByTestId("ball-tags")).toHaveTextContent("abcd");
+    expect(screen.getByRole("contentinfo")).toHaveTextContent("abcd");
     fireEvent.click(screen.getByRole("button", { name: "remove-ball-a" }));
     fireEvent.click(screen.getByRole("button", { name: "remove-ball-b" }));
     fireEvent.click(screen.getByRole("button", { name: "remove-ball-c" }));
-    expect(screen.getByTestId("ball-tags")).toHaveTextContent("d");
-
+    expect(screen.getByRole("contentinfo")).toHaveTextContent("d");
   });
 });

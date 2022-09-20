@@ -1,10 +1,10 @@
 import React, { MouseEvent } from "react";
-import { useReducerState } from "../../context/context";
+import { useAppState } from "../../context/context";
 
 interface KeyboardProps {}
 
-export const Keyboard: React.FC<KeyboardProps> = ({}) => {
-  const { state, dispatch } = useReducerState();
+export const Keyboard: React.FC<KeyboardProps> = () => {
+  const state = useAppState();
 
   const onClick = (event: MouseEvent<HTMLButtonElement>) => {
     state.activeElement?.focus();

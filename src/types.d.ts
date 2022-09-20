@@ -1,11 +1,17 @@
 type stateProps = {
   count: number;
-  strike: (string | null)[];
+  strike: string[];
   ball: Set<string>;
-  activeElement?: HTMLInputElement | null;
-  result?: Promise<string[]>;
+  activeElement: HTMLInputElement | null;
+  result: Promise<string[]>;
 };
 
-type actionProps = {
-  actionType: typeof types[keyof typeof types];
-} & Partial<stateProps>;
+type actionProps =
+  | { type: "COUNT_UP" }
+  | { type: "COUNT_DOWN" }
+  | { type: "STRIKE"; location: number; character: string }
+  | { type: "BALL_ADD"; character: string }
+  | { type: "BALL_REMOVE"; character: string }
+  | { type: "ACTIVE_ELEMENT"; activeElement: HTMLInputElement }
+  | { type: "KEYBOARD_PUSH"; character: string }
+  | { type: "SUBMIT" };

@@ -4,6 +4,6 @@ interface ResultProps {
 
 }
 
-export const Result: React.FC<ResultProps> = ({}) => {
+export const Result: React.FC<ResultProps> = () => {
         return (<></>);
 }

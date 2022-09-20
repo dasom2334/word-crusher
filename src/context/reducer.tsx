@@ -1,57 +1,85 @@
 import { getWords } from "../db/getDB";
-import { COUNT_MAX, COUNT_MIN, ActionTypes } from "../utils";
+import { COUNT_MAX, COUNT_MIN } from "../utils";
 
-function fixRequireCount(state: stateProps, action: actionProps) {
-  const mergedState = { ...state, ...action };
-  const ballLength = mergedState.ball.size;
-  const strikeLength = mergedState.strike.filter(
-    (e) => ![null, ""].includes(e)
-  ).length;
-  const requiredLength = ballLength + strikeLength;
-  return requiredLength > mergedState.count
-    ? requiredLength
-    : mergedState.count;
+function fixRequireCount({
+  count,
+  strike,
+  ball,
+}: Readonly<{
+  count: number;
+  strike: string[];
+  ball: Set<string>;
+}>) {
+  const requiredLength = ball.size + strike.filter((e) => e !== "").length;
+  return requiredLength > count ? requiredLength : count;
 }
 
 const reducer = (state: stateProps, action: actionProps): stateProps => {
-  switch (action.actionType) {
-    case ActionTypes.count_up:
-      if (state.count >= COUNT_MAX) return { ...state };
+  switch (action.type) {
+    case "COUNT_UP":
+      if (state.count >= COUNT_MAX) return state;
       return { ...state, count: state.count + 1 };
-    case ActionTypes.count_down:
-      if (state.count <= COUNT_MIN) return { ...state };
+    case "COUNT_DOWN":
+      if (state.count <= COUNT_MIN) return state;
       return {
         ...state,
-        count: fixRequireCount(state, { ...action, count: state.count - 1 }),
+        count: fixRequireCount({
+          count: state.count - 1,
+          ball: state.ball,
+          strike: state.strike,
+        }),
       };
-    case ActionTypes.strike:
-      if (state.strike === undefined) {
-        return { ...state };
-      }
+    case "STRIKE":
+      const newStrike = [...state.strike];
+      newStrike[action.location] = action.character;
       return {
         ...state,
-        strike: action.strike as stateProps["strike"],
-        count: fixRequireCount(state, action),
-        // activeElement: state.activeElement
-        activeElement: (action.activeElement)?action.activeElement:state.activeElement
+        strike: newStrike,
+        count: fixRequireCount({
+          count: state.count,
+          ball: state.ball,
+          strike: newStrike,
+        }),
       };
-    case ActionTypes.ball:
-      if (state.ball === undefined) {
-        return { ...state };
-      }
+    case "BALL_ADD":
+      if (state.ball.has(action.character)) return state;
+      const addedBall = new Set([...state.ball]);
+      addedBall.add(action.character);
       return {
         ...state,
-        ball: action.ball as stateProps["ball"],
-        count: fixRequireCount(state, action),
-        // activeElement: state.activeElement
-        activeElement: (action.activeElement)?action.activeElement:state.activeElement
+        ball: addedBall,
+        count: fixRequireCount({
+          count: state.count,
+          ball: addedBall,
+          strike: state.strike,
+        }),
       };
-    case ActionTypes.submit:
-      return { ...state, result: getWords({ ...state, ...action }) };
-    case ActionTypes.keyboard:
+    case "BALL_REMOVE":
+      if (!state.ball.has(action.character)) return state;
+      const removedBall = new Set([...state.ball]);
+      removedBall.delete(action.character);
+      return {
+        ...state,
+        count: fixRequireCount({
+          count: state.count,
+          ball: removedBall,
+          strike: state.strike,
+        }),
+      };
+
+    case "ACTIVE_ELEMENT":
+      return {
+        ...state,
+        activeElement: action.activeElement
+          ? action.activeElement
+          : state.activeElement,
+      };
+    case "KEYBOARD_PUSH":
       return { ...state };
+    case "SUBMIT":
+      return { ...state, result: getWords({ ...state, ...action }) };
     default:
-      throw new Error(`Unhandled action type ${action.actionType}`);
+      return state;
   }
 };
 

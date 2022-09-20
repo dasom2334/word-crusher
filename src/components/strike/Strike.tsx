@@ -1,42 +1,38 @@
 import React, { ChangeEvent, FocusEvent, useRef } from "react";
-import { useReducerState } from "../../context/context";
-import {
-  ActionTypes,
-  isIncludesNotAlphabet,
-  isLenthOverThenOne,
-} from "../../utils";
+import { useAppDispatch, useAppState } from "../../context/context";
+import { isIncludesNotAlphabet, isLenthOverThenOne } from "../../utils";
 
 interface StrikeProps {}
-export const Strike: React.FC<StrikeProps> = ({}) => {
-  const { state, dispatch } = useReducerState();
+export const Strike: React.FC<StrikeProps> = () => {
+  const state = useAppState();
+  const dispatch = useAppDispatch();
   let inputs = [];
-  let values = state.strike;
-  let strikeRef = useRef<(HTMLInputElement | null)[]>([]);
+  let strikeRef = useRef<HTMLInputElement[]>([]);
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const id = parseInt(event.target.getAttribute("data-strike-id") as string);
+    const location = getLocation(event);
     if (isLenthOverThenOne(event.target.value)) {
-      event.target.value = values[id] || "";
+      event.target.value = state.strike[location] || "";
       return;
     }
     if (isIncludesNotAlphabet(event.target.value)) {
-      event.target.value = values[id] || "";
+      event.target.value = "";
       return;
     }
-    values[id] = event.target.value;
-    dispatch({ actionType: ActionTypes.strike, strike: values });
+    dispatch({ type: "STRIKE", location, character: event.target.value });
   };
 
   const onFocus = (event: FocusEvent<HTMLInputElement>) => {
-    const id = parseInt(event.target.getAttribute("data-strike-id") as string);
-    values[id] = "";
     event.target.value = "";
     dispatch({
-      actionType: ActionTypes.strike,
-      strike: values,
-      activeElement: strikeRef.current[id],
+      type: "STRIKE",
+      character: "",
+      location: getLocation(event),
     });
   };
+
+  const getLocation = (event: FocusEvent | ChangeEvent) =>
+    parseInt(event.target.getAttribute("data-strike-location") as string);
 
   for (let i = 0; i < state.count; i++) {
     inputs.push(
@@ -46,18 +42,18 @@ export const Strike: React.FC<StrikeProps> = ({}) => {
         onFocus={onFocus}
         maxLength={1}
         name={"strike_" + i}
-        data-strike-id={i}
+        data-strike-location={i}
         aria-label={"strike_" + i}
         key={i}
-        ref={(ref) => {
+        ref={(ref: HTMLInputElement) => {
           strikeRef.current[i] = ref;
         }}
-      ></input>
+      />
     );
   }
   return (
     <div className="strike_wrap">
-      <div>{values}</div>
+      <div>{state.strike}</div>
 
       {inputs}
     </div>

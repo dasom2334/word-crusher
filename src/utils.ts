@@ -5,15 +5,6 @@ export const GENERATED_DB_PREFIX = "words_length_";
 export const GENERATED_DB_EXTENSION = ".ts";
 export const ORIGIN_DB = "3of6game.txt";
 
-export const ActionTypes = {
-  count_up: "COUNT_UP",
-  count_down: "COUNT_DOWN",
-  strike: "STRIKE",
-  ball: "BALL",
-  keyboard: "KEYBOARD",
-  submit: "SUBMIT",
-} as const;
-
 
 export function isLenthOverThenOne (value:string) {
   return value.length > 1;

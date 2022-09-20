@@ -1,13 +1,13 @@
 import React from "react";
-import { useReducerState } from "../../context/context";
-import { ActionTypes } from "../../utils";
+import { useAppDispatch, useAppState } from "../../context/context";
 
 interface CountProps {}
 
 export const Count: React.FC<CountProps> = () => {
-  const { state, dispatch } = useReducerState();
-  const count_up = () => dispatch({ actionType: ActionTypes.count_up });
-  const count_down = () => dispatch({ actionType: ActionTypes.count_down });
+  const state = useAppState();
+  const dispatch = useAppDispatch();
+  const count_up = () => dispatch({ type: "COUNT_UP" });
+  const count_down = () => dispatch({ type: "COUNT_DOWN" });
   return (
     <div className="count_wrap">
       <div className="count_btn">
