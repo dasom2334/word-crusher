@@ -19,26 +19,9 @@ export const Ball: React.FC<BallProps> = ({}) => {
       ball: state.ball,
       activeElement: ballInput.current,
     });
-    // if (isLenthOverThenOne(event.currentTarget.value)) {
-    //   event.currentTarget.value = event.currentTarget.value.slice(0, 1);
-    // }
-    // if (isIncludesNotAlphabet(event.currentTarget.value)) {
-    //   event.currentTarget.value = "";
-    // }
-    // if (/^[a-zA-Z]{1}$/.test(event.currentTarget.value)) {
-    //   if ([...state.ball].includes(event.currentTarget.value)) {
-    //     // set style!
-    //   }
-    //   const balls = new Set([...state.ball, event.currentTarget.value]);
-    //   dispatch({
-    //     actionType: ActionTypes.ball,
-    //     ball: balls,
-    //     activeElement: ballInput.current,
-    //   });
-    //   event.currentTarget.value = "";
-    // }
   };
-  const onChange = (event:ChangeEvent<HTMLInputElement>) => {
+
+  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     // const onChange = (event: React.KeyboardEvent<HTMLInputElement>) => {
     console.log("kyup");
     if (isLenthOverThenOne(event.currentTarget.value)) {
@@ -61,11 +44,24 @@ export const Ball: React.FC<BallProps> = ({}) => {
     }
   };
 
+  const removeBall = (character: string) => {
+    state.ball.delete(character);
+    dispatch({
+      actionType: ActionTypes.ball,
+      ball: state.ball,
+      activeElement: ballInput.current,
+    });
+  };
   return (
     <div className="ball-wrap">
       <div className="ball-tagsinput-wrap">
         <div className="ball-tags" data-testid="ball-tags">
-          {state.ball}
+          {[...state.ball].map((e) => (
+            <span key={e}>
+              {e}
+              <button onClick={() => removeBall(e)}>remove {e}</button>
+            </span>
+          ))}
         </div>
         <input
           name="ball-tagsinput"

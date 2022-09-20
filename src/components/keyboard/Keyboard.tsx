@@ -1,4 +1,4 @@
-import React, { MouseEvent, ChangeEvent } from "react";
+import React, { MouseEvent } from "react";
 import { useReducerState } from "../../context/context";
 
 interface KeyboardProps {}
@@ -8,11 +8,13 @@ export const Keyboard: React.FC<KeyboardProps> = ({}) => {
 
   const onClick = (event: MouseEvent<HTMLButtonElement>) => {
     state.activeElement?.focus();
-    var setValue = Object?.getOwnPropertyDescriptor(
+    Object?.getOwnPropertyDescriptor(
       window.HTMLInputElement.prototype,
       "value"
-    )?.set;
-    setValue?.call(state.activeElement, event.currentTarget.getAttribute("data-key"));
+    )?.set?.call(
+      state.activeElement,
+      event.currentTarget.getAttribute("data-key")
+    );
     state.activeElement?.dispatchEvent(new Event("change", { bubbles: true }));
   };
 
@@ -68,5 +70,5 @@ interface KeyStrikeCountProps {
 }
 
 const KeyStrikeCount: React.FC<KeyStrikeCountProps> = ({ strikeCount }) => {
-  return <span className={strikeCount > 0 ? "active" : ""}>{strikeCount}</span>;
+  return <span className={strikeCount > 0 ? "active" : ""} >{strikeCount}</span>;
 };
