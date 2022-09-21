@@ -19,13 +19,18 @@ describe("Keyboard Component Test", () => {
       </AppProvider>
     );
 
-    userEvent.type(screen.getByLabelText("strike_0"), "a");
-    userEvent.type(screen.getByLabelText("strike_1"), "a");
-    userEvent.type(screen.getByLabelText("strike_2"), "b");
-    userEvent.type(screen.getByLabelText("strike_3"), "b");
+    screen
+      .getAllByRole("textbox", { name: /^strike_[0-1]/ })
+      .forEach((e) => userEvent.type(e, "a"));
+    screen
+      .getAllByRole("textbox", { name: /^strike_[2-3]/ })
+      .forEach((e) => userEvent.type(e, "b"));
     expect(screen.getAllByText("2")).toHaveLength(2);
 
-    userEvent.type(screen.getByLabelText("strike_3"), "{backspace}c");
+    userEvent.type(
+      screen.getByRole("textbox", { name: "strike_3" }),
+      "{backspace}c"
+    );
     expect(screen.getAllByText("2")).toHaveLength(1);
     expect(screen.getAllByText("1")).toHaveLength(2);
   });
@@ -46,9 +51,9 @@ describe("Keyboard Component Test", () => {
     screen
       .getAllByRole("button", { name: /^[a-e]$/ })
       .forEach((e) => expect(e).toHaveClass("isBalled"));
-    expect(screen.getByRole("button", { name: "f" })).not.toHaveClass(
-      "isBalled"
-    );
+    screen
+      .getAllByRole("button", { name: /^[f-z]$/ })
+      .forEach((e) => expect(e).not.toHaveClass("isBalled"));
   });
   it("When focusing on the strike zone, the clicked keyboard enters the strike", () => {
     render(
@@ -60,10 +65,10 @@ describe("Keyboard Component Test", () => {
         </Board>
       </AppProvider>
     );
-    fireEvent.focus(screen.getByLabelText("strike_0"));
+    fireEvent.focus(screen.getByRole("textbox", { name: "strike_0" }));
     fireEvent.click(screen.getByRole("button", { name: "a" }));
-    expect(screen.getByLabelText("strike_0")).toHaveFocus();
-    expect(screen.getByLabelText("strike_0")).toHaveValue("a");
+    expect(screen.getByRole("textbox", { name: "strike_0" })).toHaveFocus();
+    expect(screen.getByRole("textbox", { name: "strike_0" })).toHaveValue("a");
   });
   it("When focusing on the ball zone, the clicked keyboard enters the ball", () => {
     render(
@@ -97,10 +102,9 @@ describe("Keyboard Component Test", () => {
       "abcde"
     );
     expect(screen.getAllByRole("button", { name: /remove/ })).toHaveLength(5);
-    fireEvent.click(screen.getByRole("button", { name: "a" }));
-    fireEvent.click(screen.getByRole("button", { name: "b" }));
-    fireEvent.click(screen.getByRole("button", { name: "c" }));
-    fireEvent.click(screen.getByRole("button", { name: "f" }));
+    screen
+      .getAllByRole("button", { name: /[a-f]/ })
+      .forEach((e) => fireEvent.click(e));
     expect(screen.getAllByRole("button", { name: /remove/ })).toHaveLength(6);
   });
 });
