@@ -7,7 +7,9 @@ export const Keyboard: React.FC<KeyboardProps> = () => {
   const state = useAppState();
 
   const onClick = (event: MouseEvent<HTMLButtonElement>) => {
+    if (state.activeElement === null) return;
     state.activeElement?.focus();
+
     Object?.getOwnPropertyDescriptor(
       window.HTMLInputElement.prototype,
       "value"
@@ -70,5 +72,5 @@ interface KeyStrikeCountProps {
 }
 
 const KeyStrikeCount: React.FC<KeyStrikeCountProps> = ({ strikeCount }) => {
-  return <span className={strikeCount > 0 ? "active" : ""} >{strikeCount}</span>;
+  return <span className={strikeCount > 0 ? "active" : ""}>{strikeCount}</span>;
 };

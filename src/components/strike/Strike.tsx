@@ -25,6 +25,10 @@ export const Strike: React.FC<StrikeProps> = () => {
   const onFocus = (event: FocusEvent<HTMLInputElement>) => {
     event.target.value = "";
     dispatch({
+      type: "ACTIVE_ELEMENT",
+      activeElement: strikeRef.current[getLocation(event)],
+    });
+    dispatch({
       type: "STRIKE",
       character: "",
       location: getLocation(event),

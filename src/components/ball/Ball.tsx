@@ -8,7 +8,7 @@ export const Ball: React.FC<BallProps> = () => {
   const state = useAppState();
   const dispatch = useAppDispatch();
 
-  const ballInput = useRef<HTMLInputElement>(new HTMLInputElement());
+  const ballInput = useRef<HTMLInputElement>(null);
 
   const onFocus = (event: FocusEvent<HTMLInputElement>) => {
     dispatch({
@@ -44,10 +44,9 @@ export const Ball: React.FC<BallProps> = () => {
       <div className="ball-tagsinput-wrap">
         <div className="ball-tags" data-testid="ball-tags">
           {[...state.ball].map((e) => (
-            <span key={e}>
-              {e}
-              <button onClick={() => removeBall(e)}>remove {e}</button>
-            </span>
+            <button onClick={() => removeBall(e)} key={e}>
+              remove {e}
+            </button>
           ))}
         </div>
         <input

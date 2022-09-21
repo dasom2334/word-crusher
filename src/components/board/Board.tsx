@@ -6,7 +6,6 @@ interface BoardProps {
 
 export const Board: React.FC<BoardProps> = ({ children }: BoardProps) => {
   const onKeyDown = (event: KeyboardEvent<Element>) => {
-    // console.log(event);
   };
   return <div onKeyDown={onKeyDown}>{children}</div>;
 };

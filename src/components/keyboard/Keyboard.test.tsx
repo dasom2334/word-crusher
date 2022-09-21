@@ -1,6 +1,7 @@
-import { fireEvent, getAllByText, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { AppProvider } from "../../context/context";
+import { Ball } from "../ball";
 import { Board } from "../board";
 import { Count } from "../count";
 import { Strike } from "../strike";
@@ -29,26 +30,77 @@ describe("Keyboard Component Test", () => {
     expect(screen.getAllByText("1")).toHaveLength(2);
   });
   it("ball coloring chekced", () => {
-    userEvent.type(screen.getByLabelText("ball-tagsinput"), "abcde");
-    expect(screen.getAllByText("a")).toHaveStyle({ "background-color": "red" });
-    expect(screen.getAllByText("b")).toHaveStyle({ "background-color": "red" });
-    expect(screen.getAllByText("c")).toHaveStyle({ "background-color": "red" });
-    expect(screen.getAllByText("d")).toHaveStyle({ "background-color": "red" });
-    expect(screen.getAllByText("e")).toHaveStyle({ "background-color": "red" });
-    expect(screen.getAllByText("f")).toHaveStyle({ "background-color": "" });
+    render(
+      <AppProvider>
+        <Board>
+          <Count />
+          <Ball />
+          <Keyboard />
+        </Board>
+      </AppProvider>
+    );
+    userEvent.type(
+      screen.getByRole("textbox", { name: "ball-tagsinput" }),
+      "abcde"
+    );
+    screen
+      .getAllByRole("button", { name: /^[a-e]$/ })
+      .forEach((e) => expect(e).toHaveClass("isBalled"));
+    expect(screen.getByRole("button", { name: "f" })).not.toHaveClass(
+      "isBalled"
+    );
   });
   it("When focusing on the strike zone, the clicked keyboard enters the strike", () => {
-
+    render(
+      <AppProvider>
+        <Board>
+          <Count />
+          <Strike />
+          <Keyboard />
+        </Board>
+      </AppProvider>
+    );
+    fireEvent.focus(screen.getByLabelText("strike_0"));
+    fireEvent.click(screen.getByRole("button", { name: "a" }));
+    expect(screen.getByLabelText("strike_0")).toHaveFocus();
+    expect(screen.getByLabelText("strike_0")).toHaveValue("a");
   });
-  it("When focusing on the ball zone, the clicked keyboard enters the ball", () => {});
+  it("When focusing on the ball zone, the clicked keyboard enters the ball", () => {
+    render(
+      <AppProvider>
+        <Board>
+          <Count />
+          <Ball />
+          <Keyboard />
+        </Board>
+      </AppProvider>
+    );
+    fireEvent.focus(screen.getByRole("textbox", { name: "ball-tagsinput" }));
+    fireEvent.click(screen.getByRole("button", { name: "a" }));
+    expect(
+      screen.getByRole("textbox", { name: "ball-tagsinput" })
+    ).toHaveFocus();
+    expect(screen.getAllByRole("button", { name: "remove a" })).toHaveLength(1);
+  });
   it("disable button what into the ball zone charaters", () => {
-    userEvent.type(screen.getByLabelText("ball-tagsinput"), "abcde");
-    expect(screen.getAllByText("abcdef")).toHaveLength(0);
+    render(
+      <AppProvider>
+        <Board>
+          <Count />
+          <Ball />
+          <Keyboard />
+        </Board>
+      </AppProvider>
+    );
+    userEvent.type(
+      screen.getByRole("textbox", { name: "ball-tagsinput" }),
+      "abcde"
+    );
+    expect(screen.getAllByRole("button", { name: /remove/ })).toHaveLength(5);
     fireEvent.click(screen.getByRole("button", { name: "a" }));
     fireEvent.click(screen.getByRole("button", { name: "b" }));
     fireEvent.click(screen.getByRole("button", { name: "c" }));
     fireEvent.click(screen.getByRole("button", { name: "f" }));
-    expect(screen.getAllByText("abcdef")).toHaveLength(1);
-
+    expect(screen.getAllByRole("button", { name: /remove/ })).toHaveLength(6);
   });
 });

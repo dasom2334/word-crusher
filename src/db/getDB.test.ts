@@ -1,14 +1,11 @@
+import { initialState } from "../context/context";
 import { getWords } from "./getDB";
 
 export {};
 
 describe("Get Words from DB", () => {
   it("The searched word must matched the condition", async () => {
-    let test_state: stateProps = {
-      count: 5,
-      ball: new Set(),
-      strike: [null, null, null, null, null],
-    };
+    let test_state = initialState;
     const word = "krone";
     let result: string[] = await getWords(test_state);
 

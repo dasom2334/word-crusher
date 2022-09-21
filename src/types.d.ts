@@ -12,6 +12,6 @@ type actionProps =
   | { type: "STRIKE"; location: number; character: string }
   | { type: "BALL_ADD"; character: string }
   | { type: "BALL_REMOVE"; character: string }
-  | { type: "ACTIVE_ELEMENT"; activeElement: HTMLInputElement }
+  | { type: "ACTIVE_ELEMENT"; activeElement: HTMLInputElement | null }
   | { type: "KEYBOARD_PUSH"; character: string }
   | { type: "SUBMIT" };

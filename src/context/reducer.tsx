@@ -60,6 +60,7 @@ const reducer = (state: stateProps, action: actionProps): stateProps => {
       removedBall.delete(action.character);
       return {
         ...state,
+        ball: removedBall,
         count: fixRequireCount({
           count: state.count,
           ball: removedBall,
