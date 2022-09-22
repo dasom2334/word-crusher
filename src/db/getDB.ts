@@ -1,4 +1,3 @@
-
 import words1 from "./words_length_1";
 import words2 from "./words_length_2";
 import words3 from "./words_length_3";
@@ -79,7 +78,6 @@ export async function getWords(state: stateProps): Promise<string[]> {
   );
 }
 
-
 function makeRegExpByState(state: stateProps): RegExp {
   return new RegExp(
     makeRegExpStringByStrike(state) + makeRegExpStringByBall(state) + ".*",
@@ -90,7 +88,9 @@ function makeRegExpByState(state: stateProps): RegExp {
 function makeRegExpStringByStrike(state: stateProps): string {
   return state.strike
     .map((character, location) =>
-      character != null ? `(?=.{${location}}${character})` : null
+      character != null
+        ? `(?=.{${location}}${character}.{${state.count - location - 1}})`
+        : null
     )
     .join("");
 }
