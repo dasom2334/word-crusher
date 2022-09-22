@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useAppState } from "../../context/context";
+import { useAppDispatch, useAppState } from "../../context/context";
 interface ResultProps {}
 
 export const Result: React.FC<ResultProps> = () => {
   const state = useAppState();
+  const dispatch = useAppDispatch();
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean | Error>(false);
@@ -21,8 +22,13 @@ export const Result: React.FC<ResultProps> = () => {
 
   if (loading) return <ResultLoading />;
   if (error instanceof Error) return <ResultError error={error} />;
+
+  const onClick = () => {
+    dispatch({ type: "SUBMIT" });
+  };
   return (
     <div className="result-wrap">
+      <button onClick={onClick}>submit</button>
       <div>
         <ul>
           {result.map((e: string) => (

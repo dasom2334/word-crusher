@@ -1,12 +1,15 @@
-import { render, screen } from "@testing-library/react";
+import {
+  fireEvent, render,
+  screen,
+  waitForElementToBeRemoved
+} from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { AppProvider } from "../../context/context";
+import { Ball } from "../ball";
 import { Board } from "../board";
 import { Count } from "../count";
 import { Strike } from "../strike";
-import { Keyboard } from "../keyboard";
 import { Result } from "./Result";
-import { Ball } from "../ball";
-import userEvent from "@testing-library/user-event";
 
 describe("Result Component Test", () => {
   it("Get Strike Result", () => {
@@ -16,7 +19,6 @@ describe("Result Component Test", () => {
           <Count />
           <Strike />
           <Result />
-          <Keyboard />
         </Board>
       </AppProvider>
     );
@@ -25,23 +27,27 @@ describe("Result Component Test", () => {
     userEvent.type(screen.getByRole("textbox", { name: /^strike_2/ }), "o");
     userEvent.type(screen.getByRole("textbox", { name: /^strike_3/ }), "n");
     userEvent.type(screen.getByRole("textbox", { name: /^strike_4/ }), "e");
-    expect(screen.getByText("krone")).toHaveLength(1);
+    fireEvent.click(screen.getByRole("button", { name: "submit" }));
+    expect(screen.getAllByText("krone")).toHaveLength(1);
   });
-  it("Get Ball Result", () => {
+  it("Get Ball Result", async () => {
     render(
       <AppProvider>
         <Board>
           <Count />
           <Ball />
           <Result />
-          <Keyboard />
         </Board>
       </AppProvider>
     );
-    userEvent.type(screen.getByRole("textbox", { name: "ball-tagsinput" }), "krone");
-    expect(screen.getByText("krone")).toHaveLength(1);
+    userEvent.type(
+      screen.getByRole("textbox", { name: "ball-tagsinput" }),
+      "krone"
+    );
+    fireEvent.click(screen.getByRole("button", { name: "submit" }));
+    expect(await screen.findAllByText("krone")).toHaveLength(1);
   });
-  it("Get Strike And Ball Result", () => {
+  it("Get Strike And Ball Result", async () => {
     render(
       <AppProvider>
         <Board>
@@ -49,17 +55,24 @@ describe("Result Component Test", () => {
           <Strike />
           <Ball />
           <Result />
-          <Keyboard />
         </Board>
       </AppProvider>
     );
-    
+
     userEvent.type(screen.getByRole("textbox", { name: /^strike_0/ }), "k");
     userEvent.type(screen.getByRole("textbox", { name: /^strike_2/ }), "o");
     userEvent.type(screen.getByRole("textbox", { name: /^strike_4/ }), "e");
-    userEvent.type(screen.getByRole("textbox", { name: "ball-tagsinput" }), "rn");
-    expect(screen.getByText("krone")).toHaveLength(1);
-    userEvent.type(screen.getByRole("textbox", { name: /^strike_0/ }), "a");
-    expect(screen.getByText("krone")).toHaveLength(0);
+    userEvent.type(
+      screen.getByRole("textbox", { name: "ball-tagsinput" }),
+      "rn"
+    );
+    fireEvent.click(screen.getByRole("button", { name: "submit" }));
+    expect(await screen.findAllByText("krone")).toHaveLength(1);
+    fireEvent.click(screen.getByRole("button", { name: "remove r" }));
+    fireEvent.click(screen.getByRole("button", { name: "remove n" }));
+    fireEvent.focus(screen.getByRole("textbox", { name: /^strike_2/ }));
+    userEvent.type(screen.getByRole("textbox", { name: /^strike_3/ }), "f");
+    fireEvent.click(screen.getByRole("button", { name: "submit" }));
+    expect(await screen.findAllByText("knife")).toHaveLength(1);
   });
 });
