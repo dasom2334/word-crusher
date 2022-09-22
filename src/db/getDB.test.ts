@@ -1,7 +1,6 @@
 import { initialState } from "../context/context";
 import { getWords } from "./getDB";
 
-export {};
 
 describe("Get Words from DB", () => {
   it("The searched word must matched the condition", async () => {

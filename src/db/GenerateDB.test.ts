@@ -1,7 +1,7 @@
 import fs from "fs";
 
 import path from "path";
-import { GENERATED_DB_EXTENSION, ORIGIN_DB } from "../utils";
+import { ORIGIN_DB } from "../utils";
 import { GetFileLength } from "./DBUtils";
 import { GenerateDB } from "./GenerateDB";
 describe("Word DB File Generate", () => {
@@ -35,10 +35,3 @@ describe("Word DB File Generate", () => {
     expect(originFileLength).toEqual(genedFilesTotalLength);
   });
 });
-const removedString = (originString: string, ...targetStrings: string[]) => {
-  let result = originString;
-  for (const str of targetStrings) {
-    result = result.replace(str, "");
-  }
-  return result;
-};

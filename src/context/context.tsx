@@ -8,7 +8,10 @@ export const initialState: stateProps = {
   ball: new Set<string>(),
   strike: new Array(5).fill(""),
   activeElement: null,
-  result: new Promise<string[]>(async () => []),
+  result: new Promise<string[]>((resolve, reject) => {
+    resolve([]);
+    // reject('');
+  }),
 };
 
 const StateContext = createContext<stateProps>(initialState);

@@ -40,6 +40,7 @@ const reducer = (state: stateProps, action: actionProps): stateProps => {
           ball: state.ball,
           strike: newStrike,
         }),
+        result:getWords(state)
       };
     case "BALL_ADD":
       if (state.ball.has(action.character)) return state;
@@ -53,6 +54,7 @@ const reducer = (state: stateProps, action: actionProps): stateProps => {
           ball: addedBall,
           strike: state.strike,
         }),
+        result:getWords(state)
       };
     case "BALL_REMOVE":
       if (!state.ball.has(action.character)) return state;
@@ -66,7 +68,9 @@ const reducer = (state: stateProps, action: actionProps): stateProps => {
           ball: removedBall,
           strike: state.strike,
         }),
+        result:getWords(state)
       };
+
 
     case "ACTIVE_ELEMENT":
       return {
@@ -78,7 +82,7 @@ const reducer = (state: stateProps, action: actionProps): stateProps => {
     case "KEYBOARD_PUSH":
       return { ...state };
     case "SUBMIT":
-      return { ...state, result: getWords({ ...state, ...action }) };
+      return { ...state, result: getWords(state) };
     default:
       return state;
   }
