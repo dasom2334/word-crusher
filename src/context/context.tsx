@@ -7,6 +7,8 @@ export const initialState: stateProps = {
   count: 5,
   ball: new Set<string>(),
   strike: new Array(5).fill(""),
+  denyBall: new Set<string>(),
+  denyStrike: new Array(5).fill(""),
   activeElement: null,
   result: new Promise<string[]>((resolve, reject) => {
     resolve([]);

@@ -1,19 +1,19 @@
-import React, { ChangeEvent, FocusEvent, useRef } from "react";
-import { useAppDispatch, useAppState } from "../../context/context";
-import { isIncludesNotAlphabet, isLenthOverThenOne } from "../../utils";
+import React, { ChangeEvent, useRef, FocusEvent } from "react";
+import { useAppState, useAppDispatch } from "../../context/context";
+import { isLenthOverThenOne, isIncludesNotAlphabet } from "../../utils";
 
-interface BallProps {}
+interface DenyBallProps {}
 
-export const Ball: React.FC<BallProps> = () => {
+export const DenyBall: React.FC<DenyBallProps> = ({}) => {
   const state = useAppState();
   const dispatch = useAppDispatch();
 
-  const ballInput = useRef<HTMLInputElement>(null);
+  const denyBallInput = useRef<HTMLInputElement>(null);
 
   const onFocus = (event: FocusEvent<HTMLInputElement>) => {
     dispatch({
       type: "ACTIVE_ELEMENT",
-      activeElement: ballInput.current,
+      activeElement: denyBallInput.current,
     });
   };
 
@@ -26,16 +26,16 @@ export const Ball: React.FC<BallProps> = () => {
     }
     if (/^[a-zA-Z]{1}$/.test(event.currentTarget.value)) {
       dispatch({
-        type: "BALL_ADD",
+        type: "DENY_BALL_ADD",
         character: event.currentTarget.value,
       });
       event.currentTarget.value = "";
     }
   };
 
-  const removeBall = (character: string) => {
+  const removeDenyBall = (character: string) => {
     dispatch({
-      type: "BALL_REMOVE",
+      type: "DENY_BALL_REMOVE",
       character,
     });
   };
@@ -44,8 +44,8 @@ export const Ball: React.FC<BallProps> = () => {
       <div className="ball-tagsinput-wrap">
         <div className="ball-tags" data-testid="ball-tags">
           {[...state.ball].map((e) => (
-            <button onClick={() => removeBall(e)} key={e} >
-              remove ball {e}
+            <button onClick={() => removeDenyBall(e)} key={e}>
+              remove {e}
             </button>
           ))}
         </div>
@@ -55,7 +55,7 @@ export const Ball: React.FC<BallProps> = () => {
           onFocus={onFocus}
           onChange={onChange}
           maxLength={1}
-          ref={ballInput}
+          ref={denyBallInput}
         />
       </div>
     </div>

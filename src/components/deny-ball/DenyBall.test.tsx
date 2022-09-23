@@ -1,19 +1,24 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import {
+  fireEvent,
+  getAllByRole,
+  render,
+  screen,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { AppProvider } from "../../context/context";
 import { Board } from "../board";
-import { Ball } from "./Ball";
+import { DenyBall } from "./DenyBall";
 
-describe("Ball Component test", () => {
+describe("DenyBall Component test", () => {
   it("the same character is not allowed", () => {
     render(
       <AppProvider>
         <Board>
-          <Ball />
+          <DenyBall />
         </Board>
       </AppProvider>
     );
-    const input = screen.getByRole("textbox", { name: "ball-tagsinput" });
+    const input = screen.getByRole("textbox", { name: "deny-ball-tagsinput" });
     userEvent.type(input, "abcdef");
     userEvent.type(input, "abcdefg");
     expect(screen.getAllByRole("button")).toHaveLength(7);
@@ -23,11 +28,11 @@ describe("Ball Component test", () => {
     render(
       <AppProvider>
         <Board>
-          <Ball />
+          <DenyBall />
         </Board>
       </AppProvider>
     );
-    const input = screen.getByRole("textbox", { name: "ball-tagsinput" });
+    const input = screen.getByRole("textbox", { name: "deny-ball-tagsinput" });
     userEvent.type(
       input,
       "가나다라마바사아차카a타파바하1234567890~!@#$%^&*()_+-=.z"
@@ -38,18 +43,18 @@ describe("Ball Component test", () => {
     render(
       <AppProvider>
         <Board>
-          <Ball />
+          <DenyBall />
         </Board>
       </AppProvider>
     );
-    const input = screen.getByRole("textbox", { name: "ball-tagsinput" });
+    const input = screen.getByRole("textbox", { name: "deny-ball-tagsinput" });
     userEvent.type(input, "abcde");
 
-    fireEvent.click(screen.getByRole("button", { name: "remove ball e" }));
+    fireEvent.click(screen.getByRole("button", { name: "remove deny ball e" }));
     expect(screen.getAllByRole("button")).toHaveLength(4);
-    fireEvent.click(screen.getByRole("button", { name: "remove ball a" }));
-    fireEvent.click(screen.getByRole("button", { name: "remove ball b" }));
-    fireEvent.click(screen.getByRole("button", { name: "remove ball c" }));
+    fireEvent.click(screen.getByRole("button", { name: "remove deny ball a" }));
+    fireEvent.click(screen.getByRole("button", { name: "remove deny ball b" }));
+    fireEvent.click(screen.getByRole("button", { name: "remove deny ball c" }));
     expect(screen.getAllByRole("button")).toHaveLength(1);
   });
 });

@@ -1,5 +1,6 @@
 import { getWords } from "../db/getDB";
 import { COUNT_MAX, COUNT_MIN } from "../utils";
+import { initialState } from "./context";
 
 function fixRequireCount({
   count,
@@ -42,7 +43,11 @@ const reducer = (state: stateProps, action: actionProps): stateProps => {
         }),
       };
     case "BALL_ADD":
-      if (state.ball.has(action.character)) return state;
+      if (
+        state.ball.has(action.character) ||
+        state.denyBall.has(action.character)
+      )
+        return state;
       const addedBall = new Set([...state.ball]);
       addedBall.add(action.character);
       return {
@@ -67,8 +72,50 @@ const reducer = (state: stateProps, action: actionProps): stateProps => {
           strike: state.strike,
         }),
       };
-
-
+    case "DENY_STRIKE":
+      const newDenyStrike = [...state.denyStrike];
+      newDenyStrike[action.location] = new Set([
+        ...action.characters.split(""),
+      ]);
+      return {
+        ...state,
+        denyStrike: newDenyStrike,
+        count: fixRequireCount({
+          count: state.count,
+          ball: state.ball,
+          strike: state.strike,
+        }),
+      };
+    case "DENY_BALL_ADD":
+      if (
+        state.denyBall.has(action.character) ||
+        state.ball.has(action.character)
+      )
+        return state;
+      const addedDenyBall = new Set([...state.denyBall]);
+      addedDenyBall.add(action.character);
+      return {
+        ...state,
+        denyBall: addedDenyBall,
+        count: fixRequireCount({
+          count: state.count,
+          ball: state.ball,
+          strike: state.strike,
+        }),
+      };
+    case "DENY_BALL_REMOVE":
+      if (!state.denyBall.has(action.character)) return state;
+      const removedDenyBall = new Set([...state.denyBall]);
+      removedDenyBall.delete(action.character);
+      return {
+        ...state,
+        denyBall: removedDenyBall,
+        count: fixRequireCount({
+          count: state.count,
+          ball: state.ball,
+          strike: state.strike,
+        }),
+      };
     case "ACTIVE_ELEMENT":
       return {
         ...state,
@@ -78,6 +125,8 @@ const reducer = (state: stateProps, action: actionProps): stateProps => {
       };
     case "KEYBOARD_PUSH":
       return { ...state };
+    case "CLEAR":
+      return { ...initialState };
     case "SUBMIT":
       return { ...state, result: getWords(state) };
     default:

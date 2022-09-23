@@ -1,7 +1,6 @@
 import {
   fireEvent, render,
   screen,
-  waitForElementToBeRemoved
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { AppProvider } from "../../context/context";
@@ -68,8 +67,8 @@ describe("Result Component Test", () => {
     );
     fireEvent.click(screen.getByRole("button", { name: "submit" }));
     expect(await screen.findAllByText("krone")).toHaveLength(1);
-    fireEvent.click(screen.getByRole("button", { name: "remove r" }));
-    fireEvent.click(screen.getByRole("button", { name: "remove n" }));
+    fireEvent.click(screen.getByRole("button", { name: "remove ball r" }));
+    fireEvent.click(screen.getByRole("button", { name: "remove ball n" }));
     fireEvent.focus(screen.getByRole("textbox", { name: /^strike_2/ }));
     userEvent.type(screen.getByRole("textbox", { name: /^strike_3/ }), "f");
     fireEvent.click(screen.getByRole("button", { name: "submit" }));

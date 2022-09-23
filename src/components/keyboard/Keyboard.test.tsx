@@ -85,7 +85,7 @@ describe("Keyboard Component Test", () => {
     expect(
       screen.getByRole("textbox", { name: "ball-tagsinput" })
     ).toHaveFocus();
-    expect(screen.getAllByRole("button", { name: "remove a" })).toHaveLength(1);
+    expect(screen.getAllByRole("button", { name: "remove ball a" })).toHaveLength(1);
   });
   it("disable button what into the ball zone charaters", () => {
     render(
