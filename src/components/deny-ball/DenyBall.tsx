@@ -4,7 +4,7 @@ import { isLenthOverThenOne, isIncludesNotAlphabet } from "../../utils";
 
 interface DenyBallProps {}
 
-export const DenyBall: React.FC<DenyBallProps> = ({}) => {
+export const DenyBall: React.FC<DenyBallProps> = () => {
   const state = useAppState();
   const dispatch = useAppDispatch();
 
@@ -40,18 +40,18 @@ export const DenyBall: React.FC<DenyBallProps> = ({}) => {
     });
   };
   return (
-    <div className="ball-wrap">
-      <div className="ball-tagsinput-wrap">
-        <div className="ball-tags" data-testid="ball-tags">
-          {[...state.ball].map((e) => (
+    <div className="deny-ball-wrap">
+      <div className="deny-ball-tagsinput-wrap">
+        <div className="deny-ball-tags" data-testid="deny-ball-tags">
+          {[...state.denyBall].map((e) => (
             <button onClick={() => removeDenyBall(e)} key={e}>
-              remove {e}
+              remove deny ball {e}
             </button>
           ))}
         </div>
         <input
-          name="ball-tagsinput"
-          aria-label="ball-tagsinput"
+          name="deny-ball-tagsinput"
+          aria-label="deny-ball-tagsinput"
           onFocus={onFocus}
           onChange={onChange}
           maxLength={1}

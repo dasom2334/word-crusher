@@ -45,9 +45,9 @@ export const Strike: React.FC<StrikeProps> = () => {
         onChange={onChange}
         onFocus={onFocus}
         maxLength={1}
-        name={"strike_" + i}
+        name={"strike-" + i}
         data-strike-location={i}
-        aria-label={"strike_" + i}
+        aria-label={"strike-" + i}
         key={i}
         ref={(ref: HTMLInputElement) => {
           strikeRef.current[i] = ref;
@@ -56,7 +56,7 @@ export const Strike: React.FC<StrikeProps> = () => {
     );
   }
   return (
-    <div className="strike_wrap">
+    <div className="strike-wrap">
       <div>{state.strike}</div>
 
       {inputs}

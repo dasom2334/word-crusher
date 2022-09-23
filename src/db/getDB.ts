@@ -73,14 +73,19 @@ function getWordFromLength(count: number): string[] {
 }
 
 export async function getWords(state: stateProps): Promise<string[]> {
-  return getWordFromLength(state.count).filter((word: string) =>
-    word.match(makeRegExpByState(state))
-  );
+  return getWordFromLength(state.count).filter((word: string) => {
+    const match = word.match(makeRegExpByState(state));
+    return match !== null && match[0] === word;
+  });
 }
 
 function makeRegExpByState(state: stateProps): RegExp {
   return new RegExp(
-    makeRegExpStringByStrike(state) + makeRegExpStringByBall(state) + ".*",
+    makeRegExpStringByStrike(state) +
+      makeRegExpStringByBall(state) +
+      makeRegExpStringByDenyStrike(state) +
+      makeRegExpStringByDenyBall(state) +
+      ".*",
     "g"
   );
 }
@@ -88,12 +93,29 @@ function makeRegExpByState(state: stateProps): RegExp {
 function makeRegExpStringByStrike(state: stateProps): string {
   return state.strike
     .map((character, location) =>
-      character != null
+      character !== ""
         ? `(?=.{${location}}${character}.{${state.count - location - 1}})`
-        : null
+        : ""
     )
     .join("");
 }
 function makeRegExpStringByBall(state: stateProps): string {
   return [...state.ball].map((character) => `(?=.*${character})`).join("");
+}
+function makeRegExpStringByDenyStrike(state: stateProps): string {
+  return state.denyStrike
+    .map((characters, location) =>
+      characters.size !== 0
+        ? [...characters]
+            .map(
+              (character) =>
+                `(?!.{${location}}${character}.{${state.count - location - 1}})`
+            )
+            .join("")
+        : ""
+    )
+    .join("");
+}
+function makeRegExpStringByDenyBall(state: stateProps): string {
+  return [...state.denyBall].map((character) => `(?!.*${character})`).join("");
 }

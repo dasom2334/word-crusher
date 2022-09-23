@@ -39,7 +39,7 @@ describe("Strike Component Test", () => {
         </Board>
       </AppProvider>
     );
-    const input = screen.getByLabelText("strike_0");
+    const input = screen.getByLabelText("strike-0");
     userEvent.type(input, "hellohello");
     expect(input).toHaveValue("h");
     userEvent.type(input, "{backspace}fffff");
@@ -57,7 +57,7 @@ describe("Strike Component Test", () => {
         </Board>
       </AppProvider>
     );
-    const input = screen.getByLabelText("strike_0");
+    const input = screen.getByLabelText("strike-0");
     userEvent.type(input, "h");
     expect(input).toHaveValue("h");
     fireEvent.focus(input);

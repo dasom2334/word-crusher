@@ -1,8 +1,6 @@
 import {
-  fireEvent,
-  getAllByRole,
-  render,
-  screen,
+    fireEvent, render,
+    screen
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { AppProvider } from "../../context/context";

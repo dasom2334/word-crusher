@@ -21,11 +21,11 @@ describe("Result Component Test", () => {
         </Board>
       </AppProvider>
     );
-    userEvent.type(screen.getByRole("textbox", { name: /^strike_0/ }), "k");
-    userEvent.type(screen.getByRole("textbox", { name: /^strike_1/ }), "r");
-    userEvent.type(screen.getByRole("textbox", { name: /^strike_2/ }), "o");
-    userEvent.type(screen.getByRole("textbox", { name: /^strike_3/ }), "n");
-    userEvent.type(screen.getByRole("textbox", { name: /^strike_4/ }), "e");
+    userEvent.type(screen.getByRole("textbox", { name: /^strike-0/ }), "k");
+    userEvent.type(screen.getByRole("textbox", { name: /^strike-1/ }), "r");
+    userEvent.type(screen.getByRole("textbox", { name: /^strike-2/ }), "o");
+    userEvent.type(screen.getByRole("textbox", { name: /^strike-3/ }), "n");
+    userEvent.type(screen.getByRole("textbox", { name: /^strike-4/ }), "e");
     fireEvent.click(screen.getByRole("button", { name: "submit" }));
     expect(screen.getAllByText("krone")).toHaveLength(1);
   });
@@ -58,9 +58,9 @@ describe("Result Component Test", () => {
       </AppProvider>
     );
 
-    userEvent.type(screen.getByRole("textbox", { name: /^strike_0/ }), "k");
-    userEvent.type(screen.getByRole("textbox", { name: /^strike_2/ }), "o");
-    userEvent.type(screen.getByRole("textbox", { name: /^strike_4/ }), "e");
+    userEvent.type(screen.getByRole("textbox", { name: /^strike-0/ }), "k");
+    userEvent.type(screen.getByRole("textbox", { name: /^strike-2/ }), "o");
+    userEvent.type(screen.getByRole("textbox", { name: /^strike-4/ }), "e");
     userEvent.type(
       screen.getByRole("textbox", { name: "ball-tagsinput" }),
       "rn"
@@ -69,8 +69,8 @@ describe("Result Component Test", () => {
     expect(await screen.findAllByText("krone")).toHaveLength(1);
     fireEvent.click(screen.getByRole("button", { name: "remove ball r" }));
     fireEvent.click(screen.getByRole("button", { name: "remove ball n" }));
-    fireEvent.focus(screen.getByRole("textbox", { name: /^strike_2/ }));
-    userEvent.type(screen.getByRole("textbox", { name: /^strike_3/ }), "f");
+    fireEvent.focus(screen.getByRole("textbox", { name: /^strike-2/ }));
+    userEvent.type(screen.getByRole("textbox", { name: /^strike-3/ }), "f");
     fireEvent.click(screen.getByRole("button", { name: "submit" }));
     expect(await screen.findAllByText("knife")).toHaveLength(1);
   });

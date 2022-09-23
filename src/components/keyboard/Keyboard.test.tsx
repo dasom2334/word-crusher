@@ -20,15 +20,15 @@ describe("Keyboard Component Test", () => {
     );
 
     screen
-      .getAllByRole("textbox", { name: /^strike_[0-1]/ })
+      .getAllByRole("textbox", { name: /^strike-[0-1]/ })
       .forEach((e) => userEvent.type(e, "a"));
     screen
-      .getAllByRole("textbox", { name: /^strike_[2-3]/ })
+      .getAllByRole("textbox", { name: /^strike-[2-3]/ })
       .forEach((e) => userEvent.type(e, "b"));
     expect(screen.getAllByText("2")).toHaveLength(2);
 
     userEvent.type(
-      screen.getByRole("textbox", { name: "strike_3" }),
+      screen.getByRole("textbox", { name: "strike-3" }),
       "{backspace}c"
     );
     expect(screen.getAllByText("2")).toHaveLength(1);
@@ -65,10 +65,10 @@ describe("Keyboard Component Test", () => {
         </Board>
       </AppProvider>
     );
-    fireEvent.focus(screen.getByRole("textbox", { name: "strike_0" }));
+    fireEvent.focus(screen.getByRole("textbox", { name: "strike-0" }));
     fireEvent.click(screen.getByRole("button", { name: "a" }));
-    expect(screen.getByRole("textbox", { name: "strike_0" })).toHaveFocus();
-    expect(screen.getByRole("textbox", { name: "strike_0" })).toHaveValue("a");
+    expect(screen.getByRole("textbox", { name: "strike-0" })).toHaveFocus();
+    expect(screen.getByRole("textbox", { name: "strike-0" })).toHaveValue("a");
   });
   it("When focusing on the ball zone, the clicked keyboard enters the ball", () => {
     render(
