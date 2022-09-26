@@ -1,8 +1,7 @@
 import {
-  fireEvent,
-  getAllByRole,
-  render,
-  screen,
+    fireEvent, render,
+    screen,
+    waitFor
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { AppProvider, initialState } from "../../context/context";
@@ -35,9 +34,8 @@ describe("Clear Component test", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "➕" }));
     fireEvent.click(screen.getByRole("button", { name: "➕" }));
-    fireEvent.click(screen.getByRole("button", { name: "➕" }));
     userEvent.type(screen.getByLabelText("strike-0"), "y");
-    userEvent.type(screen.getByLabelText("deny-strike-0"), "z");
+    userEvent.type(screen.getByLabelText("deny-strike-2"), "k");
     userEvent.type(
       screen.getByRole("textbox", { name: "ball-tagsinput" }),
       "a"
@@ -47,14 +45,19 @@ describe("Clear Component test", () => {
       "e"
     );
     fireEvent.click(screen.getByRole("button", { name: "submit" }));
+    expect((await screen.findAllByText("yacking")).length).toBe(1);
 
-    expect(await screen.findAllByText("yachting")).toHaveLength(1);
+    expect(screen.getByRole("contentinfo")).toHaveTextContent(
+      (initialState.count + 2).toString()
+    );
 
     fireEvent.click(screen.getByRole("button", { name: "Clear" }));
-    // expect(screen.getByRole("contentinfo")).toHaveTextContent(
-    //   initialState.count.toString()
-    // );
-    // console.log(screen)
-    // expect(screen.getAllByText("yachting")).toHaveLength(0);
+    expect(screen.getByRole("contentinfo")).toHaveTextContent(
+      initialState.count.toString()
+    );
+    screen.getAllByRole("textbox").forEach((e) => expect(e).toHaveValue(""));
+    await waitFor(() => {
+      expect(screen.queryByText("yacking")).not.toBeInTheDocument();
+    });
   });
 });

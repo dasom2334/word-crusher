@@ -26,11 +26,12 @@ export const Result: React.FC<ResultProps> = () => {
   const onClick = () => {
     dispatch({ type: "SUBMIT" });
   };
+  
   return (
     <div className="result-wrap">
       <button onClick={onClick}>submit</button>
       <div>
-        <ul>
+        <ul className="result-list">
           {result.map((e: string) => (
             <li key={e}>{e}</li>
           ))}
