@@ -22,6 +22,8 @@ export const Keyboard: React.FC<KeyboardProps> = () => {
 
   const keys = ["qwertyuiop", "asdfghjkl", "zxcvbnm"];
   const rows = [];
+  console.log(state.denyStrike);
+  state.denyStrike.filter((e) => {console.log(e)});
   for (const str of keys) {
     rows.push(
       <div className="row" key={"keywrap-" + str}>
@@ -29,6 +31,7 @@ export const Keyboard: React.FC<KeyboardProps> = () => {
           <KeyboardButton
             key={"key-" + character}
             strikeCount={state.strike.filter((e) => e === character).length}
+            denyStrikeCount={state.denyStrike.filter((e) => e.has(character)).length}
             isBalled={state.ball.has(character)}
             character={character}
             clickFunc={onClick}
@@ -37,11 +40,12 @@ export const Keyboard: React.FC<KeyboardProps> = () => {
       </div>
     );
   }
-  return <div className="keyboard_wrap">{rows}</div>;
+  return <div className="keyboard-wrap">{rows}</div>;
 };
 
 interface KeyboardButtonProps {
   strikeCount: number;
+  denyStrikeCount: number;
   isBalled: boolean;
   character: string;
   clickFunc: (event: MouseEvent<HTMLButtonElement>) => void;
@@ -49,6 +53,7 @@ interface KeyboardButtonProps {
 
 export const KeyboardButton: React.FC<KeyboardButtonProps> = ({
   strikeCount,
+  denyStrikeCount,
   isBalled,
   character,
   clickFunc,
@@ -63,6 +68,7 @@ export const KeyboardButton: React.FC<KeyboardButtonProps> = ({
         {character}
       </button>
       <KeyStrikeCount strikeCount={strikeCount} />
+      <KeyDenyStrikeCount denyStrikeCount={denyStrikeCount} />
     </span>
   );
 };
@@ -72,5 +78,15 @@ interface KeyStrikeCountProps {
 }
 
 const KeyStrikeCount: React.FC<KeyStrikeCountProps> = ({ strikeCount }) => {
-  return <span className={strikeCount > 0 ? "active" : ""}>{strikeCount}</span>;
+  return <span className={(strikeCount > 0 ? "active" : "") + " accept"}>{strikeCount}</span>;
+};
+
+interface KeyDenyStrikeCountProps {
+  denyStrikeCount: number;
+}
+
+const KeyDenyStrikeCount: React.FC<KeyDenyStrikeCountProps> = ({
+  denyStrikeCount,
+}) => {
+  return <span className={(denyStrikeCount > 0 ? "active" : "") + " deny"}>{denyStrikeCount}</span>;
 };

@@ -3,18 +3,21 @@ import reducer from "./reducer";
 
 import React from "react";
 
-export const initialState: stateProps = {
-  count: 5,
-  ball: new Set<string>(),
-  strike: new Array(5).fill(""),
-  denyBall: new Set<string>(),
-  denyStrike: new Array(5).fill(""),
-  activeElement: null,
-  result: new Promise<string[]>((resolve, reject) => {
-    resolve([]);
-    // reject('');
-  }),
-};
+export function makeInitialState(count: number): stateProps {
+  return {
+    count: count,
+    ball: new Set<string>(),
+    strike: new Array(count).fill(""),
+    denyBall: new Set<string>(),
+    denyStrike: new Array(count).fill(new Set<string>()),
+    activeElement: null,
+    result: new Promise<string[]>((resolve, reject) => {
+      resolve([]);
+      // reject('');
+    }),
+  };
+}
+export const initialState = makeInitialState(5);
 
 const StateContext = createContext<stateProps>(initialState);
 const DispatchContext = createContext<Dispatch<actionProps>>(() => null);

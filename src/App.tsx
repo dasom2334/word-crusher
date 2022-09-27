@@ -1,4 +1,4 @@
-import "./App.css";
+import "./App.scss";
 import { Ball } from "./components/ball";
 import { Board } from "./components/board";
 import { Clear } from "./components/clear";
@@ -15,14 +15,16 @@ function App() {
     <div className="App">
       <AppProvider>
         <Board>
-          <Clear />
           <Count />
           <Strike />
           <DenyStrike />
           <Ball />
           <DenyBall />
           <Keyboard />
-          <Result />
+          <div className="btn-wrap">
+            <Clear />
+            <Result />
+          </div>
         </Board>
       </AppProvider>
     </div>

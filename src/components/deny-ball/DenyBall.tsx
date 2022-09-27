@@ -40,9 +40,9 @@ export const DenyBall: React.FC<DenyBallProps> = () => {
     });
   };
   return (
-    <div className="deny-ball-wrap">
-      <div className="deny-ball-tagsinput-wrap">
-        <div className="deny-ball-tags" data-testid="deny-ball-tags">
+    <div className="deny ball-wrap">
+      <div className="deny ball-tagsinput-wrap">
+        <div className="deny ball-tags" data-testid="deny-ball-tags">
           {[...state.denyBall].map((e) => (
             <button onClick={() => removeDenyBall(e)} key={e}>
               remove deny ball {e}

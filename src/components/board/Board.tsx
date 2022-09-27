@@ -1,3 +1,4 @@
+import "./Boards.scss";
 import React, { KeyboardEvent } from "react";
 
 interface BoardProps {
@@ -5,7 +6,5 @@ interface BoardProps {
 }
 
 export const Board: React.FC<BoardProps> = ({ children }: BoardProps) => {
-  const onKeyDown = (event: KeyboardEvent<Element>) => {
-  };
-  return <div onKeyDown={onKeyDown}>{children}</div>;
+  return <div className="board">{children}</div>;
 };

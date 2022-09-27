@@ -1,3 +1,4 @@
+import "./Count.css";
 import React from "react";
 import { useAppDispatch, useAppState } from "../../context/context";
 
@@ -13,7 +14,7 @@ export const Count: React.FC<CountProps> = () => {
       <div className="count_btn">
         <button onClick={count_down}>➖</button>
       </div>
-      <div>
+      <div className="count">
         <span id="count" role={"contentinfo"}>
           {state.count}
         </span>

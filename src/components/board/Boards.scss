@@ -1,0 +1,103 @@
+// @import "../../variables";
+
+$accept-color: #0f0;
+$deny-color: #f00;
+
+$chracter-width: 40px;
+$chracter-height: 40px;
+$chracter-margin: 5px;
+
+@mixin character-box {
+  width: $chracter-width;
+  height: $chracter-height;
+  margin: $chracter-margin;
+}
+
+.board {
+  padding: 20px 10%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+button {
+  border: none;
+  padding: 10px 15px;
+}
+.strike-wrap input {
+  @include character-box;
+}
+
+.ball-wrap input {
+  width: $chracter-width;
+  height: $chracter-height;
+  margin: $chracter-margin;
+}
+.ball-wrap button {
+  @include character-box;
+}
+
+.keyboard-wrap {
+  span {
+    button {
+      width: $chracter-width;
+      height: $chracter-height;
+      margin: 5px;
+      font-size: 1.3em;
+      text-align: center;
+      &.isBalled {
+        background-color: $accept-color;
+      }
+      &.isDenyBalled {
+        background-color: $deny-color;
+      }
+    }
+    span {
+      display: none;
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      margin: -5px 0 0;
+      font-size: 0.9em;
+      &.accept {
+        margin-left:-15px;
+      background-color: $accept-color;
+      }
+      &.deny {
+        margin-left:-50px;
+      background-color: $accept-color;
+    }
+      &.active {
+        display: initial;
+      }
+    }
+  }
+}
+
+.btn-wrap {
+  button {
+    width: 100%;
+  }
+}
+
+.result-wrap {
+  button {
+    width: 100%;
+  }
+  .result-list {
+    margin: 20px 0 0;
+    padding: 0;
+    position: absolute;
+    list-style: none;
+    left: 50%;
+    width: 80%;
+    margin-left: -40%;
+    height: 200px;
+    overflow-y: auto;
+    li {
+      background-color: #eee;
+      margin: 3px;
+      padding: 10px 20px;
+      display: inline-block;
+    }
+  }
+}
