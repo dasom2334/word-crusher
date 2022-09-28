@@ -105,6 +105,7 @@ button {
   box-shadow: $dark-button-shadow;
   background-color: $button-color;
   border-radius: $default-border-radius;
+  cursor: pointer;
   &:hover {
     background-color: $button-hover-color;
   }
@@ -254,6 +255,8 @@ button {
     height: 200px;
     position: fixed;
     bottom: 20px;
+    width: 100%;
+    left:0;
     button {
       border-radius: $default-border-radius;
     }
