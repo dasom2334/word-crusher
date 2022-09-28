@@ -1,4 +1,3 @@
-import "./Boards.scss";
 import React from "react";
 import { Ball } from "../ball";
 import { Clear } from "../clear";

@@ -1,3 +1,4 @@
+import "./App.scss";
 import { Board } from "./components/board";
 import { Header } from "./components/header";
 import { AppProvider } from "./context/context";
