@@ -1,12 +1,8 @@
-import {
-    fireEvent, render,
-    screen,
-    waitFor
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { AppProvider, initialState } from "../../context/context";
+import { COUNT_UP_BUTTON_TEXT } from "../../utils";
 import { Ball } from "../ball";
-import { Board } from "../board";
 import { Count } from "../count";
 import { DenyBall } from "../deny-ball";
 import { DenyStrike } from "../deny-strike";
@@ -19,21 +15,20 @@ describe("Clear Component test", () => {
   it("Is All Clear", async () => {
     render(
       <AppProvider>
-        <Board>
-          <Clear />
-          <Count />
-          <Strike />
-          <DenyStrike />
-          <Ball />
-          <DenyBall />
-          <Keyboard />
-          <Result />
-        </Board>
+        <Clear />
+        <Count />
+        <Strike />
+        <DenyStrike />
+        <Ball />
+        <DenyBall />
+        <Keyboard />
+        <Result />
       </AppProvider>
     );
 
-    fireEvent.click(screen.getByRole("button", { name: "➕" }));
-    fireEvent.click(screen.getByRole("button", { name: "➕" }));
+    
+    fireEvent.click(screen.getByRole("button", { name: COUNT_UP_BUTTON_TEXT }));
+    fireEvent.click(screen.getByRole("button", { name: COUNT_UP_BUTTON_TEXT }));
     userEvent.type(screen.getByLabelText("strike-0"), "y");
     userEvent.type(screen.getByLabelText("deny-strike-2"), "k");
     userEvent.type(

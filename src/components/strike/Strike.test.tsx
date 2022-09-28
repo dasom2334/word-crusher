@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { AppProvider, initialState } from "../../context/context";
-import { Board } from "../board";
+import { COUNT_UP_BUTTON_TEXT, COUNT_DOWN_BUTTON_TEXT } from "../../utils";
 import { Count } from "../count";
 import { Strike } from "./Strike";
 
@@ -9,14 +9,12 @@ describe("Strike Component Test", () => {
   it("Sync With Count", () => {
     render(
       <AppProvider>
-        <Board>
-          <Count />
-          <Strike />
-        </Board>
+        <Count />
+        <Strike />
       </AppProvider>
     );
-    const downButton = screen.getByText("➖");
-    const upButton = screen.getByText("➕");
+    const downButton = screen.getByText(COUNT_DOWN_BUTTON_TEXT);
+    const upButton = screen.getByText(COUNT_UP_BUTTON_TEXT);
     fireEvent.click(upButton);
     fireEvent.click(downButton);
     fireEvent.click(upButton);
@@ -34,9 +32,7 @@ describe("Strike Component Test", () => {
   it("One strike input is only English of length 1 allowed", () => {
     render(
       <AppProvider>
-        <Board>
-          <Strike />
-        </Board>
+        <Strike />
       </AppProvider>
     );
     const input = screen.getByLabelText("strike-0");
@@ -52,9 +48,7 @@ describe("Strike Component Test", () => {
   it("Remove value from strike input when focusing", () => {
     render(
       <AppProvider>
-        <Board>
-          <Strike />
-        </Board>
+        <Strike />
       </AppProvider>
     );
     const input = screen.getByLabelText("strike-0");

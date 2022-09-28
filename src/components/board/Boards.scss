@@ -6,7 +6,24 @@ $deny-color: #f00;
 $chracter-width: 40px;
 $chracter-height: 40px;
 $chracter-margin: 5px;
+$button-color: rgb(240, 240, 240);
+$button-hover-color: rgb(200, 200, 200);
+// Return opaque color
+// opaque(#fff, rgba(0, 0, 0, .5)) => #808080
+@function opaque($background, $foreground) {
+  @return mix(rgba($foreground, 1), $background, opacity($foreground) * 100);
+}
 
+// scss-docs-start color-functions
+// Tint a color: mix a color with white
+@function tint-color($color, $weight) {
+  @return mix(white, $color, $weight);
+}
+
+// Shade a color: mix a color with black
+@function shade-color($color, $weight) {
+  @return mix(black, $color, $weight);
+}
 @mixin character-box {
   width: $chracter-width;
   height: $chracter-height;
@@ -17,87 +34,158 @@ $chracter-margin: 5px;
   padding: 20px 10%;
   margin-right: auto;
   margin-left: auto;
+  text-align: center;
 }
 
 button {
   border: none;
-  padding: 10px 15px;
+  box-shadow: 0 0 2px 1px rgba(black, 0.3);
+  &:hover {
+    background-color: $button-hover-color;
+  }
 }
-.strike-wrap input {
-  @include character-box;
+.count-wrap {
+  div {
+    display: inline-block;
+    margin: 10px;
+    height: 50px;
+    width: 50px;
+    &count {
+      margin: 20px;
+      background-color: bisque;
+      width: 50px;
+      height: 50px;
+    }
+    button {
+      display: inline-block;
+      height: 100%;
+      width: 100%;
+    }
+  }
 }
 
-.ball-wrap input {
-  width: $chracter-width;
-  height: $chracter-height;
-  margin: $chracter-margin;
+.strike-wrap {
+  input {
+    @include character-box;
+  }
 }
-.ball-wrap button {
-  @include character-box;
+
+.ball-wrap {
+  input {
+    width: $chracter-width;
+    height: $chracter-height;
+    margin: $chracter-margin;
+  }
+  button {
+    @include character-box;
+  }
+  .ball-tagsinput-wrap {
+    div {
+      display: inline-block;
+    }
+    input {
+      display: inline-block;
+    }
+  }
 }
 
 .keyboard-wrap {
-  span {
-    button {
-      width: $chracter-width;
-      height: $chracter-height;
-      margin: 5px;
-      font-size: 1.3em;
-      text-align: center;
-      &.isBalled {
-        background-color: $accept-color;
-      }
-      &.isDenyBalled {
-        background-color: $deny-color;
-      }
-    }
+  .keyboard-row {
     span {
-      display: none;
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      margin: -5px 0 0;
-      font-size: 0.9em;
-      &.accept {
-        margin-left:-15px;
-      background-color: $accept-color;
+      button {
+        width: $chracter-width;
+        height: $chracter-height;
+        margin: 5px;
+        font-size: 1.3em;
+        text-align: center;
+        &.isBalled {
+          background-color: $accept-color;
+        }
+        &.isDenyBalled {
+          background-color: $deny-color;
+        }
       }
-      &.deny {
-        margin-left:-50px;
-      background-color: $accept-color;
-    }
-      &.active {
-        display: initial;
+      span {
+        display: none;
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        margin: -5px 0 0;
+        font-size: 0.9em;
+        &.active {
+          display: initial;
+          &.accept {
+            margin-left: -15px;
+            background-color: $accept-color;
+          }
+          &.deny {
+            margin-left: -50px;
+            background-color: $deny-color;
+          }
+        }
       }
     }
   }
 }
-
-.btn-wrap {
-  button {
-    width: 100%;
+.bottom-btns-wrap {
+  div {
+    display: inline-block;
+    margin: 5px;
+    button {
+      width: 100%;
+      margin-top: 5px;
+      padding: 10px 30px;
+      font-size: 1.1em;
+    }
   }
 }
 
-.result-wrap {
-  button {
-    width: 100%;
-  }
-  .result-list {
-    margin: 20px 0 0;
-    padding: 0;
-    position: absolute;
-    list-style: none;
-    left: 50%;
-    width: 80%;
-    margin-left: -40%;
+.bottom-wrap {
+  height: 220px;
+  .bottom-fix {
+    background-color: rgba(white, 0.9);
     height: 200px;
-    overflow-y: auto;
-    li {
-      background-color: #eee;
-      margin: 3px;
-      padding: 10px 20px;
-      display: inline-block;
+    position: fixed;
+    bottom: 20px;
+  }
+}
+
+#modal-root {
+  .modal-shadow {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background-color: rgba(black, 0.5);
+    top: 0;
+  }
+  .modal {
+    margin: 100px auto;
+    width: 500px;
+    height: 70%;
+    background-color: white;
+    .modal-header {
+      height: 40px;
+      text-align: right;
+      button {
+        height: 40px;
+      }
+    }
+    .modal-content {
+      overflow-y: auto;
+      height: calc(100% - 50px);
+      padding: 0 10px;
+      text-align: center;
+      .result-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        li {
+          background-color: #eee;
+          margin: 3px;
+          padding: 10px 20px;
+          display: inline-block;
+        }
+      }
     }
   }
 }

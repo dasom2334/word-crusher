@@ -22,17 +22,18 @@ export const Keyboard: React.FC<KeyboardProps> = () => {
 
   const keys = ["qwertyuiop", "asdfghjkl", "zxcvbnm"];
   const rows = [];
-  console.log(state.denyStrike);
-  state.denyStrike.filter((e) => {console.log(e)});
   for (const str of keys) {
     rows.push(
-      <div className="row" key={"keywrap-" + str}>
+      <div className="keyboard-row" key={"keywrap-" + str}>
         {str.split("").map((character) => (
           <KeyboardButton
             key={"key-" + character}
             strikeCount={state.strike.filter((e) => e === character).length}
-            denyStrikeCount={state.denyStrike.filter((e) => e.has(character)).length}
+            denyStrikeCount={
+              state.denyStrike.filter((e) => e.has(character)).length
+            }
             isBalled={state.ball.has(character)}
+            isDenyBalled={state.denyBall.has(character)}
             character={character}
             clickFunc={onClick}
           />
@@ -47,6 +48,7 @@ interface KeyboardButtonProps {
   strikeCount: number;
   denyStrikeCount: number;
   isBalled: boolean;
+  isDenyBalled: boolean;
   character: string;
   clickFunc: (event: MouseEvent<HTMLButtonElement>) => void;
 }
@@ -55,13 +57,18 @@ export const KeyboardButton: React.FC<KeyboardButtonProps> = ({
   strikeCount,
   denyStrikeCount,
   isBalled,
+  isDenyBalled,
   character,
   clickFunc,
 }) => {
   return (
     <span>
       <button
-        className={isBalled ? "isBalled" : ""}
+        className={
+          (isBalled ? "isBalled" : "") +
+          " " +
+          (isDenyBalled ? "isDenyBalled" : "")
+        }
         onClick={clickFunc}
         data-key={character}
       >
@@ -78,7 +85,11 @@ interface KeyStrikeCountProps {
 }
 
 const KeyStrikeCount: React.FC<KeyStrikeCountProps> = ({ strikeCount }) => {
-  return <span className={(strikeCount > 0 ? "active" : "") + " accept"}>{strikeCount}</span>;
+  return (
+    <span className={(strikeCount > 0 ? "active" : "") + " accept"}>
+      {strikeCount}
+    </span>
+  );
 };
 
 interface KeyDenyStrikeCountProps {
@@ -88,5 +99,9 @@ interface KeyDenyStrikeCountProps {
 const KeyDenyStrikeCount: React.FC<KeyDenyStrikeCountProps> = ({
   denyStrikeCount,
 }) => {
-  return <span className={(denyStrikeCount > 0 ? "active" : "") + " deny"}>{denyStrikeCount}</span>;
+  return (
+    <span className={(denyStrikeCount > 0 ? "active" : "") + " deny"}>
+      {denyStrikeCount}
+    </span>
+  );
 };

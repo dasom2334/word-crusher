@@ -1,24 +1,18 @@
-import {
-  fireEvent, render,
-  screen,
-} from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { AppProvider } from "../../context/context";
 import { Ball } from "../ball";
-import { Board } from "../board";
 import { Count } from "../count";
 import { Strike } from "../strike";
 import { Result } from "./Result";
 
 describe("Result Component Test", () => {
-  it("Get Strike Result", () => {
+  it("Get Strike Result", async() => {
     render(
       <AppProvider>
-        <Board>
-          <Count />
-          <Strike />
-          <Result />
-        </Board>
+        <Count />
+        <Strike />
+        <Result />
       </AppProvider>
     );
     userEvent.type(screen.getByRole("textbox", { name: /^strike-0/ }), "k");
@@ -27,16 +21,14 @@ describe("Result Component Test", () => {
     userEvent.type(screen.getByRole("textbox", { name: /^strike-3/ }), "n");
     userEvent.type(screen.getByRole("textbox", { name: /^strike-4/ }), "e");
     fireEvent.click(screen.getByRole("button", { name: "submit" }));
-    expect(screen.getAllByText("krone")).toHaveLength(1);
+    expect(await screen.findAllByText("krone")).toHaveLength(1);
   });
   it("Get Ball Result", async () => {
     render(
       <AppProvider>
-        <Board>
-          <Count />
-          <Ball />
-          <Result />
-        </Board>
+        <Count />
+        <Ball />
+        <Result />
       </AppProvider>
     );
     userEvent.type(
@@ -49,12 +41,10 @@ describe("Result Component Test", () => {
   it("Get Strike And Ball Result", async () => {
     render(
       <AppProvider>
-        <Board>
-          <Count />
-          <Strike />
-          <Ball />
-          <Result />
-        </Board>
+        <Count />
+        <Strike />
+        <Ball />
+        <Result />
       </AppProvider>
     );
 

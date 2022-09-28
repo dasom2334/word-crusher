@@ -1,16 +1,13 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { AppProvider } from "../../context/context";
-import { Board } from "../board";
 import { Ball } from "./Ball";
 
 describe("Ball Component test", () => {
   it("the same character is not allowed", () => {
     render(
       <AppProvider>
-        <Board>
-          <Ball />
-        </Board>
+        <Ball />
       </AppProvider>
     );
     const input = screen.getByRole("textbox", { name: "ball-tagsinput" });
@@ -22,9 +19,7 @@ describe("Ball Component test", () => {
   it("Non-alphabetic strings are not allowed.", () => {
     render(
       <AppProvider>
-        <Board>
-          <Ball />
-        </Board>
+        <Ball />
       </AppProvider>
     );
     const input = screen.getByRole("textbox", { name: "ball-tagsinput" });
@@ -37,9 +32,7 @@ describe("Ball Component test", () => {
   it("Click the button to remove the ball", () => {
     render(
       <AppProvider>
-        <Board>
-          <Ball />
-        </Board>
+        <Ball />
       </AppProvider>
     );
     const input = screen.getByRole("textbox", { name: "ball-tagsinput" });

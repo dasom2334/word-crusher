@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { AppProvider, initialState } from "../../context/context";
-import { COUNT_MAX, COUNT_MIN } from "../../utils";
+import { COUNT_DOWN_BUTTON_TEXT, COUNT_MAX, COUNT_MIN, COUNT_UP_BUTTON_TEXT } from "../../utils";
 import { Count } from "./index";
 
 describe("Count Component Test", () => {
@@ -20,7 +20,7 @@ describe("Count Component Test", () => {
         <Count />
       </AppProvider>
     );
-    const upButton = screen.getByText("➕");
+    const upButton = screen.getByText(COUNT_UP_BUTTON_TEXT);
     fireEvent.click(upButton);
     expect(screen.getByRole("contentinfo")).toHaveTextContent(
       (initialState.count + 1).toString()
@@ -32,7 +32,7 @@ describe("Count Component Test", () => {
         <Count />
       </AppProvider>
     );
-    const downButton = screen.getByText("➖");
+    const downButton = screen.getByText(COUNT_DOWN_BUTTON_TEXT);
     fireEvent.click(downButton);
     expect(screen.getByRole("contentinfo")).toHaveTextContent(
       (initialState.count - 1).toString()
@@ -44,8 +44,8 @@ describe("Count Component Test", () => {
         <Count />
       </AppProvider>
     );
-    const downButton = screen.getByText("➖");
-    const upButton = screen.getByText("➕");
+    const downButton = screen.getByText(COUNT_DOWN_BUTTON_TEXT);
+    const upButton = screen.getByText(COUNT_UP_BUTTON_TEXT);
     fireEvent.click(upButton);
     fireEvent.click(downButton);
     fireEvent.click(upButton);
@@ -71,7 +71,7 @@ describe("Count Component Test", () => {
         <Count />
       </AppProvider>
     );
-    const downButton = screen.getByText("➖");
+    const downButton = screen.getByText(COUNT_DOWN_BUTTON_TEXT);
     for (let i = 0; i < initialState.count + 5; i++)
       fireEvent.click(downButton);
     expect(screen.getByRole("contentinfo")).toHaveTextContent(
@@ -84,7 +84,7 @@ describe("Count Component Test", () => {
         <Count />
       </AppProvider>
     );
-    const upButton = screen.getByText("➕");
+    const upButton = screen.getByText(COUNT_UP_BUTTON_TEXT);
     for (let i = 0; i < COUNT_MAX + 5; i++) fireEvent.click(upButton);
     expect(screen.getByRole("contentinfo")).toHaveTextContent(
       COUNT_MAX.toString()
@@ -102,7 +102,7 @@ describe("Count Component Test", () => {
     // userEvent.type(screen.getByLabelText("strike_1"), "h");
     // userEvent.type(screen.getByLabelText("strike_2"), "h");
     // userEvent.type(screen.getByLabelText("ball-tagsinput"), "abcd");
-    // const downButton = screen.getByText("➖");
+    // const downButton = screen.getByText(COUNT_DOWN_BUTTON_TEXT);
     // for (let i = 0; i < COUNT_MAX; i++) fireEvent.click(downButton);
     // expect(screen.getByRole("contentinfo")).toHaveTextContent("7");
   });

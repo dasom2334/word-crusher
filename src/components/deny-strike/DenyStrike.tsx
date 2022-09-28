@@ -47,8 +47,6 @@ export const DenyStrike: React.FC<DenyStrikeProps> = () => {
   }
   return (
     <div className="deny strike-wrap">
-      <div>{state.denyStrike}</div>
-
       {inputs}
     </div>
   );

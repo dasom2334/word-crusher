@@ -1,19 +1,13 @@
-import {
-    fireEvent, render,
-    screen
-} from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { AppProvider } from "../../context/context";
-import { Board } from "../board";
 import { DenyBall } from "./DenyBall";
 
 describe("DenyBall Component test", () => {
   it("the same character is not allowed", () => {
     render(
       <AppProvider>
-        <Board>
-          <DenyBall />
-        </Board>
+        <DenyBall />
       </AppProvider>
     );
     const input = screen.getByRole("textbox", { name: "deny-ball-tagsinput" });
@@ -25,9 +19,7 @@ describe("DenyBall Component test", () => {
   it("Non-alphabetic strings are not allowed.", () => {
     render(
       <AppProvider>
-        <Board>
-          <DenyBall />
-        </Board>
+        <DenyBall />
       </AppProvider>
     );
     const input = screen.getByRole("textbox", { name: "deny-ball-tagsinput" });
@@ -40,9 +32,7 @@ describe("DenyBall Component test", () => {
   it("Click the button to remove the ball", () => {
     render(
       <AppProvider>
-        <Board>
-          <DenyBall />
-        </Board>
+        <DenyBall />
       </AppProvider>
     );
     const input = screen.getByRole("textbox", { name: "deny-ball-tagsinput" });

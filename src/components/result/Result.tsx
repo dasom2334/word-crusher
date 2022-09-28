@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppState } from "../../context/context";
+import { Modal } from "../modal";
 interface ResultProps {}
 
 export const Result: React.FC<ResultProps> = () => {
@@ -9,6 +10,8 @@ export const Result: React.FC<ResultProps> = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean | Error>(false);
   const [result, setResult] = useState<string[]>([]);
+  const [hidden, setHidden] = useState(true);
+  
   useEffect(() => {
     setError(false);
     setLoading(true);
@@ -25,18 +28,25 @@ export const Result: React.FC<ResultProps> = () => {
 
   const onClick = () => {
     dispatch({ type: "SUBMIT" });
+    setHidden(false);
   };
-  
+
   return (
     <div className="result-wrap">
       <button onClick={onClick}>submit</button>
-      <div>
-        <ul className="result-list">
-          {result.map((e: string) => (
-            <li key={e}>{e}</li>
-          ))}
-        </ul>
-      </div>
+      {!hidden && (
+        <Modal onClose={() => setHidden(true)}>
+          {result.length > 0 ? (
+            <ul className="result-list">
+              {result.map((e: string) => (
+                <li key={e}>{e}</li>
+              ))}
+            </ul>
+          ) : (
+            <div>No Result!</div>
+          )}
+        </Modal>
+      )}
     </div>
   );
 };

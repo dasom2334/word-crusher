@@ -2,7 +2,6 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { AppProvider } from "../../context/context";
 import { Ball } from "../ball";
-import { Board } from "../board";
 import { Count } from "../count";
 import { Strike } from "../strike";
 import { Keyboard } from "./Keyboard";
@@ -11,11 +10,9 @@ describe("Keyboard Component Test", () => {
   it("strike numbering chekced", () => {
     render(
       <AppProvider>
-        <Board>
-          <Count />
-          <Strike />
-          <Keyboard />
-        </Board>
+        <Count />
+        <Strike />
+        <Keyboard />
       </AppProvider>
     );
 
@@ -37,11 +34,9 @@ describe("Keyboard Component Test", () => {
   it("ball coloring chekced", () => {
     render(
       <AppProvider>
-        <Board>
-          <Count />
-          <Ball />
-          <Keyboard />
-        </Board>
+        <Count />
+        <Ball />
+        <Keyboard />
       </AppProvider>
     );
     userEvent.type(
@@ -58,11 +53,9 @@ describe("Keyboard Component Test", () => {
   it("When focusing on the strike zone, the clicked keyboard enters the strike", () => {
     render(
       <AppProvider>
-        <Board>
-          <Count />
-          <Strike />
-          <Keyboard />
-        </Board>
+        <Count />
+        <Strike />
+        <Keyboard />
       </AppProvider>
     );
     fireEvent.focus(screen.getByRole("textbox", { name: "strike-0" }));
@@ -73,11 +66,9 @@ describe("Keyboard Component Test", () => {
   it("When focusing on the ball zone, the clicked keyboard enters the ball", () => {
     render(
       <AppProvider>
-        <Board>
-          <Count />
-          <Ball />
-          <Keyboard />
-        </Board>
+        <Count />
+        <Ball />
+        <Keyboard />
       </AppProvider>
     );
     fireEvent.focus(screen.getByRole("textbox", { name: "ball-tagsinput" }));
@@ -85,16 +76,16 @@ describe("Keyboard Component Test", () => {
     expect(
       screen.getByRole("textbox", { name: "ball-tagsinput" })
     ).toHaveFocus();
-    expect(screen.getAllByRole("button", { name: "remove ball a" })).toHaveLength(1);
+    expect(
+      screen.getAllByRole("button", { name: "remove ball a" })
+    ).toHaveLength(1);
   });
   it("disable button what into the ball zone charaters", () => {
     render(
       <AppProvider>
-        <Board>
-          <Count />
-          <Ball />
-          <Keyboard />
-        </Board>
+        <Count />
+        <Ball />
+        <Keyboard />
       </AppProvider>
     );
     userEvent.type(
