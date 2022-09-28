@@ -14,6 +14,7 @@ const words = [
   "do",
   "eh",
   "er",
+  "ew",
   "ex",
   "fa",
   "go",
@@ -56,7 +57,7 @@ const words = [
   "up",
   "us",
   "we",
-  "x^",
+  "ya",
   "ye",
   "yo",
 ];

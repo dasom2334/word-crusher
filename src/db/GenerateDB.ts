@@ -10,7 +10,11 @@ export async function GenerateDB(filePath: string, filePrefix: string) {
   } = {};
 
   for await (const word of fileLines) {
-    writeWordToStreamListByWordLength(word, newStreamList, filePrefix);
+    writeWordToStreamListByWordLength(
+      word.replaceAll(/[^a-z]/gi, ""),
+      newStreamList,
+      filePrefix
+    );
   }
   await wrapUpNewStream(newStreamList);
 }

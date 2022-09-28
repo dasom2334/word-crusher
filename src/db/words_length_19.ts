@@ -1,5 +1,6 @@
 const words = [
   "chlorofluorocarbons",
+  "counterinsurgencies",
   "counterintelligence",
   "electrocardiographs",
   "incomprehensibility",

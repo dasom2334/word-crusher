@@ -1,5 +1,4 @@
 const words = [
-  "counterinsurgencies$",
   "counterrevolutionary",
   "electroencephalogram",
   "institutionalisation",
