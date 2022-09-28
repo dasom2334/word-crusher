@@ -19,6 +19,10 @@
 ### Deny Ball
 - 찾고 있는 단어의 어느 위치던지 포함되지 않는 글자를 알고 있다면 글자를 추가합니다.
 
+## Keyboard
+## Submit
+- 설정을 바탕으로 검색되어 나타난 단어들을 확인합니다.
+
 
 #### word list by 12dicts
 #### Inspired by Wardle( To game crushing)
