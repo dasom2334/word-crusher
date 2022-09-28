@@ -1,13 +1,5 @@
 // @import "../../variables";
 
-$accept-color: #0f0;
-$deny-color: #f00;
-
-$chracter-width: 40px;
-$chracter-height: 40px;
-$chracter-margin: 5px;
-$button-color: rgb(240, 240, 240);
-$button-hover-color: rgb(200, 200, 200);
 // Return opaque color
 // opaque(#fff, rgba(0, 0, 0, .5)) => #808080
 @function opaque($background, $foreground) {
@@ -24,6 +16,38 @@ $button-hover-color: rgb(200, 200, 200);
 @function shade-color($color, $weight) {
   @return mix(black, $color, $weight);
 }
+$allow-color: tint-color(green, 40%);
+$allow-hover-color: shade-color($allow-color, 5%);
+$allow-input-color: opaque($allow-color, rgba(255, 255, 255, 0.9));
+$deny-color: tint-color(red, 40%);
+$deny-hover-color: shade-color($deny-color, 5%);
+$deny-input-color: opaque($deny-color, rgba(255, 255, 255, 0.9));
+$button-color: shade-color(white, 5%);
+$button-hover-color: shade-color(white, 10%);
+
+$deny-allow-gradient: linear-gradient(90deg, $deny-color, $allow-color);
+
+$dark-button-shadow: 0 0 2px 1px rgba(black, 0.3);
+$dark-box-shadow: 0 0 20px 10px rgba(black, 0.3);
+$default-border-radius: 5px;
+
+$chracter-width: 40px;
+$chracter-height: 40px;
+$chracter-margin: 5px;
+@mixin allow-button-background {
+  background-color: $allow-color;
+  color: white;
+  &:hover {
+    background-color: $allow-hover-color;
+  }
+}
+@mixin deny-button-background {
+  background-color: $deny-color;
+  color: white;
+  &:hover {
+    background-color: $deny-hover-color;
+  }
+}
 @mixin character-box {
   width: $chracter-width;
   height: $chracter-height;
@@ -36,10 +60,51 @@ $button-hover-color: rgb(200, 200, 200);
   margin-left: auto;
   text-align: center;
 }
+header {
+  height: 70px;
 
+  div {
+    z-index: 3;
+    height: 70px;
+    position: fixed;
+    width: 100%;
+    background-color: white;
+    border-bottom: 2px solid;
+
+    border-image: $deny-allow-gradient;
+
+    border-image-slice: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &.shadow {
+      background: $deny-allow-gradient;
+      z-index: -1;
+      filter: blur(5px);
+    }
+    h1 {
+      margin: 0;
+      background: $deny-allow-gradient;
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+}
+
+input {
+  border-radius: $default-border-radius;
+  font-size: 16px;
+  text-align: center;
+  // box-shadow: 0 0 -1px -1px rgba(black, 0.1) inset;
+  border: 1px solid rgba(black, 0.1);
+}
 button {
   border: none;
-  box-shadow: 0 0 2px 1px rgba(black, 0.3);
+  box-shadow: $dark-button-shadow;
+  background-color: $button-color;
+  border-radius: $default-border-radius;
   &:hover {
     background-color: $button-hover-color;
   }
@@ -50,16 +115,21 @@ button {
     margin: 10px;
     height: 50px;
     width: 50px;
-    &count {
-      margin: 20px;
-      background-color: bisque;
-      width: 50px;
-      height: 50px;
+    &.count {
+      font-size: 1.3em;
     }
     button {
       display: inline-block;
       height: 100%;
       width: 100%;
+      font-size: 1.5em;
+      color: white;
+      &.up {
+        @include allow-button-background;
+      }
+      &.down {
+        @include deny-button-background;
+      }
     }
   }
 }
@@ -67,6 +137,13 @@ button {
 .strike-wrap {
   input {
     @include character-box;
+    background-color: $allow-input-color;
+  }
+
+  &.deny {
+    input {
+      background-color: $deny-input-color;
+    }
   }
 }
 
@@ -80,11 +157,34 @@ button {
     @include character-box;
   }
   .ball-tagsinput-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .ball-tags {
+      button {
+        font-size: 0;
+        @include allow-button-background;
+        &:before {
+          font-size: initial;
+          content: attr(data-charcter);
+        }
+        &.isDenyBalled {
+          @include deny-button-background;
+        }
+      }
+      &.deny button {
+        @include deny-button-background;
+      }
+    }
     div {
       display: inline-block;
     }
     input {
       display: inline-block;
+      background-color: $allow-input-color;
+    }
+    &.deny input {
+      background-color: $deny-input-color;
     }
   }
 }
@@ -99,24 +199,27 @@ button {
         font-size: 1.3em;
         text-align: center;
         &.isBalled {
-          background-color: $accept-color;
+          @include allow-button-background;
         }
         &.isDenyBalled {
-          background-color: $deny-color;
+          @include deny-button-background;
         }
       }
       span {
         display: none;
         position: absolute;
-        width: 20px;
-        height: 20px;
+        // width: 15px;
+        // height: 15px;
+        padding: 3px 5px;
         margin: -5px 0 0;
-        font-size: 0.9em;
+        font-size: 0.8em;
+        border-radius: $default-border-radius;
         &.active {
-          display: initial;
-          &.accept {
-            margin-left: -15px;
-            background-color: $accept-color;
+          display: inline-block;
+          box-shadow: $dark-button-shadow;
+          &.allow {
+            margin-left: -17px;
+            background-color: $allow-color;
           }
           &.deny {
             margin-left: -50px;
@@ -137,16 +240,23 @@ button {
       padding: 10px 30px;
       font-size: 1.1em;
     }
+    &.result-wrap button {
+      @include allow-button-background;
+    }
   }
 }
 
 .bottom-wrap {
-  height: 220px;
+  height: 250px;
   .bottom-fix {
+    box-shadow: 0 0 50px 30px rgba(white, 0.9);
     background-color: rgba(white, 0.9);
     height: 200px;
     position: fixed;
     bottom: 20px;
+    button {
+      border-radius: $default-border-radius;
+    }
   }
 }
 
@@ -157,16 +267,20 @@ button {
     position: fixed;
     background-color: rgba(black, 0.5);
     top: 0;
+    z-index: 1000;
   }
   .modal {
+    box-shadow: $dark-box-shadow;
     margin: 100px auto;
     width: 500px;
     height: 70%;
     background-color: white;
+    border-radius: $default-border-radius;
     .modal-header {
       height: 40px;
       text-align: right;
       button {
+        width: 40px;
         height: 40px;
       }
     }

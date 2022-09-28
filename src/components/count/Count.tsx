@@ -12,7 +12,7 @@ export const Count: React.FC<CountProps> = () => {
   return (
     <div className="count-wrap">
       <div className="count-btn">
-        <button onClick={count_down}>{COUNT_DOWN_BUTTON_TEXT}</button>
+        <button className="down" onClick={count_down}>{COUNT_DOWN_BUTTON_TEXT}</button>
       </div>
       <div className="count">
         <span id="count" role={"contentinfo"}>
@@ -20,7 +20,7 @@ export const Count: React.FC<CountProps> = () => {
         </span>
       </div>
       <div className="count-btn">
-        <button onClick={count_up}>{COUNT_UP_BUTTON_TEXT}</button>
+        <button className="up" onClick={count_up}>{COUNT_UP_BUTTON_TEXT}</button>
       </div>
     </div>
   );

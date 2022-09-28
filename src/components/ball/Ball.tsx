@@ -44,7 +44,7 @@ export const Ball: React.FC<BallProps> = () => {
       <div className="ball-tagsinput-wrap">
         <div className="ball-tags" data-testid="ball-tags">
           {[...state.ball].map((e) => (
-            <button onClick={() => removeBall(e)} key={e} >
+            <button data-charcter={e} onClick={() => removeBall(e)} key={e}>
               remove ball {e}
             </button>
           ))}

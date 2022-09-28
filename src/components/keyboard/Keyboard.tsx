@@ -86,7 +86,7 @@ interface KeyStrikeCountProps {
 
 const KeyStrikeCount: React.FC<KeyStrikeCountProps> = ({ strikeCount }) => {
   return (
-    <span className={(strikeCount > 0 ? "active" : "") + " accept"}>
+    <span className={(strikeCount > 0 ? "active" : "") + " allow"}>
       {strikeCount}
     </span>
   );
