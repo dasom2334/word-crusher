@@ -15,15 +15,14 @@ function fixRequireCount({
   return requiredLength > count ? requiredLength : count;
 }
 
-
 const reducer = (state: stateProps, action: actionProps): stateProps => {
   switch (action.type) {
     case "COUNT_UP":
       if (state.count >= COUNT_MAX) return state;
-      return { ...makeInitialState(state.count + 1)};
+      return { ...makeInitialState(state.count + 1) };
     case "COUNT_DOWN":
       if (state.count <= COUNT_MIN) return state;
-      return { ...makeInitialState(state.count - 1)};
+      return { ...makeInitialState(state.count - 1) };
     case "STRIKE":
       const newStrike = [...state.strike];
       newStrike[action.location] = action.character;
@@ -68,9 +67,7 @@ const reducer = (state: stateProps, action: actionProps): stateProps => {
       };
     case "DENY_STRIKE":
       const newDenyStrike = [...state.denyStrike];
-      newDenyStrike[action.location] = new Set([
-        ...action.characters.split(""),
-      ]);
+      newDenyStrike[action.location] = new Set([...action.characters]);
       return {
         ...state,
         denyStrike: newDenyStrike,
@@ -117,8 +114,6 @@ const reducer = (state: stateProps, action: actionProps): stateProps => {
           ? action.activeElement
           : state.activeElement,
       };
-    case "KEYBOARD_PUSH":
-      return { ...state };
     case "CLEAR":
       return { ...initialState };
     case "SUBMIT":
