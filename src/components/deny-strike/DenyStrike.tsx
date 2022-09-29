@@ -15,7 +15,7 @@ export const DenyStrike: React.FC<DenyStrikeProps> = () => {
       event.target.value = event.target.value.toUpperCase();
     }
     const location = getLocation(event);
-    if (state.denyStrike[location].has(event.target.value.charAt(event.target.value.length - 1))) {
+    if (state.denyStrike[location].has(event.target.value[event.target.value.length - 1])) {
       event.target.value = [...state.denyStrike[location]].join("") || "";
       putClassForAwhile(event.target, "shaking");
       return;
