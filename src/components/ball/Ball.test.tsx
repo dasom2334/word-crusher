@@ -19,7 +19,7 @@ describe("Ball Component test", () => {
       .forEach((e) => {
         expect(
           screen.getByRole("button", { name: `remove ball ${e}` })
-        ).toHaveAttribute("data-charater", e);
+        ).toHaveAttribute("data-character", e);
       });
   });
   it("the same character is not allowed", () => {
@@ -56,11 +56,11 @@ describe("Ball Component test", () => {
     const input = screen.getByRole("textbox", { name: "ball-tagsinput" });
     userEvent.type(input, "abcde");
 
-    fireEvent.click(screen.getByRole("button", { name: "remove ball e" }));
+    fireEvent.click(screen.getByRole("button", { name: "remove ball E" }));
     expect(screen.getAllByRole("button")).toHaveLength(4);
-    fireEvent.click(screen.getByRole("button", { name: "remove ball a" }));
-    fireEvent.click(screen.getByRole("button", { name: "remove ball b" }));
-    fireEvent.click(screen.getByRole("button", { name: "remove ball c" }));
+    fireEvent.click(screen.getByRole("button", { name: "remove ball A" }));
+    fireEvent.click(screen.getByRole("button", { name: "remove ball B" }));
+    fireEvent.click(screen.getByRole("button", { name: "remove ball C" }));
     expect(screen.getAllByRole("button")).toHaveLength(1);
   });
 });

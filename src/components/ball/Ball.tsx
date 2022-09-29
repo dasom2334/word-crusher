@@ -1,7 +1,10 @@
 import React, { ChangeEvent, FocusEvent, useRef } from "react";
-import { setTimeout } from "timers";
 import { useAppDispatch, useAppState } from "../../context/context";
-import { isIncludesNotAlphabet, isLenthOverThenOne } from "../../utils";
+import {
+  isIncludesNotAlphabet,
+  isLenthOverThenOne,
+  putClassForAwhile,
+} from "../../utils";
 
 interface BallProps {}
 
@@ -19,26 +22,24 @@ export const Ball: React.FC<BallProps> = () => {
   };
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (isLenthOverThenOne(event.currentTarget.value)) {
-      event.currentTarget.value = event.currentTarget.value.slice(0, 1);
+    if (isIncludesNotAlphabet(event.target.value)) {
+      event.target.value = "";
+      putClassForAwhile(event.target, "shaking");
+      return;
     }
-    if (isIncludesNotAlphabet(event.currentTarget.value)) {
-      event.currentTarget.value = "";
+    if (!isIncludesNotAlphabet(event.target.value)) {
+      event.target.value = event.target.value.toUpperCase();
     }
-    // event.currentTarget.classList.add("shaking");
-    // setTimeout(
-    //   (event) => {
-    //     event.currentTarget.classList.remove("shaking");
-    //   },
-    //   500,
-    //   event
-    // );
-    if (/^[a-zA-Z]{1}$/.test(event.currentTarget.value)) {
+    if (isLenthOverThenOne(event.target.value)) {
+      event.target.value = event.target.value.slice(1);
+      putClassForAwhile(event.target, "shaking");
+    }
+    if (![...state.ball].includes(event.target.value)) {
       dispatch({
         type: "BALL_ADD",
-        character: event.currentTarget.value,
+        character: event.target.value,
       });
-      event.currentTarget.value = "";
+      event.target.value = "";
     }
   };
 
@@ -53,7 +54,7 @@ export const Ball: React.FC<BallProps> = () => {
       <div className="ball-tagsinput-wrap">
         <div className="ball-tags" data-testid="ball-tags">
           {[...state.ball].map((e) => (
-            <button data-charcter={e} onClick={() => removeBall(e)} key={e}>
+            <button data-character={e} onClick={() => removeBall(e)} key={e}>
               remove ball {e}
             </button>
           ))}
@@ -63,7 +64,6 @@ export const Ball: React.FC<BallProps> = () => {
           aria-label="ball-tagsinput"
           onFocus={onFocus}
           onChange={onChange}
-          maxLength={1}
           ref={ballInput}
         />
       </div>

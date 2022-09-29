@@ -14,3 +14,24 @@ export function isLenthOverThenOne(value: string) {
 export function isIncludesNotAlphabet(value: string) {
   return /[^a-zA-Z]+/.test(value);
 }
+
+export function putClassForAwhile(
+  element: HTMLElement,
+  className: string,
+  delay = 100
+): void {
+  element.classList.remove(className);
+  element.classList.add(className);
+  let count = 0;
+  const clear: any = setInterval(
+    (element) => {
+      if (count > 0) {
+        element.classList.remove(className);
+        clearInterval(clear);
+      }
+      count++;
+    },
+    delay,
+    element
+  );
+}

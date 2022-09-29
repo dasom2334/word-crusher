@@ -17,10 +17,10 @@ describe("Keyboard Component Test", () => {
     );
 
     screen
-      .getAllByRole("textbox", { name: /^strike-[0-1]/ })
+      .getAllByRole("textbox", { name: /^strike-[0-1]/gi })
       .forEach((e) => userEvent.type(e, "a"));
     screen
-      .getAllByRole("textbox", { name: /^strike-[2-3]/ })
+      .getAllByRole("textbox", { name: /^strike-[2-3]/gi })
       .forEach((e) => userEvent.type(e, "b"));
     expect(screen.getAllByText("2")).toHaveLength(2);
 
@@ -44,10 +44,10 @@ describe("Keyboard Component Test", () => {
       "abcde"
     );
     screen
-      .getAllByRole("button", { name: /^[a-e]$/ })
+      .getAllByRole("button", { name: /^[A-E]$/gi })
       .forEach((e) => expect(e).toHaveClass("isBalled"));
     screen
-      .getAllByRole("button", { name: /^[f-z]$/ })
+      .getAllByRole("button", { name: /^[F-Z]$/gi })
       .forEach((e) => expect(e).not.toHaveClass("isBalled"));
   });
   it("When focusing on the strike zone, the clicked keyboard enters the strike", () => {
@@ -59,9 +59,9 @@ describe("Keyboard Component Test", () => {
       </AppProvider>
     );
     fireEvent.focus(screen.getByRole("textbox", { name: "strike-0" }));
-    fireEvent.click(screen.getByRole("button", { name: "a" }));
+    fireEvent.click(screen.getByRole("button", { name: "A" }));
     expect(screen.getByRole("textbox", { name: "strike-0" })).toHaveFocus();
-    expect(screen.getByRole("textbox", { name: "strike-0" })).toHaveValue("a");
+    expect(screen.getByRole("textbox", { name: "strike-0" })).toHaveValue("A");
   });
   it("When focusing on the ball zone, the clicked keyboard enters the ball", () => {
     render(
@@ -72,12 +72,12 @@ describe("Keyboard Component Test", () => {
       </AppProvider>
     );
     fireEvent.focus(screen.getByRole("textbox", { name: "ball-tagsinput" }));
-    fireEvent.click(screen.getByRole("button", { name: "a" }));
+    fireEvent.click(screen.getByRole("button", { name: "A" }));
     expect(
       screen.getByRole("textbox", { name: "ball-tagsinput" })
     ).toHaveFocus();
     expect(
-      screen.getAllByRole("button", { name: "remove ball a" })
+      screen.getAllByRole("button", { name: "remove ball A" })
     ).toHaveLength(1);
   });
   it("disable button what into the ball zone charaters", () => {
@@ -92,10 +92,10 @@ describe("Keyboard Component Test", () => {
       screen.getByRole("textbox", { name: "ball-tagsinput" }),
       "abcde"
     );
-    expect(screen.getAllByRole("button", { name: /remove/ })).toHaveLength(5);
+    expect(screen.getAllByRole("button", { name: /remove/gi })).toHaveLength(5);
     screen
-      .getAllByRole("button", { name: /[a-f]/ })
+      .getAllByRole("button", { name: /[a-f]/gi })
       .forEach((e) => fireEvent.click(e));
-    expect(screen.getAllByRole("button", { name: /remove/ })).toHaveLength(6);
+    expect(screen.getAllByRole("button", { name: /remove/gi })).toHaveLength(6);
   });
 });

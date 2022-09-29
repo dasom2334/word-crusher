@@ -167,7 +167,7 @@ button {
         @include allow-button-background;
         &:before {
           font-size: initial;
-          content: attr(data-charcter);
+          content: attr(data-character);
         }
         &.isDenyBalled {
           @include deny-button-background;

@@ -86,7 +86,7 @@ function makeRegExpByState(state: stateProps): RegExp {
       makeRegExpStringByDenyStrike(state) +
       makeRegExpStringByDenyBall(state) +
       ".*",
-    "g"
+    "gi"
   );
 }
 

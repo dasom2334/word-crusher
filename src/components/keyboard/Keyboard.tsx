@@ -20,7 +20,7 @@ export const Keyboard: React.FC<KeyboardProps> = () => {
     state.activeElement?.dispatchEvent(new Event("change", { bubbles: true }));
   };
 
-  const keys = ["qwertyuiop", "asdfghjkl", "zxcvbnm"];
+  const keys = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"];
   const rows = [];
   for (const str of keys) {
     rows.push(

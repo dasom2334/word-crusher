@@ -1,6 +1,10 @@
 import React, { ChangeEvent, FocusEvent, useRef } from "react";
 import { useAppDispatch, useAppState } from "../../context/context";
-import { isIncludesNotAlphabet, isLenthOverThenOne } from "../../utils";
+import {
+  isIncludesNotAlphabet,
+  isLenthOverThenOne,
+  putClassForAwhile,
+} from "../../utils";
 
 interface StrikeProps {}
 export const Strike: React.FC<StrikeProps> = () => {
@@ -10,20 +14,23 @@ export const Strike: React.FC<StrikeProps> = () => {
   let strikeRef = useRef<HTMLInputElement[]>([]);
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (isIncludesNotAlphabet(event.target.value)) {
+      event.target.value = "";
+      putClassForAwhile(event.target, "shaking");
+      return;
+    }
+    if (!isIncludesNotAlphabet(event.target.value)) {
+      event.target.value = event.target.value.toUpperCase();
+    }
     const location = getLocation(event);
     if (isLenthOverThenOne(event.target.value)) {
       event.target.value = state.strike[location] || "";
-      return;
+      putClassForAwhile(event.target, "shaking");
     }
-    if (isIncludesNotAlphabet(event.target.value)) {
-      event.target.value = "";
-      return;
-    }
-    event.target.value = event.target.value.toUpperCase();
     dispatch({
       type: "STRIKE",
       location,
-      character: event.target.value.toUpperCase(),
+      character: event.target.value,
     });
   };
 
@@ -49,7 +56,6 @@ export const Strike: React.FC<StrikeProps> = () => {
         type="text"
         onChange={onChange}
         onFocus={onFocus}
-        maxLength={1}
         name={"strike-" + i}
         data-strike-location={i}
         aria-label={"strike-" + i}

@@ -33,7 +33,7 @@ export const Result: React.FC<ResultProps> = () => {
 
   return (
     <div className="result-wrap">
-      <button onClick={onClick}>submit</button>
+      <button onClick={onClick}>SUBMIT</button>
       {!hidden && (
         <Modal onClose={() => setHidden(true)}>
           {result.length > 0 ? (

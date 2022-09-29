@@ -26,7 +26,6 @@ describe("Clear Component test", () => {
       </AppProvider>
     );
 
-    
     fireEvent.click(screen.getByRole("button", { name: COUNT_UP_BUTTON_TEXT }));
     fireEvent.click(screen.getByRole("button", { name: COUNT_UP_BUTTON_TEXT }));
     userEvent.type(screen.getByLabelText("strike-0"), "y");
@@ -39,20 +38,20 @@ describe("Clear Component test", () => {
       screen.getByRole("textbox", { name: "deny-ball-tagsinput" }),
       "e"
     );
-    fireEvent.click(screen.getByRole("button", { name: "submit" }));
-    expect((await screen.findAllByText("yacking")).length).toBe(1);
+    fireEvent.click(screen.getByRole("button", { name: /submit/gi }));
+    expect(await screen.findAllByText(/yacking/gi)).toBeTruthy();
 
     expect(screen.getByRole("contentinfo")).toHaveTextContent(
       (initialState.count + 2).toString()
     );
 
-    fireEvent.click(screen.getByRole("button", { name: "Clear" }));
+    fireEvent.click(screen.getByRole("button", { name: /Clear/gi }));
     expect(screen.getByRole("contentinfo")).toHaveTextContent(
       initialState.count.toString()
     );
     screen.getAllByRole("textbox").forEach((e) => expect(e).toHaveValue(""));
     await waitFor(() => {
-      expect(screen.queryByText("yacking")).not.toBeInTheDocument();
+      expect(screen.queryByText(/yacking/gi)).not.toBeInTheDocument();
     });
   });
 });
