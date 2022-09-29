@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useRef, FocusEvent } from "react";
 import { useAppState, useAppDispatch } from "../../context/context";
-import { isLenthOverThenOne, isIncludesNotAlphabet } from "../../utils";
+import { isLenthOverThenOne, isIncludesNotAlphabet, putClassForAwhile } from "../../utils";
 
 interface DenyBallProps {}
 
@@ -18,18 +18,27 @@ export const DenyBall: React.FC<DenyBallProps> = () => {
   };
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (isLenthOverThenOne(event.currentTarget.value)) {
-      event.currentTarget.value = event.currentTarget.value.slice(0, 1);
+    if (isIncludesNotAlphabet(event.target.value)) {
+      event.target.value = "";
+      putClassForAwhile(event.target, "shaking");
+      return;
     }
-    if (isIncludesNotAlphabet(event.currentTarget.value)) {
-      event.currentTarget.value = "";
+    if (!isIncludesNotAlphabet(event.target.value)) {
+      event.target.value = event.target.value.toUpperCase();
     }
-    if (/^[a-zA-Z]{1}$/.test(event.currentTarget.value)) {
+    if (isLenthOverThenOne(event.target.value)) {
+      event.target.value = event.target.value.slice(1);
+      putClassForAwhile(event.target, "shaking");
+    }
+    if ([...state.ball].includes(event.target.value)) {
+      putClassForAwhile(event.target, "shaking");
+    }
+    if (![...state.denyBall].includes(event.target.value)) {
       dispatch({
         type: "DENY_BALL_ADD",
-        character: event.currentTarget.value,
+        character: event.target.value,
       });
-      event.currentTarget.value = "";
+      event.target.value = "";
     }
   };
 
@@ -54,7 +63,6 @@ export const DenyBall: React.FC<DenyBallProps> = () => {
           aria-label="deny-ball-tagsinput"
           onFocus={onFocus}
           onChange={onChange}
-          maxLength={1}
           ref={denyBallInput}
         />
       </div>

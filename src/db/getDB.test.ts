@@ -5,7 +5,7 @@ import { getWords } from "./getDB";
 describe("Get Words from DB", () => {
   it("The searched word must matched the condition", async () => {
     let test_state = initialState;
-    const word = "krone";
+    const word = "KRONE";
     let result: string[] = await getWords(test_state);
 
     expect(result.includes(word)).toEqual(true);

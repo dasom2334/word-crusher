@@ -73,10 +73,12 @@ function getWordFromLength(count: number): string[] {
 }
 
 export async function getWords(state: stateProps): Promise<string[]> {
-  return getWordFromLength(state.count).filter((word: string) => {
-    const match = word.match(makeRegExpByState(state));
-    return match !== null && match[0] === word;
-  });
+  return getWordFromLength(state.count)
+    .filter((word: string) => {
+      const match = word.match(makeRegExpByState(state));
+      return match !== null && match[0] === word;
+    })
+    .map((e) => e.toUpperCase());
 }
 
 function makeRegExpByState(state: stateProps): RegExp {

@@ -38,11 +38,11 @@ describe("DenyBall Component test", () => {
     const input = screen.getByRole("textbox", { name: "deny-ball-tagsinput" });
     userEvent.type(input, "abcde");
 
-    fireEvent.click(screen.getByRole("button", { name: "remove deny ball e" }));
+    fireEvent.click(screen.getByRole("button", { name: /remove deny ball e/gi }));
     expect(screen.getAllByRole("button")).toHaveLength(4);
-    fireEvent.click(screen.getByRole("button", { name: "remove deny ball a" }));
-    fireEvent.click(screen.getByRole("button", { name: "remove deny ball b" }));
-    fireEvent.click(screen.getByRole("button", { name: "remove deny ball c" }));
+    fireEvent.click(screen.getByRole("button", { name: /remove deny ball a/gi }));
+    fireEvent.click(screen.getByRole("button", { name: /remove deny ball b/gi }));
+    fireEvent.click(screen.getByRole("button", { name: /remove deny ball c/gi }));
     expect(screen.getAllByRole("button")).toHaveLength(1);
   });
 });

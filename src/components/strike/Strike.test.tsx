@@ -59,16 +59,4 @@ describe("Strike Component Test", () => {
     userEvent.type(input, "{backspace}헬로헬로57688)(**^*&%sDF");
     expect(input).toHaveValue("S");
   });
-  it("Remove value from strike input when focusing", () => {
-    render(
-      <AppProvider>
-        <Strike />
-      </AppProvider>
-    );
-    const input = screen.getByLabelText("strike-0");
-    userEvent.type(input, "H");
-    expect(input).toHaveValue("H");
-    fireEvent.focus(input);
-    expect(input).toHaveValue("");
-  });
 });

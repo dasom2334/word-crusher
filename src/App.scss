@@ -158,7 +158,6 @@ button {
     @include character-box;
   }
   .ball-tagsinput-wrap {
-    display: flex;
     align-items: center;
     justify-content: center;
     .ball-tags {
@@ -178,10 +177,10 @@ button {
       }
     }
     div {
-      display: inline-block;
+      display: inline;
     }
     input {
-      display: inline-block;
+      display: inline;
       background-color: $allow-input-color;
     }
     &.deny input {
