@@ -12,5 +12,5 @@ export function isLenthOverThenOne(value: string) {
 }
 
 export function isIncludesNotAlphabet(value: string) {
-  return /[^a-z]+/.test(value);
+  return /[^a-zA-Z]+/.test(value);
 }

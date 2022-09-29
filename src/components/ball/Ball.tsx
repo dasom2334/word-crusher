@@ -1,4 +1,5 @@
 import React, { ChangeEvent, FocusEvent, useRef } from "react";
+import { setTimeout } from "timers";
 import { useAppDispatch, useAppState } from "../../context/context";
 import { isIncludesNotAlphabet, isLenthOverThenOne } from "../../utils";
 
@@ -24,6 +25,14 @@ export const Ball: React.FC<BallProps> = () => {
     if (isIncludesNotAlphabet(event.currentTarget.value)) {
       event.currentTarget.value = "";
     }
+    // event.currentTarget.classList.add("shaking");
+    // setTimeout(
+    //   (event) => {
+    //     event.currentTarget.classList.remove("shaking");
+    //   },
+    //   500,
+    //   event
+    // );
     if (/^[a-zA-Z]{1}$/.test(event.currentTarget.value)) {
       dispatch({
         type: "BALL_ADD",

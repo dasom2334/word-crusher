@@ -43,7 +43,7 @@ const reducer = (state: stateProps, action: actionProps): stateProps => {
       )
         return state;
       const addedBall = new Set([...state.ball]);
-      addedBall.add(action.character);
+      addedBall.add(action.character.toUpperCase());
       return {
         ...state,
         ball: addedBall,

@@ -19,7 +19,12 @@ export const Strike: React.FC<StrikeProps> = () => {
       event.target.value = "";
       return;
     }
-    dispatch({ type: "STRIKE", location, character: event.target.value });
+    event.target.value = event.target.value.toUpperCase();
+    dispatch({
+      type: "STRIKE",
+      location,
+      character: event.target.value.toUpperCase(),
+    });
   };
 
   const onFocus = (event: FocusEvent<HTMLInputElement>) => {
@@ -55,9 +60,5 @@ export const Strike: React.FC<StrikeProps> = () => {
       />
     );
   }
-  return (
-    <div className="strike-wrap">
-      {inputs}
-    </div>
-  );
+  return <div className="strike-wrap">{inputs}</div>;
 };

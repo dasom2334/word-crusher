@@ -21,7 +21,7 @@ describe("Result Component Test", () => {
     userEvent.type(screen.getByRole("textbox", { name: /^strike-3/ }), "n");
     userEvent.type(screen.getByRole("textbox", { name: /^strike-4/ }), "e");
     fireEvent.click(screen.getByRole("button", { name: "submit" }));
-    expect(await screen.findAllByText("krone")).toHaveLength(1);
+    expect(await screen.findAllByText(/krone/gi)).toHaveLength(1);
   });
   it("Get Ball Result", async () => {
     render(
@@ -36,7 +36,7 @@ describe("Result Component Test", () => {
       "krone"
     );
     fireEvent.click(screen.getByRole("button", { name: "submit" }));
-    expect(await screen.findAllByText("krone")).toHaveLength(1);
+    expect(await screen.findAllByText(/krone/gi)).toHaveLength(1);
   });
   it("Get Strike And Ball Result", async () => {
     render(
@@ -56,12 +56,12 @@ describe("Result Component Test", () => {
       "rn"
     );
     fireEvent.click(screen.getByRole("button", { name: "submit" }));
-    expect(await screen.findAllByText("krone")).toHaveLength(1);
+    expect(await screen.findAllByText(/krone/gi)).toHaveLength(1);
     fireEvent.click(screen.getByRole("button", { name: "remove ball r" }));
     fireEvent.click(screen.getByRole("button", { name: "remove ball n" }));
     fireEvent.focus(screen.getByRole("textbox", { name: /^strike-2/ }));
     userEvent.type(screen.getByRole("textbox", { name: /^strike-3/ }), "f");
     fireEvent.click(screen.getByRole("button", { name: "submit" }));
-    expect(await screen.findAllByText("knife")).toHaveLength(1);
+    expect(await screen.findAllByText(/knife/gi)).toHaveLength(1);
   });
 });

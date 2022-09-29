@@ -29,7 +29,21 @@ describe("Strike Component Test", () => {
     expect(screen.getAllByRole("textbox").length).toBe(initialState.count - 1);
   });
 
-  it("One strike input is only English of length 1 allowed", () => {
+  it("Only uppercase letters are allowed for strike input.", () => {
+    render(
+      <AppProvider>
+        <Strike />
+      </AppProvider>
+    );
+    const input = screen.getByLabelText("strike-0");
+    userEvent.type(input, "h");
+    expect(input).toHaveValue("H");
+    userEvent.type(input, "{backspace}f");
+    expect(input).toHaveValue("F");
+    userEvent.type(input, "{backspace}s");
+    expect(input).toHaveValue("S");
+  });
+  it("Only one English length is allowed for strike input.", () => {
     render(
       <AppProvider>
         <Strike />
@@ -37,13 +51,13 @@ describe("Strike Component Test", () => {
     );
     const input = screen.getByLabelText("strike-0");
     userEvent.type(input, "hellohello");
-    expect(input).toHaveValue("h");
-    userEvent.type(input, "{backspace}fffff");
-    expect(input).toHaveValue("f");
+    expect(input).toHaveValue("H");
+    userEvent.type(input, "{backspace}FFFF");
+    expect(input).toHaveValue("F");
     userEvent.type(input, "{backspace}헬로헬로57688)(**^*&%");
     expect(input).toHaveValue("");
-    userEvent.type(input, "{backspace}헬로헬로57688)(**^*&%sdf");
-    expect(input).toHaveValue("s");
+    userEvent.type(input, "{backspace}헬로헬로57688)(**^*&%sDF");
+    expect(input).toHaveValue("S");
   });
   it("Remove value from strike input when focusing", () => {
     render(
@@ -52,8 +66,8 @@ describe("Strike Component Test", () => {
       </AppProvider>
     );
     const input = screen.getByLabelText("strike-0");
-    userEvent.type(input, "h");
-    expect(input).toHaveValue("h");
+    userEvent.type(input, "H");
+    expect(input).toHaveValue("H");
     fireEvent.focus(input);
     expect(input).toHaveValue("");
   });

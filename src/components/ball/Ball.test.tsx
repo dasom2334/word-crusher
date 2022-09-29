@@ -4,6 +4,24 @@ import { AppProvider } from "../../context/context";
 import { Ball } from "./Ball";
 
 describe("Ball Component test", () => {
+  it("Only capital letters are allowed on the ball.", () => {
+    render(
+      <AppProvider>
+        <Ball />
+      </AppProvider>
+    );
+    const input = screen.getByRole("textbox", { name: "ball-tagsinput" });
+    const typing = "abcdef";
+    userEvent.type(input, typing);
+    typing
+      .toUpperCase()
+      .split("")
+      .forEach((e) => {
+        expect(
+          screen.getByRole("button", { name: `remove ball ${e}` })
+        ).toHaveAttribute("data-charater", e);
+      });
+  });
   it("the same character is not allowed", () => {
     render(
       <AppProvider>
