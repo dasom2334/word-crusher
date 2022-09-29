@@ -4,6 +4,24 @@ import { AppProvider } from "../../context/context";
 import { DenyBall } from "./DenyBall";
 
 describe("DenyBall Component test", () => {
+  it("Only capital letters are allowed on the ball.", () => {
+    render(
+      <AppProvider>
+        <DenyBall />
+      </AppProvider>
+    );
+    const input = screen.getByRole("textbox", { name: "deny-ball-tagsinput" });
+    const typing = "abcdef";
+    userEvent.type(input, typing);
+    typing
+      .toUpperCase()
+      .split("")
+      .forEach((e) => {
+        expect(
+          screen.getByRole("button", { name: `remove deny ball ${e}` })
+        ).toHaveAttribute("data-character", e);
+      });
+  });
   it("the same character is not allowed", () => {
     render(
       <AppProvider>

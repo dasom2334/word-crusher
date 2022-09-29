@@ -143,6 +143,7 @@ button {
 
   &.deny {
     input {
+      width: 100px;
       background-color: $deny-input-color;
     }
   }

@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { AppProvider, initialState } from "../../context/context";
 import { COUNT_UP_BUTTON_TEXT, COUNT_DOWN_BUTTON_TEXT } from "../../utils";
 import { Count } from "../count";
@@ -26,5 +27,29 @@ describe("DenyStrike Component Test", () => {
     fireEvent.click(downButton);
     fireEvent.click(downButton);
     expect(screen.getAllByRole("textbox").length).toBe(initialState.count - 1);
+  });
+  it("Only uppercase letters are allowed for strike input.", () => {
+    render(
+      <AppProvider>
+        <DenyStrike />
+      </AppProvider>
+    );
+    const input = screen.getByLabelText("deny-strike-0");
+    userEvent.type(input, "h");
+    expect(input).toHaveValue("H");
+    userEvent.type(input, "f");
+    expect(input).toHaveValue("HF");
+    userEvent.type(input, "s");
+    expect(input).toHaveValue("HFS");
+  });
+  it("Identical characters are not allowed in strike input", () => {
+    render(
+      <AppProvider>
+        <DenyStrike />
+      </AppProvider>
+    );
+    const input = screen.getByLabelText("deny-strike-0");
+    userEvent.type(input, "ABCDABCD");
+    expect(input).toHaveValue("ABCD");
   });
 });

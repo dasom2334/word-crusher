@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FocusEvent, useRef } from "react";
 import { useAppDispatch, useAppState } from "../../context/context";
-import { isIncludesNotAlphabet } from "../../utils";
+import { isIncludesNotAlphabet, putClassForAwhile } from "../../utils";
 
 interface DenyStrikeProps {}
 
@@ -11,9 +11,19 @@ export const DenyStrike: React.FC<DenyStrikeProps> = () => {
   let denyStrikeRef = useRef<HTMLInputElement[]>([]);
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (!isIncludesNotAlphabet(event.target.value)) {
+      event.target.value = event.target.value.toUpperCase();
+    }
     const location = getLocation(event);
+    console.log(event.target.value.charAt(event.target.value.length - 1));
+    if (state.denyStrike[location].has(event.target.value.charAt(event.target.value.length - 1))) {
+      event.target.value = [...state.denyStrike[location]].join("") || "";
+      putClassForAwhile(event.target, "shaking");
+      return;
+    }
     if (isIncludesNotAlphabet(event.target.value)) {
       event.target.value = [...state.denyStrike[location]].join("") || "";
+      putClassForAwhile(event.target, "shaking");
       return;
     }
     dispatch({ type: "DENY_STRIKE", location, characters: event.target.value });
@@ -42,12 +52,9 @@ export const DenyStrike: React.FC<DenyStrikeProps> = () => {
         ref={(ref: HTMLInputElement) => {
           denyStrikeRef.current[i] = ref;
         }}
+        value={[...state.denyStrike[i]].join("")}
       />
     );
   }
-  return (
-    <div className="deny strike-wrap">
-      {inputs}
-    </div>
-  );
+  return <div className="deny strike-wrap">{inputs}</div>;
 };
