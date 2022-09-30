@@ -26,6 +26,12 @@ export const Strike: React.FC<StrikeProps> = () => {
       event.target.value = state.strike[location] || "";
       putClassForAwhile(event.target, "shaking");
     }
+    
+    if ([...state.denyStrike[location]].includes(event.target.value)) {
+      event.target.value = state.strike[location] || "";
+      putClassForAwhile(event.target, "shaking");
+      return;
+    }
     dispatch({
       type: "STRIKE",
       location,

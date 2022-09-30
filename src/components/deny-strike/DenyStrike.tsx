@@ -28,6 +28,12 @@ export const DenyStrike: React.FC<DenyStrikeProps> = () => {
       putClassForAwhile(event.target, "shaking");
       return;
     }
+
+    if ([...event.target.value].includes(state.strike[location])) {
+      event.target.value = [...state.denyStrike[location]].join("") || "";
+      putClassForAwhile(event.target, "shaking");
+      return;
+    }
     dispatch({ type: "DENY_STRIKE", location, characters: event.target.value });
   };
 
