@@ -4,6 +4,9 @@ import { isIncludesNotAlphabet, putClassForAwhile } from "../../utils";
 
 interface DenyStrikeProps {}
 
+const isDuplicatedContained = (str: string) =>
+  str.length !== new Set([...str]).size;
+
 export const DenyStrike: React.FC<DenyStrikeProps> = () => {
   const state = useAppState();
   const dispatch = useAppDispatch();
@@ -15,11 +18,7 @@ export const DenyStrike: React.FC<DenyStrikeProps> = () => {
       event.target.value = event.target.value.toUpperCase();
     }
     const location = getLocation(event);
-    if (
-      state.denyStrike[location].has(
-        event.target.value[event.target.value.length - 1]
-      )
-    ) {
+    if (isDuplicatedContained(event.target.value)) {
       event.target.value = [...state.denyStrike[location]].join("") || "";
       putClassForAwhile(event.target, "shaking");
       return;
