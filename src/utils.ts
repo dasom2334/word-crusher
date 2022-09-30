@@ -34,3 +34,8 @@ export function putClassForAwhile(
     element
   );
 }
+
+export const allInputClear = () =>
+  [...document.getElementsByTagName("input")].forEach((element) => {
+    element.value = "";
+  });
