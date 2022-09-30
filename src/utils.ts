@@ -11,7 +11,7 @@ export function isLenthOverThenOne(value: string) {
 }
 
 export function isIncludesNotAlphabet(value: string) {
-  return /[^a-zA-Z]+/.test(value);
+  return /[^a-zA-Z]/gi.test(value);
 }
 
 export function putClassForAwhile(
