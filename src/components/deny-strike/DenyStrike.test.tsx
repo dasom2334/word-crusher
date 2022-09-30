@@ -4,15 +4,16 @@ import { AppProvider, initialState } from "../../context/context";
 import { COUNT_UP_BUTTON_TEXT, COUNT_DOWN_BUTTON_TEXT } from "../../utils";
 import { Count } from "../count";
 import { DenyStrike } from "./DenyStrike";
-
+const rendering = () =>
+  render(
+    <AppProvider>
+      <Count />
+      <DenyStrike />
+    </AppProvider>
+  );
 describe("DenyStrike Component Test", () => {
   it("Sync With Count", () => {
-    render(
-      <AppProvider>
-        <Count />
-        <DenyStrike />
-      </AppProvider>
-    );
+    rendering();
     const downButton = screen.getByText(COUNT_DOWN_BUTTON_TEXT);
     const upButton = screen.getByText(COUNT_UP_BUTTON_TEXT);
     fireEvent.click(upButton);
@@ -29,11 +30,7 @@ describe("DenyStrike Component Test", () => {
     expect(screen.getAllByRole("textbox").length).toBe(initialState.count - 1);
   });
   it("Only uppercase letters are allowed for strike input.", () => {
-    render(
-      <AppProvider>
-        <DenyStrike />
-      </AppProvider>
-    );
+    rendering();
     const input = screen.getByLabelText("deny-strike-0");
     userEvent.type(input, "h");
     expect(input).toHaveValue("H");
@@ -43,11 +40,7 @@ describe("DenyStrike Component Test", () => {
     expect(input).toHaveValue("HFS");
   });
   it("Identical characters are not allowed in strike input", () => {
-    render(
-      <AppProvider>
-        <DenyStrike />
-      </AppProvider>
-    );
+    rendering();
     const input = screen.getByLabelText("deny-strike-0");
     userEvent.type(input, "ABCDABCD");
     expect(input).toHaveValue("ABCD");

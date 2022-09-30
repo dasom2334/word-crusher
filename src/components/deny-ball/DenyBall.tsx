@@ -1,6 +1,10 @@
 import React, { ChangeEvent, useRef, FocusEvent } from "react";
 import { useAppState, useAppDispatch } from "../../context/context";
-import { isLenthOverThenOne, isIncludesNotAlphabet, putClassForAwhile } from "../../utils";
+import {
+  isLenthOverThenOne,
+  isIncludesNotAlphabet,
+  putClassForAwhile,
+} from "../../utils";
 
 interface DenyBallProps {}
 
@@ -53,7 +57,11 @@ export const DenyBall: React.FC<DenyBallProps> = () => {
       <div className="deny ball-tagsinput-wrap">
         <div className="deny ball-tags" data-testid="deny-ball-tags">
           {[...state.denyBall].map((e) => (
-            <button data-character={e} onClick={() => removeDenyBall(e)} key={e}>
+            <button
+              data-character={e}
+              onClick={() => removeDenyBall(e)}
+              key={e}
+            >
               remove deny ball {e}
             </button>
           ))}

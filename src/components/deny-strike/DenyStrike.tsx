@@ -7,7 +7,7 @@ interface DenyStrikeProps {}
 export const DenyStrike: React.FC<DenyStrikeProps> = () => {
   const state = useAppState();
   const dispatch = useAppDispatch();
-  let inputs = [];
+
   let denyStrikeRef = useRef<HTMLInputElement[]>([]);
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -15,7 +15,11 @@ export const DenyStrike: React.FC<DenyStrikeProps> = () => {
       event.target.value = event.target.value.toUpperCase();
     }
     const location = getLocation(event);
-    if (state.denyStrike[location].has(event.target.value[event.target.value.length - 1])) {
+    if (
+      state.denyStrike[location].has(
+        event.target.value[event.target.value.length - 1]
+      )
+    ) {
       event.target.value = [...state.denyStrike[location]].join("") || "";
       putClassForAwhile(event.target, "shaking");
       return;
@@ -38,21 +42,22 @@ export const DenyStrike: React.FC<DenyStrikeProps> = () => {
   const getLocation = (event: FocusEvent | ChangeEvent) =>
     parseInt(event.target.getAttribute("data-deny-strike-location") as string);
 
-  for (let i = 0; i < state.count; i++) {
-    inputs.push(
-      <input
-        type="text"
-        onChange={onChange}
-        onFocus={onFocus}
-        name={"deny-strike-" + i}
-        data-deny-strike-location={i}
-        aria-label={"deny-strike-" + i}
-        key={i}
-        ref={(ref: HTMLInputElement) => {
-          denyStrikeRef.current[i] = ref;
-        }}
-      />
-    );
-  }
-  return <div className="deny strike-wrap">{inputs}</div>;
+  return (
+    <div className="deny strike-wrap">
+      {new Array(state.count).fill(null).map((e, i) => (
+        <input
+          type="text"
+          onChange={onChange}
+          onFocus={onFocus}
+          name={"deny-strike-" + i}
+          data-deny-strike-location={i}
+          aria-label={"deny-strike-" + i}
+          key={i}
+          ref={(ref: HTMLInputElement) => {
+            denyStrikeRef.current[i] = ref;
+          }}
+        />
+      ))}
+    </div>
+  );
 };

@@ -3,7 +3,7 @@ import { useAppDispatch, useAppState } from "../../context/context";
 import {
   isIncludesNotAlphabet,
   isLenthOverThenOne,
-  putClassForAwhile,
+  putClassForAwhile
 } from "../../utils";
 
 interface BallProps {}
@@ -34,9 +34,6 @@ export const Ball: React.FC<BallProps> = () => {
       event.target.value = event.target.value.slice(1);
       putClassForAwhile(event.target, "shaking");
     }
-    // if ([...state.denyBall].includes(event.target.value)) {
-    //   putClassForAwhile(event.target, "shaking");
-    // }
     if (![...state.ball].includes(event.target.value)) {
       dispatch({
         type: "BALL_ADD",

@@ -10,7 +10,6 @@ interface StrikeProps {}
 export const Strike: React.FC<StrikeProps> = () => {
   const state = useAppState();
   const dispatch = useAppDispatch();
-  let inputs = [];
   let strikeRef = useRef<HTMLInputElement[]>([]);
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -44,21 +43,22 @@ export const Strike: React.FC<StrikeProps> = () => {
   const getLocation = (event: FocusEvent | ChangeEvent) =>
     parseInt(event.target.getAttribute("data-strike-location") as string);
 
-  for (let i = 0; i < state.count; i++) {
-    inputs.push(
-      <input
-        type="text"
-        onChange={onChange}
-        onFocus={onFocus}
-        name={"strike-" + i}
-        data-strike-location={i}
-        aria-label={"strike-" + i}
-        key={i}
-        ref={(ref: HTMLInputElement) => {
-          strikeRef.current[i] = ref;
-        }}
-      />
-    );
-  }
-  return <div className="strike-wrap">{inputs}</div>;
+  return (
+    <div className="strike-wrap">
+      {new Array(state.count).fill(null).map((e, i) => (
+        <input
+          type="text"
+          onChange={onChange}
+          onFocus={onFocus}
+          name={"strike-" + i}
+          data-strike-location={i}
+          aria-label={"strike-" + i}
+          key={i}
+          ref={(ref: HTMLInputElement) => {
+            strikeRef.current[i] = ref;
+          }}
+        />
+      ))}
+    </div>
+  );
 };

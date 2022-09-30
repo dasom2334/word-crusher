@@ -1,20 +1,16 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { AppProvider } from "../../context/context";
-import { Ball } from "../ball";
-import { Count } from "../count";
-import { Strike } from "../strike";
-import { Keyboard } from "./Keyboard";
-
+import { Board } from "../board";
+const rendering = () =>
+  render(
+    <AppProvider>
+      <Board />
+    </AppProvider>
+  );
 describe("Keyboard Component Test", () => {
   it("strike numbering chekced", () => {
-    render(
-      <AppProvider>
-        <Count />
-        <Strike />
-        <Keyboard />
-      </AppProvider>
-    );
+    rendering();
 
     screen
       .getAllByRole("textbox", { name: /^strike-[0-1]/gi })
@@ -30,15 +26,40 @@ describe("Keyboard Component Test", () => {
     );
     expect(screen.getAllByText("2")).toHaveLength(1);
     expect(screen.getAllByText("1")).toHaveLength(2);
+    screen.getAllByText("2").forEach((e) => {
+      expect(e).toHaveClass("active allow");
+    });
+
+    screen.getAllByText("1").forEach((e) => {
+      expect(e).toHaveClass("active allow");
+    });
   });
-  it("ball coloring chekced", () => {
-    render(
-      <AppProvider>
-        <Count />
-        <Ball />
-        <Keyboard />
-      </AppProvider>
+  it("deny strike numbering chekced", () => {
+    rendering();
+
+    screen
+      .getAllByRole("textbox", { name: /^deny-strike-[0-1]/gi })
+      .forEach((e) => userEvent.type(e, "a"));
+    screen
+      .getAllByRole("textbox", { name: /^deny-strike-[2-3]/gi })
+      .forEach((e) => userEvent.type(e, "b"));
+    expect(screen.getAllByText("2")).toHaveLength(2);
+
+    userEvent.type(
+      screen.getByRole("textbox", { name: "deny-strike-3" }),
+      "{backspace}c"
     );
+    expect(screen.getAllByText("2")).toHaveLength(1);
+    expect(screen.getAllByText("1")).toHaveLength(2);
+    screen.getAllByText("2").forEach((e) => {
+      expect(e).toHaveClass("active deny");
+    });
+    screen.getAllByText("1").forEach((e) => {
+      expect(e).toHaveClass("active deny");
+    });
+  });
+  it("The balled key has an isBalled class", () => {
+    rendering();
     userEvent.type(
       screen.getByRole("textbox", { name: "ball-tagsinput" }),
       "abcde"
@@ -50,27 +71,39 @@ describe("Keyboard Component Test", () => {
       .getAllByRole("button", { name: /^[F-Z]$/gi })
       .forEach((e) => expect(e).not.toHaveClass("isBalled"));
   });
-  it("When focusing on the strike zone, the clicked keyboard enters the strike", () => {
-    render(
-      <AppProvider>
-        <Count />
-        <Strike />
-        <Keyboard />
-      </AppProvider>
+  it("The deny balled key has an isDenyBalled class", () => {
+    rendering();
+    userEvent.type(
+      screen.getByRole("textbox", { name: "deny-ball-tagsinput" }),
+      "abcde"
     );
+    screen
+      .getAllByRole("button", { name: /^[A-E]$/gi })
+      .forEach((e) => expect(e).toHaveClass("isDenyBalled"));
+    screen
+      .getAllByRole("button", { name: /^[F-Z]$/gi })
+      .forEach((e) => expect(e).not.toHaveClass("isDenyBalled"));
+  });
+  it("When focusing on the strike zone, the clicked keyboard enters the strike", () => {
+    rendering();
     fireEvent.focus(screen.getByRole("textbox", { name: "strike-0" }));
     fireEvent.click(screen.getByRole("button", { name: "A" }));
     expect(screen.getByRole("textbox", { name: "strike-0" })).toHaveFocus();
     expect(screen.getByRole("textbox", { name: "strike-0" })).toHaveValue("A");
   });
-  it("When focusing on the ball zone, the clicked keyboard enters the ball", () => {
-    render(
-      <AppProvider>
-        <Count />
-        <Ball />
-        <Keyboard />
-      </AppProvider>
+  it("When focusing on the deny strike zone, the clicked keyboard enters the deny strike", () => {
+    rendering();
+    fireEvent.focus(screen.getByRole("textbox", { name: "deny-strike-0" }));
+    fireEvent.click(screen.getByRole("button", { name: "A" }));
+    expect(
+      screen.getByRole("textbox", { name: "deny-strike-0" })
+    ).toHaveFocus();
+    expect(screen.getByRole("textbox", { name: "deny-strike-0" })).toHaveValue(
+      "A"
     );
+  });
+  it("When focusing on the ball zone, the clicked keyboard enters the ball", () => {
+    rendering();
     fireEvent.focus(screen.getByRole("textbox", { name: "ball-tagsinput" }));
     fireEvent.click(screen.getByRole("button", { name: "A" }));
     expect(
@@ -78,24 +111,19 @@ describe("Keyboard Component Test", () => {
     ).toHaveFocus();
     expect(
       screen.getAllByRole("button", { name: "remove ball A" })
-    ).toHaveLength(1);
+    ).toBeTruthy();
   });
-  it("disable button what into the ball zone charaters", () => {
-    render(
-      <AppProvider>
-        <Count />
-        <Ball />
-        <Keyboard />
-      </AppProvider>
+  it("When focusing on the deny ball zone, the clicked keyboard enters the deny ball", () => {
+    rendering();
+    fireEvent.focus(
+      screen.getByRole("textbox", { name: "deny-ball-tagsinput" })
     );
-    userEvent.type(
-      screen.getByRole("textbox", { name: "ball-tagsinput" }),
-      "abcde"
-    );
-    expect(screen.getAllByRole("button", { name: /remove/gi })).toHaveLength(5);
-    screen
-      .getAllByRole("button", { name: /[a-f]/gi })
-      .forEach((e) => fireEvent.click(e));
-    expect(screen.getAllByRole("button", { name: /remove/gi })).toHaveLength(6);
+    fireEvent.click(screen.getByRole("button", { name: "A" }));
+    expect(
+      screen.getByRole("textbox", { name: "deny-ball-tagsinput" })
+    ).toHaveFocus();
+    expect(
+      screen.getAllByRole("button", { name: "remove deny ball A" })
+    ).toBeTruthy();
   });
 });

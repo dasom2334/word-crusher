@@ -3,13 +3,16 @@ import userEvent from "@testing-library/user-event";
 import { AppProvider } from "../../context/context";
 import { Ball } from "./Ball";
 
+const redering = () =>
+  render(
+    <AppProvider>
+      <Ball />
+    </AppProvider>
+  );
+
 describe("Ball Component test", () => {
-  it("Only capital letters are allowed on the ball.", () => {
-    render(
-      <AppProvider>
-        <Ball />
-      </AppProvider>
-    );
+  it("Only capital letters are allowed on the ball", () => {
+    redering();
     const input = screen.getByRole("textbox", { name: "ball-tagsinput" });
     const typing = "abcdef";
     userEvent.type(input, typing);
@@ -23,23 +26,17 @@ describe("Ball Component test", () => {
       });
   });
   it("the same character is not allowed", () => {
-    render(
-      <AppProvider>
-        <Ball />
-      </AppProvider>
-    );
+    redering();
+
     const input = screen.getByRole("textbox", { name: "ball-tagsinput" });
     userEvent.type(input, "abcdef");
     userEvent.type(input, "abcdefg");
     expect(screen.getAllByRole("button")).toHaveLength(7);
   });
 
-  it("Non-alphabetic strings are not allowed.", () => {
-    render(
-      <AppProvider>
-        <Ball />
-      </AppProvider>
-    );
+  it("Non-alphabetic strings are not allowed", () => {
+    redering();
+
     const input = screen.getByRole("textbox", { name: "ball-tagsinput" });
     userEvent.type(
       input,
@@ -48,11 +45,8 @@ describe("Ball Component test", () => {
     expect(screen.getAllByRole("button")).toHaveLength(2);
   });
   it("Click the button to remove the ball", () => {
-    render(
-      <AppProvider>
-        <Ball />
-      </AppProvider>
-    );
+    redering();
+
     const input = screen.getByRole("textbox", { name: "ball-tagsinput" });
     userEvent.type(input, "abcde");
 
@@ -60,7 +54,6 @@ describe("Ball Component test", () => {
     expect(screen.getAllByRole("button")).toHaveLength(4);
     fireEvent.click(screen.getByRole("button", { name: "remove ball A" }));
     fireEvent.click(screen.getByRole("button", { name: "remove ball B" }));
-    fireEvent.click(screen.getByRole("button", { name: "remove ball C" }));
-    expect(screen.getAllByRole("button")).toHaveLength(1);
+    expect(screen.getAllByRole("button")).toHaveLength(2);
   });
 });

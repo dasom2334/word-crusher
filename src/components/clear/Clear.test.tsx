@@ -2,27 +2,13 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { AppProvider, initialState } from "../../context/context";
 import { COUNT_UP_BUTTON_TEXT } from "../../utils";
-import { Ball } from "../ball";
-import { Count } from "../count";
-import { DenyBall } from "../deny-ball";
-import { DenyStrike } from "../deny-strike";
-import { Keyboard } from "../keyboard";
-import { Result } from "../result";
-import { Strike } from "../strike";
-import { Clear } from "./Clear";
+import { Board } from "../board";
 
 describe("Clear Component test", () => {
   it("Is All Clear", async () => {
     render(
       <AppProvider>
-        <Clear />
-        <Count />
-        <Strike />
-        <DenyStrike />
-        <Ball />
-        <DenyBall />
-        <Keyboard />
-        <Result />
+        <Board />
       </AppProvider>
     );
 

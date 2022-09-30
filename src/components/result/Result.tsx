@@ -11,7 +11,7 @@ export const Result: React.FC<ResultProps> = () => {
   const [error, setError] = useState<boolean | Error>(false);
   const [result, setResult] = useState<string[]>([]);
   const [hidden, setHidden] = useState(true);
-  
+
   useEffect(() => {
     setError(false);
     setLoading(true);
