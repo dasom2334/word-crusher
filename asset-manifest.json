@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.4fcd0db9.css",
-    "main.js": "/static/js/main.2a71f5dd.js",
-    "static/js/787.f380c47a.chunk.js": "/static/js/787.f380c47a.chunk.js",
-    "index.html": "/index.html",
-    "main.4fcd0db9.css.map": "/static/css/main.4fcd0db9.css.map",
-    "main.2a71f5dd.js.map": "/static/js/main.2a71f5dd.js.map",
-    "787.f380c47a.chunk.js.map": "/static/js/787.f380c47a.chunk.js.map"
+    "main.css": "/word-crusher/static/css/main.4fcd0db9.css",
+    "main.js": "/word-crusher/static/js/main.6f834d22.js",
+    "static/js/787.f380c47a.chunk.js": "/word-crusher/static/js/787.f380c47a.chunk.js",
+    "index.html": "/word-crusher/index.html",
+    "main.4fcd0db9.css.map": "/word-crusher/static/css/main.4fcd0db9.css.map",
+    "main.6f834d22.js.map": "/word-crusher/static/js/main.6f834d22.js.map",
+    "787.f380c47a.chunk.js.map": "/word-crusher/static/js/787.f380c47a.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.4fcd0db9.css",
-    "static/js/main.2a71f5dd.js"
+    "static/js/main.6f834d22.js"
   ]
 }
