@@ -63,7 +63,7 @@ $chracter-margin: 5px;
 header {
   height: 70px;
 
-  div {
+  > div {
     z-index: 3;
     height: 70px;
     position: fixed;
@@ -83,12 +83,22 @@ header {
       z-index: -1;
       filter: blur(5px);
     }
-    h1 {
-      margin: 0;
-      background: $deny-allow-gradient;
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    div {
+      margin: 0 auto;
+      h1 {
+        margin: 0;
+        background: $deny-allow-gradient;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+    .htp-btn-wrap {
+      position: absolute;
+      right: 20px;
+      button {
+        padding: 5px;
+      }
     }
   }
 }
@@ -256,7 +266,7 @@ button {
     position: fixed;
     bottom: 20px;
     width: 100%;
-    left:0;
+    left: 0;
     button {
       border-radius: $default-border-radius;
     }
@@ -281,7 +291,14 @@ button {
     border-radius: $default-border-radius;
     .modal-header {
       height: 40px;
-      text-align: right;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      h5 {
+        padding-left: 15px;
+        font-size: 1.2em;
+        margin: auto;
+      }
       button {
         width: 40px;
         height: 40px;
@@ -306,13 +323,31 @@ button {
     }
   }
 }
+
+.htp-wrap {
+  text-align: left;
+  h4 {
+    padding-left: 40px;
+  }
+}
+
 .shaking {
   animation: horizontal-shaking 0.25s linear infinite;
 }
 @keyframes horizontal-shaking {
-  0% { transform: translateX(0) }
-  25% { transform: translateX(5px) }
-  50% { transform: translateX(-5px) }
-  75% { transform: translateX(5px) }
-  100% { transform: translateX(0) }
- }
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(5px);
+  }
+  50% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}

@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 
 interface ModalProps {
   children: React.ReactNode;
+  title?:string;
   onClose: () => any;
 }
 
@@ -11,7 +12,7 @@ const modalRoot = document.createElement("div");
 modalRoot.setAttribute("id", "modal-root");
 document.body.appendChild(modalRoot);
 
-export const Modal: React.FC<ModalProps> = ({ children, onClose }) => {
+export const Modal: React.FC<ModalProps> = ({ children, onClose, title }) => {
   const element = document.createElement("div");
 
   useEffect(() => {
@@ -25,6 +26,7 @@ export const Modal: React.FC<ModalProps> = ({ children, onClose }) => {
     <div className="modal-shadow" onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
+          <h5>{title}</h5>
           <button id="modal-close" onClick={onClose}>
             ✕
           </button>

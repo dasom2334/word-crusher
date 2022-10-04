@@ -1,4 +1,5 @@
 import React from "react";
+import { HowToPlay } from "../how-to-play";
 
 interface HeaderProps {
   title: string;
@@ -9,7 +10,10 @@ export const Header: React.FC<HeaderProps> = ({ title }) => {
     <header>
       <div className="shadow"></div>
       <div>
-        <h1>{title}</h1>
+        <div>
+          <h1>{title}</h1>
+        </div>
+        <HowToPlay />
       </div>
     </header>
   );

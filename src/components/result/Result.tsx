@@ -35,7 +35,7 @@ export const Result: React.FC<ResultProps> = () => {
     <div className="result-wrap">
       <button onClick={onClick}>SUBMIT</button>
       {!hidden && (
-        <Modal onClose={() => setHidden(true)}>
+        <Modal onClose={() => setHidden(true)} title="Result">
           {result.length > 0 ? (
             <ul className="result-list">
               {result.map((e: string) => (
