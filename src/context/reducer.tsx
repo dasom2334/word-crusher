@@ -1,6 +1,6 @@
 import { getWords } from "../db/getDB";
 import { COUNT_MAX, COUNT_MIN } from "../utils";
-import { initialState, makeInitialState } from "./context";
+import { makeInitialState } from "./context";
 
 function fixRequireCount({
   count,

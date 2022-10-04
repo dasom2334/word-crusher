@@ -3,7 +3,7 @@ import { Modal } from "../modal";
 
 interface HowToPlayProps {}
 
-export const HowToPlay: React.FC<HowToPlayProps> = ({}) => {
+export const HowToPlay: React.FC<HowToPlayProps> = () => {
   const [hidden, setHidden] = useState(true);
   const onClick = () => setHidden(false);
   return (
