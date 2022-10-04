@@ -115,7 +115,7 @@ const reducer = (state: stateProps, action: actionProps): stateProps => {
           : state.activeElement,
       };
     case "CLEAR":
-      return { ...initialState };
+      return { ...makeInitialState(state.count) };
     case "SUBMIT":
       return { ...state, result: getWords(state) };
     default:

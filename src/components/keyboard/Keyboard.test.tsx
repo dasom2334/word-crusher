@@ -40,6 +40,7 @@ describe("Keyboard Component Test", () => {
     screen
       .getAllByRole("textbox", { name: /^deny-strike-[0-1]/gi })
       .forEach((e) => userEvent.type(e, "a"));
+      
     screen
       .getAllByRole("textbox", { name: /^deny-strike-[2-3]/gi })
       .forEach((e) => userEvent.type(e, "b"));

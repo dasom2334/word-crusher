@@ -15,6 +15,7 @@ describe("Clear Component test", () => {
     fireEvent.click(screen.getByRole("button", { name: COUNT_UP_BUTTON_TEXT }));
     fireEvent.click(screen.getByRole("button", { name: COUNT_UP_BUTTON_TEXT }));
     userEvent.type(screen.getByLabelText("strike-0"), "y");
+    
     userEvent.type(screen.getByLabelText("deny-strike-2"), "k");
     userEvent.type(
       screen.getByRole("textbox", { name: "ball-tagsinput" }),
@@ -32,9 +33,6 @@ describe("Clear Component test", () => {
     );
 
     fireEvent.click(screen.getByRole("button", { name: /Clear/gi }));
-    expect(screen.getByRole("contentinfo")).toHaveTextContent(
-      initialState.count.toString()
-    );
     screen.getAllByRole("textbox").forEach((e) => expect(e).toHaveValue(""));
     await waitFor(() => {
       expect(screen.queryByText(/yacking/gi)).not.toBeInTheDocument();
