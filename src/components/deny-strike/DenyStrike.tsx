@@ -1,11 +1,12 @@
 import React, { ChangeEvent, FocusEvent, useRef } from "react";
 import { useAppDispatch, useAppState } from "../../context/context";
-import { isIncludesNotAlphabet, putClassForAwhile } from "../../utils";
+import {
+  isContainSameChar,
+  isIncludesNotAlphabet,
+  putClassForAwhile,
+} from "../../utils";
 
 interface DenyStrikeProps {}
-
-const isDuplicatedContained = (str: string) =>
-  str.length !== new Set([...str]).size;
 
 export const DenyStrike: React.FC<DenyStrikeProps> = () => {
   const state = useAppState();
@@ -18,23 +19,23 @@ export const DenyStrike: React.FC<DenyStrikeProps> = () => {
       event.target.value = event.target.value.toUpperCase();
     }
     const location = getLocation(event);
-    if (isDuplicatedContained(event.target.value)) {
+    if (
+      isContainSameChar(event.target.value) ||
+      isIncludesNotAlphabet(event.target.value)
+    ) {
       event.target.value = [...state.denyStrike[location]].join("") || "";
-      putClassForAwhile(event.target, "shaking");
-      return;
-    }
-    if (isIncludesNotAlphabet(event.target.value)) {
-      event.target.value = [...state.denyStrike[location]].join("") || "";
-      putClassForAwhile(event.target, "shaking");
-      return;
     }
 
-    if ([...event.target.value].includes(state.strike[location])) {
-      event.target.value = [...state.denyStrike[location]].join("") || "";
-      putClassForAwhile(event.target, "shaking");
+    if (![...event.target.value].includes(state.strike[location])) {
+      dispatch({
+        type: "DENY_STRIKE",
+        location,
+        characters: event.target.value,
+      });
       return;
     }
-    dispatch({ type: "DENY_STRIKE", location, characters: event.target.value });
+    event.target.value = [...state.denyStrike[location]].join("") || "";
+    putClassForAwhile(event.target, "shaking");
   };
 
   const onFocus = (event: FocusEvent<HTMLInputElement>) => {

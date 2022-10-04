@@ -3,7 +3,7 @@ import { useAppDispatch, useAppState } from "../../context/context";
 import {
   isIncludesNotAlphabet,
   isLenthOverThenOne,
-  putClassForAwhile
+  putClassForAwhile,
 } from "../../utils";
 
 interface BallProps {}
@@ -24,7 +24,6 @@ export const Ball: React.FC<BallProps> = () => {
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (isIncludesNotAlphabet(event.target.value)) {
       event.target.value = "";
-      putClassForAwhile(event.target, "shaking");
       return;
     }
     if (!isIncludesNotAlphabet(event.target.value)) {
@@ -32,15 +31,20 @@ export const Ball: React.FC<BallProps> = () => {
     }
     if (isLenthOverThenOne(event.target.value)) {
       event.target.value = event.target.value.slice(1);
-      putClassForAwhile(event.target, "shaking");
     }
-    if (![...state.ball].includes(event.target.value)) {
+    if (
+      ![...state.ball].includes(event.target.value) &&
+      ![...state.denyBall].includes(event.target.value)
+    ) {
       dispatch({
         type: "BALL_ADD",
         character: event.target.value,
       });
       event.target.value = "";
+      return;
     }
+
+    putClassForAwhile(event.target, "shaking");
   };
 
   const removeBall = (character: string) => {

@@ -24,26 +24,26 @@ export const DenyBall: React.FC<DenyBallProps> = () => {
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (isIncludesNotAlphabet(event.target.value)) {
       event.target.value = "";
-      putClassForAwhile(event.target, "shaking");
-      return;
     }
     if (!isIncludesNotAlphabet(event.target.value)) {
       event.target.value = event.target.value.toUpperCase();
     }
     if (isLenthOverThenOne(event.target.value)) {
       event.target.value = event.target.value.slice(1);
-      putClassForAwhile(event.target, "shaking");
     }
-    if ([...state.ball].includes(event.target.value)) {
-      putClassForAwhile(event.target, "shaking");
-    }
-    if (![...state.denyBall].includes(event.target.value)) {
+    if (
+      ![...state.denyBall].includes(event.target.value) &&
+      ![...state.ball].includes(event.target.value) &&
+      ![...state.strike].includes(event.target.value)
+    ) {
       dispatch({
         type: "DENY_BALL_ADD",
         character: event.target.value,
       });
       event.target.value = "";
+      return;
     }
+    putClassForAwhile(event.target, "shaking");
   };
 
   const removeDenyBall = (character: string) => {

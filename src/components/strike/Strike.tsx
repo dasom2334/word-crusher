@@ -15,8 +15,6 @@ export const Strike: React.FC<StrikeProps> = () => {
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (isIncludesNotAlphabet(event.target.value)) {
       event.target.value = "";
-      putClassForAwhile(event.target, "shaking");
-      return;
     }
     if (!isIncludesNotAlphabet(event.target.value)) {
       event.target.value = event.target.value.toUpperCase();
@@ -24,19 +22,21 @@ export const Strike: React.FC<StrikeProps> = () => {
     const location = getLocation(event);
     if (isLenthOverThenOne(event.target.value)) {
       event.target.value = state.strike[location] || "";
-      putClassForAwhile(event.target, "shaking");
     }
-    
-    if ([...state.denyStrike[location]].includes(event.target.value)) {
-      event.target.value = state.strike[location] || "";
-      putClassForAwhile(event.target, "shaking");
+
+    if (
+      ![...state.denyStrike[location]].includes(event.target.value) &&
+      ![...state.denyBall].includes(event.target.value)
+    ) {
+      dispatch({
+        type: "STRIKE",
+        location,
+        character: event.target.value,
+      });
       return;
     }
-    dispatch({
-      type: "STRIKE",
-      location,
-      character: event.target.value,
-    });
+    event.target.value = state.strike[location] || "";
+    putClassForAwhile(event.target, "shaking");
   };
 
   const onFocus = (event: FocusEvent<HTMLInputElement>) => {

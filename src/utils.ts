@@ -39,3 +39,6 @@ export const allInputClear = () =>
   [...document.getElementsByTagName("input")].forEach((element) => {
     element.value = "";
   });
+
+export const isContainSameChar = (str: string) =>
+  str.length !== new Set([...str]).size;
