@@ -1,4 +1,5 @@
 # WORD CRUSHER
+[![CodeFactor](https://www.codefactor.io/repository/github/dasom2334/word-crusher/badge)](https://www.codefactor.io/repository/github/dasom2334/word-crusher)
 
 ## 👉 [Play WORD CRUSHER](https://dasom2334.github.io/word-crusher/)
 
