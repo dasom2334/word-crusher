@@ -3,6 +3,7 @@ import fs from "fs";
 export async function GetFileLength(filePath: string): Promise<number> {
   const fileLine = getFileLines(filePath);
   let count = 0;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   for await (const _ of fileLine) count++;
   return count;
 }
