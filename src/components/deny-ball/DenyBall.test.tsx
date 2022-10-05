@@ -46,17 +46,17 @@ describe("DenyBall Component test", () => {
     userEvent.type(input, "abcde");
 
     fireEvent.click(
-      screen.getByRole("button", { name: /remove deny ball e/gi })
+      screen.getByRole("button", { name: /remove deny ball e/i })
     );
     expect(screen.getAllByRole("button")).toHaveLength(4);
     fireEvent.click(
-      screen.getByRole("button", { name: /remove deny ball a/gi })
+      screen.getByRole("button", { name: /remove deny ball a/i })
     );
     fireEvent.click(
-      screen.getByRole("button", { name: /remove deny ball b/gi })
+      screen.getByRole("button", { name: /remove deny ball b/i })
     );
     fireEvent.click(
-      screen.getByRole("button", { name: /remove deny ball c/gi })
+      screen.getByRole("button", { name: /remove deny ball c/i })
     );
     expect(screen.getAllByRole("button")).toBeTruthy();
   });

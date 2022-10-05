@@ -13,10 +13,10 @@ describe("Keyboard Component Test", () => {
     rendering();
 
     screen
-      .getAllByRole("textbox", { name: /^strike-[0-1]/gi })
+      .getAllByRole("textbox", { name: /^strike-[0-1]/i })
       .forEach((e) => userEvent.type(e, "a"));
     screen
-      .getAllByRole("textbox", { name: /^strike-[2-3]/gi })
+      .getAllByRole("textbox", { name: /^strike-[2-3]/i })
       .forEach((e) => userEvent.type(e, "b"));
     expect(screen.getAllByText("2")).toHaveLength(2);
 
@@ -38,11 +38,11 @@ describe("Keyboard Component Test", () => {
     rendering();
 
     screen
-      .getAllByRole("textbox", { name: /^deny-strike-[0-1]/gi })
+      .getAllByRole("textbox", { name: /^deny-strike-[0-1]/i })
       .forEach((e) => userEvent.type(e, "a"));
       
     screen
-      .getAllByRole("textbox", { name: /^deny-strike-[2-3]/gi })
+      .getAllByRole("textbox", { name: /^deny-strike-[2-3]/i })
       .forEach((e) => userEvent.type(e, "b"));
     expect(screen.getAllByText("2")).toHaveLength(2);
 
@@ -66,10 +66,10 @@ describe("Keyboard Component Test", () => {
       "abcde"
     );
     screen
-      .getAllByRole("button", { name: /^[A-E]$/gi })
+      .getAllByRole("button", { name: /^[A-E]$/i })
       .forEach((e) => expect(e).toHaveClass("isBalled"));
     screen
-      .getAllByRole("button", { name: /^[F-Z]$/gi })
+      .getAllByRole("button", { name: /^[F-Z]$/i })
       .forEach((e) => expect(e).not.toHaveClass("isBalled"));
   });
   it("The deny balled key has an isDenyBalled class", () => {
@@ -79,10 +79,10 @@ describe("Keyboard Component Test", () => {
       "abcde"
     );
     screen
-      .getAllByRole("button", { name: /^[A-E]$/gi })
+      .getAllByRole("button", { name: /^[A-E]$/i })
       .forEach((e) => expect(e).toHaveClass("isDenyBalled"));
     screen
-      .getAllByRole("button", { name: /^[F-Z]$/gi })
+      .getAllByRole("button", { name: /^[F-Z]$/i })
       .forEach((e) => expect(e).not.toHaveClass("isDenyBalled"));
   });
   it("When focusing on the strike zone, the clicked keyboard enters the strike", () => {

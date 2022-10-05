@@ -23,13 +23,13 @@ describe("DenyStrike Component Test", () => {
     fireEvent.click(upButton);
     fireEvent.click(upButton);
     fireEvent.click(upButton);
-    expect(screen.getAllByRole("textbox", {name:/^deny-strike/gi})).toHaveLength(initialState.count + 3);
+    expect(screen.getAllByRole("textbox", {name:/^deny-strike/i})).toHaveLength(initialState.count + 3);
     fireEvent.click(downButton);
     fireEvent.click(downButton);
-    expect(screen.getAllByRole("textbox", {name:/^deny-strike/gi})).toHaveLength(initialState.count + 1);
+    expect(screen.getAllByRole("textbox", {name:/^deny-strike/i})).toHaveLength(initialState.count + 1);
     fireEvent.click(downButton);
     fireEvent.click(downButton);
-    expect(screen.getAllByRole("textbox", {name:/^deny-strike/gi})).toHaveLength(initialState.count - 1);
+    expect(screen.getAllByRole("textbox", {name:/^deny-strike/i})).toHaveLength(initialState.count - 1);
   });
   it("Only uppercase letters are allowed for strike input.", () => {
     rendering();

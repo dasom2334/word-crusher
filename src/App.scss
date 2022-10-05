@@ -31,9 +31,9 @@ $dark-button-shadow: 0 0 2px 1px rgba(black, 0.3);
 $dark-box-shadow: 0 0 20px 10px rgba(black, 0.3);
 $default-border-radius: 5px;
 
-$chracter-width: 40px;
-$chracter-height: 40px;
-$chracter-margin: 5px;
+$character-width: 40px;
+$character-height: 40px;
+$character-margin: 5px;
 @mixin allow-button-background {
   background-color: $allow-color;
   color: white;
@@ -49,9 +49,9 @@ $chracter-margin: 5px;
   }
 }
 @mixin character-box {
-  width: $chracter-width;
-  height: $chracter-height;
-  margin: $chracter-margin;
+  width: $character-width;
+  height: $character-height;
+  margin: $character-margin;
 }
 
 .board {
@@ -161,9 +161,9 @@ button {
 
 .ball-wrap {
   input {
-    width: $chracter-width;
-    height: $chracter-height;
-    margin: $chracter-margin;
+    width: $character-width;
+    height: $character-height;
+    margin: $character-margin;
   }
   button {
     @include character-box;
@@ -204,8 +204,8 @@ button {
   .keyboard-row {
     span {
       button {
-        width: $chracter-width;
-        height: $chracter-height;
+        width: $character-width;
+        height: $character-height;
         margin: 5px;
         font-size: 1.3em;
         text-align: center;

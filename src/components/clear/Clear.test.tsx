@@ -25,17 +25,17 @@ describe("Clear Component test", () => {
       screen.getByRole("textbox", { name: "deny-ball-tagsinput" }),
       "e"
     );
-    fireEvent.click(screen.getByRole("button", { name: /submit/gi }));
-    expect(await screen.findAllByText(/yacking/gi)).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: /submit/i }));
+    expect(await screen.findAllByText(/yacking/i)).toBeTruthy();
 
     expect(screen.getByRole("contentinfo")).toHaveTextContent(
       (initialState.count + 2).toString()
     );
 
-    fireEvent.click(screen.getByRole("button", { name: /Clear/gi }));
+    fireEvent.click(screen.getByRole("button", { name: /Clear/i }));
     screen.getAllByRole("textbox").forEach((e) => expect(e).toHaveValue(""));
     await waitFor(() => {
-      expect(screen.queryByText(/yacking/gi)).not.toBeInTheDocument();
+      expect(screen.queryByText(/yacking/i)).not.toBeInTheDocument();
     });
   });
 });
