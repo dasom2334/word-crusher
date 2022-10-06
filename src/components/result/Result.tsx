@@ -3,7 +3,7 @@ import { useAppDispatch, useAppState } from "../../context/context";
 import { Modal } from "../modal";
 interface ResultProps {}
 
-export const Result: React.FC<ResultProps> = () => {
+export const Result: React.FC<ResultProps> = React.memo(() => {
   const state = useAppState();
   const dispatch = useAppDispatch();
 
@@ -49,7 +49,7 @@ export const Result: React.FC<ResultProps> = () => {
       )}
     </div>
   );
-};
+});
 
 interface ResulLoadingProps {}
 const ResultLoading: React.FC<ResulLoadingProps> = () => {

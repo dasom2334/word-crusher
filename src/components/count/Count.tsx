@@ -11,7 +11,7 @@ import {
 
 interface CountProps {}
 
-export const Count: React.FC<CountProps> = () => {
+export const Count: React.FC<CountProps> = React.memo(() => {
   const state = useAppState();
   const dispatch = useAppDispatch();
   const count_up: MouseEventHandler<HTMLButtonElement> = (
@@ -53,4 +53,4 @@ export const Count: React.FC<CountProps> = () => {
       </div>
     </div>
   );
-};
+});

@@ -8,7 +8,7 @@ import {
 
 interface DenyStrikeProps {}
 
-export const DenyStrike: React.FC<DenyStrikeProps> = () => {
+export const DenyStrike: React.FC<DenyStrikeProps> = React.memo(() => {
   const state = useAppState();
   const dispatch = useAppDispatch();
 
@@ -66,4 +66,4 @@ export const DenyStrike: React.FC<DenyStrikeProps> = () => {
       ))}
     </div>
   );
-};
+});

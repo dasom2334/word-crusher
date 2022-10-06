@@ -8,7 +8,7 @@ import {
 
 interface BallProps {}
 
-export const Ball: React.FC<BallProps> = () => {
+export const Ball: React.FC<BallProps> = React.memo(() => {
   const state = useAppState();
   const dispatch = useAppDispatch();
 
@@ -33,6 +33,7 @@ export const Ball: React.FC<BallProps> = () => {
       event.target.value = event.target.value.slice(1);
     }
     if (
+      event.target.value !== "" &&
       ![...state.ball].includes(event.target.value) &&
       ![...state.denyBall].includes(event.target.value)
     ) {
@@ -73,4 +74,4 @@ export const Ball: React.FC<BallProps> = () => {
       </div>
     </div>
   );
-};
+});

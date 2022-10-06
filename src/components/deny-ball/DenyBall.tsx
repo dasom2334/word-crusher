@@ -8,7 +8,7 @@ import {
 
 interface DenyBallProps {}
 
-export const DenyBall: React.FC<DenyBallProps> = () => {
+export const DenyBall: React.FC<DenyBallProps> = React.memo(() => {
   const state = useAppState();
   const dispatch = useAppDispatch();
 
@@ -76,4 +76,4 @@ export const DenyBall: React.FC<DenyBallProps> = () => {
       </div>
     </div>
   );
-};
+});

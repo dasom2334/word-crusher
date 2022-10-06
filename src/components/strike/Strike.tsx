@@ -7,14 +7,17 @@ import {
 } from "../../utils";
 
 interface StrikeProps {}
-export const Strike: React.FC<StrikeProps> = () => {
+
+export const Strike: React.FC<StrikeProps> = React.memo(() => {
   const state = useAppState();
   const dispatch = useAppDispatch();
   let strikeRef = useRef<HTMLInputElement[]>([]);
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+    let isShaking = false;
     if (isIncludesNotAlphabet(event.target.value)) {
-      event.target.value = "";
+      event.target.value = event.target.value.match(/[a-z]/i)?.[0] || "";
+      isShaking = true;
     }
     if (!isIncludesNotAlphabet(event.target.value)) {
       event.target.value = event.target.value.toUpperCase();
@@ -22,8 +25,9 @@ export const Strike: React.FC<StrikeProps> = () => {
     const location = getLocation(event);
     if (isLenthOverThenOne(event.target.value)) {
       event.target.value = state.strike[location] || "";
+      isShaking = true;
     }
-
+    if (isShaking) putClassForAwhile(event.target, "shaking");
     if (
       ![...state.denyStrike[location]].includes(event.target.value) &&
       ![...state.denyBall].includes(event.target.value)
@@ -36,7 +40,6 @@ export const Strike: React.FC<StrikeProps> = () => {
       return;
     }
     event.target.value = state.strike[location] || "";
-    putClassForAwhile(event.target, "shaking");
   };
 
   const onFocus = (event: FocusEvent<HTMLInputElement>) => {
@@ -67,4 +70,4 @@ export const Strike: React.FC<StrikeProps> = () => {
       ))}
     </div>
   );
-};
+});
