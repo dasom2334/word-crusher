@@ -18,10 +18,10 @@ function fixRequireCount({
 type reduceFunctionProps = {
   state: stateProps;
   action: {
-    type: string;
-    character?: string;
-    characters?: string;
-    location?: number;
+    type: keyof typeActionProps;
+    location?:number;
+    character?:string;
+    characters?:string;
     activeElement?: HTMLInputElement | null;
   };
 };
@@ -37,7 +37,7 @@ function countDown({ state }: reduceFunctionProps): stateProps {
 }
 
 function strike({ state, action }: reduceFunctionProps): stateProps {
-  if (action?.location === undefined || action.character === undefined)
+  if (action?.location === undefined || action?.character === undefined)
     return state;
   const newStrike = [...state.strike];
   newStrike[action.location] = action.character;
@@ -149,7 +149,7 @@ function submit({ state }: reduceFunctionProps): stateProps {
 }
 
 const reduceFunctions: Record<
-  keyof actionTypes,
+  keyof typeActionProps,
   (arg0: reduceFunctionProps) => stateProps
 > = {
   COUNT_UP: countUp,
@@ -164,11 +164,12 @@ const reduceFunctions: Record<
   CLEAR: clear,
   SUBMIT: submit,
 };
+
 function reducer(state: stateProps, action: actionProps): stateProps {
-  return reduceFunctions[action.type as actionTypes[keyof actionTypes]]({
+  return reduceFunctions[action.type]({
     state,
     action,
-  });
+  } );
 }
 
 export default reducer;

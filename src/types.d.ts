@@ -1,3 +1,9 @@
+type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
+  k: infer I
+) => void
+  ? I
+  : never;
+
 type stateProps = {
   count: number;
   strike: string[];
@@ -8,56 +14,38 @@ type stateProps = {
   result: Promise<string[]>;
 };
 
-// type actionTypes = Record<
-//   typeActionProps[keyof typeActionProps],
-//   typeActionProps
-// >;
 
-type actionTypes = {
-  COUNT_UP: "COUNT_UP";
-  COUNT_DOWN: "COUNT_DOWN";
-  STRIKE: "STRIKE";
-  BALL_ADD: "BALL_ADD";
-  BALL_REMOVE: "BALL_REMOVE";
-  DENY_STRIKE: "DENY_STRIKE";
-  DENY_BALL_ADD: "DENY_BALL_ADD";
-  DENY_BALL_REMOVE: "DENY_BALL_REMOVE";
-  ACTIVE_ELEMENT: "ACTIVE_ELEMENT";
-  CLEAR: "CLEAR";
-  SUBMIT: "SUBMIT";
-};
-
-type countUpActionProps = { type: actionTypes.COUNT_UP };
-type countDownActionProps = { type: actionTypes.COUNT_DOWN };
+type countUpActionProps = { type: "COUNT_UP" };
+type countDownActionProps = { type: "COUNT_DOWN" };
 type strikeActionProps = {
-  type: actionTypes.STRIKE;
+  type: "STRIKE";
   location: number;
   character: string;
 };
-type ballAddActionProps = { type: actionTypes.BALL_ADD; character: string };
+type ballAddActionProps = { type: "BALL_ADD"; character: string };
 type ballRemoveActionProps = {
-  type: actionTypes.BALL_REMOVE;
+  type: "BALL_REMOVE";
   character: string;
 };
 type denyStrikeActionProps = {
-  type: actionTypes.DENY_STRIKE;
+  type: "DENY_STRIKE";
   location: number;
   characters: string;
 };
 type denyBallAddActionProps = {
-  type: actionTypes.DENY_BALL_ADD;
+  type: "DENY_BALL_ADD";
   character: string;
 };
 type denyBallRemoveActionProps = {
-  type: actionTypes.DENY_BALL_REMOVE;
+  type: "DENY_BALL_REMOVE";
   character: string;
 };
 type activeElementActionProps = {
-  type: actionTypes.ACTIVE_ELEMENT;
+  type: "ACTIVE_ELEMENT";
   activeElement: HTMLInputElement | null;
 };
-type clearActionProps = { type: actionTypes.CLEAR };
-type submitActionProps = { type: actionTypes.SUBMIT };
+type clearActionProps = { type: "CLEAR" };
+type submitActionProps = { type: "SUBMIT" };
 
 type typeActionProps = {
   COUNT_UP: countUpActionProps;
