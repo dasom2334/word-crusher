@@ -14,18 +14,31 @@ function fixRequireCount({
   const requiredLength = ball.size + strike.filter((e) => e !== "").length;
   return requiredLength > count ? requiredLength : count;
 }
+// type noTypeActionprops = Omit<actionProps, "type">
 
 type reduceFunctionProps = {
   state: stateProps;
-  action: {
-    type: keyof typeActionProps;
-    location?:number;
-    character?:string;
-    characters?:string;
-    activeElement?: HTMLInputElement | null;
-  };
-};
 
+  // action: {
+  //   type?: actionProps["type"];
+  //   location?:number;
+  //   character?:string;
+  //   characters?:string;
+  //   activeElement?:HTMLInputElement | null;
+  // };
+  // action: countUpActionProps & strikeActionProps;
+  // action: typeActionProps["COUNT_DOWN"] & typeActionProps["COUNT_UP"] & typeActionProps["STRIKE"];
+  // action: typeActionProps[keyof typeActionProps];
+  // action: UnionToIntersection<typeActionProps[keyof typeActionProps]>;
+  action: Exclude<typeActionProps[keyof typeActionProps], "type">;
+  // action:Partial<Omit<typeActionProps[keyof typeActionProps], "type">>;
+};
+const hi: Exclude<typeActionProps[keyof typeActionProps], "type"> = {
+  location: "3",
+  character: 0,
+  characters: 111,
+  hihi: "hihi",
+};
 function countUp({ state }: reduceFunctionProps): stateProps {
   if (state.count >= COUNT_MAX) return state;
   return { ...makeInitialState(state.count + 1) };
@@ -149,8 +162,9 @@ function submit({ state }: reduceFunctionProps): stateProps {
 }
 
 const reduceFunctions: Record<
-  keyof typeActionProps,
+  actionProps["type"],
   (arg0: reduceFunctionProps) => stateProps
+  // (arg0 : {state : stateProps, action:actionProps}) => stateProps
 > = {
   COUNT_UP: countUp,
   COUNT_DOWN: countDown,
@@ -169,7 +183,7 @@ function reducer(state: stateProps, action: actionProps): stateProps {
   return reduceFunctions[action.type]({
     state,
     action,
-  } );
+  });
 }
 
 export default reducer;

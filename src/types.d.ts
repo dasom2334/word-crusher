@@ -14,40 +14,58 @@ type stateProps = {
   result: Promise<string[]>;
 };
 
+// type actionTypes = Record<
+//   typeActionProps[keyof typeActionProps],
+//   typeActionProps
+// >;
 
-type countUpActionProps = { type: "COUNT_UP" };
-type countDownActionProps = { type: "COUNT_DOWN" };
-type strikeActionProps = {
+interface actionTypes {
+  COUNT_UP: "COUNT_UP";
+  COUNT_DOWN: "COUNT_DOWN";
+  STRIKE: "STRIKE";
+  BALL_ADD: "BALL_ADD";
+  BALL_REMOVE: "BALL_REMOVE";
+  DENY_STRIKE: "DENY_STRIKE";
+  DENY_BALL_ADD: "DENY_BALL_ADD";
+  DENY_BALL_REMOVE: "DENY_BALL_REMOVE";
+  ACTIVE_ELEMENT: "ACTIVE_ELEMENT";
+  CLEAR: "CLEAR";
+  SUBMIT: "SUBMIT";
+};
+
+interface countUpActionProps { type: "COUNT_UP" };
+interface countDownActionProps { type: "COUNT_DOWN" };
+interface strikeActionProps {
   type: "STRIKE";
   location: number;
   character: string;
 };
-type ballAddActionProps = { type: "BALL_ADD"; character: string };
-type ballRemoveActionProps = {
+interface ballAddActionProps { type: "BALL_ADD"; character: string };
+interface ballRemoveActionProps {
   type: "BALL_REMOVE";
   character: string;
 };
-type denyStrikeActionProps = {
+interface denyStrikeActionProps {
   type: "DENY_STRIKE";
   location: number;
   characters: string;
 };
-type denyBallAddActionProps = {
+interface denyBallAddActionProps {
   type: "DENY_BALL_ADD";
   character: string;
 };
-type denyBallRemoveActionProps = {
+interface denyBallRemoveActionProps {
   type: "DENY_BALL_REMOVE";
   character: string;
 };
-type activeElementActionProps = {
+interface activeElementActionProps {
   type: "ACTIVE_ELEMENT";
   activeElement: HTMLInputElement | null;
 };
-type clearActionProps = { type: "CLEAR" };
-type submitActionProps = { type: "SUBMIT" };
+interface clearActionProps { type: "CLEAR" };
+interface submitActionProps { type: "SUBMIT" };
 
-type typeActionProps = {
+interface typeActionProps {
   COUNT_UP: countUpActionProps;
   COUNT_DOWN: countDownActionProps;
   STRIKE: strikeActionProps;
