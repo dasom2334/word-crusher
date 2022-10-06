@@ -14,44 +14,21 @@ function fixRequireCount({
   const requiredLength = ball.size + strike.filter((e) => e !== "").length;
   return requiredLength > count ? requiredLength : count;
 }
-// type noTypeActionprops = Omit<actionProps, "type">
 
-type reduceFunctionProps = {
-  state: stateProps;
-
-  // action: {
-  //   type?: actionProps["type"];
-  //   location?:number;
-  //   character?:string;
-  //   characters?:string;
-  //   activeElement?:HTMLInputElement | null;
-  // };
-  // action: countUpActionProps & strikeActionProps;
-  // action: typeActionProps["COUNT_DOWN"] & typeActionProps["COUNT_UP"] & typeActionProps["STRIKE"];
-  // action: typeActionProps[keyof typeActionProps];
-  // action: UnionToIntersection<typeActionProps[keyof typeActionProps]>;
-  action: Exclude<typeActionProps[keyof typeActionProps], "type">;
-  // action:Partial<Omit<typeActionProps[keyof typeActionProps], "type">>;
-};
-const hi: Exclude<typeActionProps[keyof typeActionProps], "type"> = {
-  location: "3",
-  character: 0,
-  characters: 111,
-  hihi: "hihi",
-};
-function countUp({ state }: reduceFunctionProps): stateProps {
+function countUp(state: stateProps, action: actionProps): stateProps {
+  if (action.type !== "COUNT_UP") return state;
   if (state.count >= COUNT_MAX) return state;
   return { ...makeInitialState(state.count + 1) };
 }
 
-function countDown({ state }: reduceFunctionProps): stateProps {
+function countDown(state: stateProps, action: actionProps): stateProps {
+  if (action.type !== "COUNT_DOWN") return state;
   if (state.count <= COUNT_MIN) return state;
   return { ...makeInitialState(state.count - 1) };
 }
 
-function strike({ state, action }: reduceFunctionProps): stateProps {
-  if (action?.location === undefined || action?.character === undefined)
-    return state;
+function strike(state: stateProps, action: actionProps): stateProps {
+  if (action.type !== "STRIKE") return state;
   const newStrike = [...state.strike];
   newStrike[action.location] = action.character;
   return {
@@ -65,8 +42,8 @@ function strike({ state, action }: reduceFunctionProps): stateProps {
   };
 }
 
-function ballAdd({ state, action }: reduceFunctionProps): stateProps {
-  if (action?.character === undefined) return state;
+function ballAdd(state: stateProps, action: actionProps): stateProps {
+  if (action.type !== "BALL_ADD") return state;
   if (state.ball.has(action.character) || state.denyBall.has(action.character))
     return state;
   const addedBall = new Set([...state.ball]);
@@ -82,8 +59,8 @@ function ballAdd({ state, action }: reduceFunctionProps): stateProps {
   };
 }
 
-function ballRemove({ state, action }: reduceFunctionProps): stateProps {
-  if (action?.character === undefined) return state;
+function ballRemove(state: stateProps, action: actionProps): stateProps {
+  if (action.type !== "BALL_REMOVE") return state;
   if (!state.ball.has(action.character)) return state;
   const removedBall = new Set([...state.ball]);
   removedBall.delete(action.character);
@@ -98,9 +75,8 @@ function ballRemove({ state, action }: reduceFunctionProps): stateProps {
   };
 }
 
-function denyStrike({ state, action }: reduceFunctionProps): stateProps {
-  if (action?.location === undefined || action?.characters === undefined)
-    return state;
+function denyStrike(state: stateProps, action: actionProps): stateProps {
+  if (action.type !== "DENY_STRIKE") return state;
   const newDenyStrike = [...state.denyStrike];
   newDenyStrike[action.location] = new Set([...action.characters]);
   return {
@@ -113,8 +89,8 @@ function denyStrike({ state, action }: reduceFunctionProps): stateProps {
     }),
   };
 }
-function denyBallAdd({ state, action }: reduceFunctionProps): stateProps {
-  if (action?.character === undefined) return state;
+function denyBallAdd(state: stateProps, action: actionProps): stateProps {
+  if (action.type !== "DENY_BALL_ADD") return state;
   if (state.denyBall.has(action.character) || state.ball.has(action.character))
     return state;
   const addedDenyBall = new Set([...state.denyBall]);
@@ -129,8 +105,8 @@ function denyBallAdd({ state, action }: reduceFunctionProps): stateProps {
     }),
   };
 }
-function denyBallRemove({ state, action }: reduceFunctionProps): stateProps {
-  if (action?.character === undefined) return state;
+function denyBallRemove(state: stateProps, action: actionProps): stateProps {
+  if (action.type !== "DENY_BALL_REMOVE") return state;
   if (!state.denyBall.has(action.character)) return state;
   const removedDenyBall = new Set([...state.denyBall]);
   removedDenyBall.delete(action.character);
@@ -144,8 +120,8 @@ function denyBallRemove({ state, action }: reduceFunctionProps): stateProps {
     }),
   };
 }
-function activeElement({ state, action }: reduceFunctionProps): stateProps {
-  if (action?.activeElement === undefined) return state;
+function activeElement(state: stateProps, action: actionProps): stateProps {
+  if (action.type !== "ACTIVE_ELEMENT") return state;
   return {
     ...state,
     activeElement: action.activeElement
@@ -153,18 +129,19 @@ function activeElement({ state, action }: reduceFunctionProps): stateProps {
       : state.activeElement,
   };
 }
-function clear({ state }: reduceFunctionProps): stateProps {
+function clear(state: stateProps, action: actionProps): stateProps {
+  if (action.type !== "CLEAR") return state;
   return { ...makeInitialState(state.count) };
 }
 
-function submit({ state }: reduceFunctionProps): stateProps {
+function submit(state: stateProps, action: actionProps): stateProps {
+  if (action.type !== "SUBMIT") return state;
   return { ...state, result: getWords(state) };
 }
 
 const reduceFunctions: Record<
   actionProps["type"],
-  (arg0: reduceFunctionProps) => stateProps
-  // (arg0 : {state : stateProps, action:actionProps}) => stateProps
+  (state: stateProps, action: actionProps) => stateProps
 > = {
   COUNT_UP: countUp,
   COUNT_DOWN: countDown,
@@ -180,10 +157,7 @@ const reduceFunctions: Record<
 };
 
 function reducer(state: stateProps, action: actionProps): stateProps {
-  return reduceFunctions[action.type]({
-    state,
-    action,
-  });
+  return reduceFunctions[action.type](state, action);
 }
 
 export default reducer;
