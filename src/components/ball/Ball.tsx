@@ -22,15 +22,20 @@ export const Ball: React.FC<BallProps> = React.memo(() => {
   };
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+    let isShaking = false;
     if (isIncludesNotAlphabet(event.target.value)) {
       event.target.value = "";
-      return;
+      isShaking = true;
     }
     if (!isIncludesNotAlphabet(event.target.value)) {
       event.target.value = event.target.value.toUpperCase();
     }
     if (isLenthOverThenOne(event.target.value)) {
       event.target.value = event.target.value.slice(1);
+      isShaking = true;
+    }
+    if (isShaking) {
+      putClassForAwhile(event.target, "shaking");
     }
     if (
       event.target.value !== "" &&
@@ -44,8 +49,6 @@ export const Ball: React.FC<BallProps> = React.memo(() => {
       event.target.value = "";
       return;
     }
-
-    putClassForAwhile(event.target, "shaking");
   };
 
   const removeBall = (character: string) => {

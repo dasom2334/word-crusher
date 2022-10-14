@@ -15,7 +15,9 @@ export const DenyStrike: React.FC<DenyStrikeProps> = React.memo(() => {
   let denyStrikeRef = useRef<HTMLInputElement[]>([]);
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+    let isShaking = false;
     if (!isIncludesNotAlphabet(event.target.value)) {
+      isShaking = true;
       event.target.value = event.target.value.toUpperCase();
     }
     const location = getLocation(event);
@@ -23,9 +25,11 @@ export const DenyStrike: React.FC<DenyStrikeProps> = React.memo(() => {
       isContainSameChar(event.target.value) ||
       isIncludesNotAlphabet(event.target.value)
     ) {
+      isShaking = true;
       event.target.value = [...state.denyStrike[location]].join("") || "";
     }
 
+    if (isShaking) putClassForAwhile(event.target, "shaking");
     if (![...event.target.value].includes(state.strike[location])) {
       dispatch({
         type: "DENY_STRIKE",
