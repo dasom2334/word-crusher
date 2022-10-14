@@ -17,7 +17,6 @@ export const DenyStrike: React.FC<DenyStrikeProps> = React.memo(() => {
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     let isShaking = false;
     if (!isIncludesNotAlphabet(event.target.value)) {
-      isShaking = true;
       event.target.value = event.target.value.toUpperCase();
     }
     const location = getLocation(event);
