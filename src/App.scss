@@ -282,7 +282,7 @@ button {
           &.allow {
             margin-left: -13px;
             @include mobile {
-              margin-left: 28px;
+              margin-left: -8px;
             }
             background-color: $allow-color;
           }
