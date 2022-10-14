@@ -9,13 +9,12 @@ export const Keyboard: React.FC<KeyboardProps> = () => {
   const onClick = (event: MouseEvent<HTMLButtonElement>) => {
     if (state.activeElement === null) return;
     state.activeElement?.focus();
-
     Object?.getOwnPropertyDescriptor(
       window.HTMLInputElement.prototype,
       "value"
     )?.set?.call(
       state.activeElement,
-      event.currentTarget.getAttribute("data-key")
+      state.activeElement?.value + event.currentTarget.getAttribute("data-key")
     );
     state.activeElement?.dispatchEvent(new Event("change", { bubbles: true }));
   };

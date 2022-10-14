@@ -95,12 +95,14 @@ describe("Keyboard Component Test", () => {
   it("When focusing on the deny strike zone, the clicked keyboard enters the deny strike", () => {
     rendering();
     fireEvent.focus(screen.getByRole("textbox", { name: "deny-strike-0" }));
-    fireEvent.click(screen.getByRole("button", { name: /[a-c]/i }));
+    fireEvent.click(screen.getByRole("button", { name: "A" }));
+    fireEvent.click(screen.getByRole("button", { name: "B" }));
+    fireEvent.click(screen.getByRole("button", { name: "C" }));
     expect(
       screen.getByRole("textbox", { name: "deny-strike-0" })
     ).toHaveFocus();
     expect(screen.getByRole("textbox", { name: "deny-strike-0" })).toHaveValue(
-      "AB"
+      "ABC"
     );
   });
   it("When focusing on the ball zone, the clicked keyboard enters the ball", () => {
