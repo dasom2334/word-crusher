@@ -14,8 +14,8 @@ export const Header: React.FC<HeaderProps> = ({ title }) => {
           <a href="/">
             <h1>{title}</h1>
           </a>
-          <HowToPlay />
         </div>
+        <HowToPlay />
       </div>
     </header>
   );
