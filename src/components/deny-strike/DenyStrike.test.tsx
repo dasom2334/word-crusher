@@ -45,7 +45,19 @@ describe("DenyStrike Component Test", () => {
     rendering();
     const input = screen.getByLabelText("deny-strike-0");
     userEvent.type(input, "ABCDABCD");
+    expect(input).toHaveClass("shaking");
     expect(input).toHaveValue("ABCD");
+  });
+  
+  it("Non-alphabetic strings are not allowed.", () => {
+    rendering();
+    const input = screen.getByLabelText("deny-strike-0");
+    userEvent.type(
+      input,
+      "가나다라마바사아차카a타파바하1234567890~!@#$%^&*()_+-=.z"
+    );
+    expect(input).toHaveClass("shaking");
+    expect(input).toHaveValue("AZ");
   });
   it("The strike zone cannot contain the letter of the deny strike zone in the same position.", () => {
     rendering();

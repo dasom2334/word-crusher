@@ -47,6 +47,7 @@ describe("Strike Component Test", () => {
     rendering();
     const input = screen.getByLabelText("strike-0");
     userEvent.type(input, "hellohello");
+    expect(input).toHaveClass("shaking");
     expect(input).toHaveValue("H");
     userEvent.type(input, "{backspace}FFFF");
     expect(input).toHaveValue("F");
@@ -54,6 +55,17 @@ describe("Strike Component Test", () => {
     expect(input).toHaveValue("");
     userEvent.type(input, "{backspace}헬로헬로57688)(**^*&%sDF");
     expect(input).toHaveValue("S");
+    expect(input).toHaveClass("shaking");
+  });
+  it("Non-alphabetic strings are not allowed.", () => {
+    rendering();
+    const input = screen.getByLabelText("strike-0");
+    userEvent.type(
+      input,
+      "가나다라마바사아차카a타파바하1234567890~!@#$%^&*()_+-=."
+    );
+    expect(input).toHaveClass("shaking");
+    expect(input).toHaveValue("A");
   });
   it("The strike zone cannot contain the letter of the deny strike zone in the same position.", () => {
     rendering();

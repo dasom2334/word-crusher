@@ -4,7 +4,7 @@ import {
   COUNT_DOWN_BUTTON_TEXT,
   COUNT_MAX,
   COUNT_MIN,
-  COUNT_UP_BUTTON_TEXT
+  COUNT_UP_BUTTON_TEXT,
 } from "../../utils";
 import { Count } from "./index";
 const rendering = () =>
@@ -64,6 +64,8 @@ describe("Count Component Test", () => {
     const downButton = screen.getByText(COUNT_DOWN_BUTTON_TEXT);
     for (let i = 0; i < initialState.count + 5; i++)
       fireEvent.click(downButton);
+
+    expect(downButton).toHaveClass("shaking");
     expect(screen.getByRole("contentinfo")).toHaveTextContent(
       COUNT_MIN.toString()
     );
@@ -72,6 +74,7 @@ describe("Count Component Test", () => {
     rendering();
     const upButton = screen.getByText(COUNT_UP_BUTTON_TEXT);
     for (let i = 0; i < COUNT_MAX + 5; i++) fireEvent.click(upButton);
+    expect(upButton).toHaveClass("shaking");
     expect(screen.getByRole("contentinfo")).toHaveTextContent(
       COUNT_MAX.toString()
     );

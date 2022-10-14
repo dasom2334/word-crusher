@@ -31,6 +31,7 @@ describe("Ball Component test", () => {
     const input = screen.getByRole("textbox", { name: "ball-tagsinput" });
     userEvent.type(input, "abcdef");
     userEvent.type(input, "abcdefg");
+    expect(input).toHaveClass("shaking");
     expect(screen.getAllByRole("button")).toHaveLength(7);
   });
 
@@ -42,6 +43,8 @@ describe("Ball Component test", () => {
       input,
       "가나다라마바사아차카a타파바하1234567890~!@#$%^&*()_+-=.z"
     );
+    
+    expect(input).toHaveClass("shaking");
     expect(screen.getAllByRole("button")).toHaveLength(2);
   });
   it("Click the button to remove the ball", () => {
@@ -56,4 +59,6 @@ describe("Ball Component test", () => {
     fireEvent.click(screen.getByRole("button", { name: "remove ball B" }));
     expect(screen.getAllByRole("button")).toHaveLength(2);
   });
+
+  
 });
