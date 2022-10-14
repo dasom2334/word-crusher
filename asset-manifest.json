@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/word-crusher/static/css/main.b6fad137.css",
-    "main.js": "/word-crusher/static/js/main.c973f04f.js",
+    "main.js": "/word-crusher/static/js/main.ec12099e.js",
     "static/js/787.f380c47a.chunk.js": "/word-crusher/static/js/787.f380c47a.chunk.js",
     "index.html": "/word-crusher/index.html",
     "main.b6fad137.css.map": "/word-crusher/static/css/main.b6fad137.css.map",
-    "main.c973f04f.js.map": "/word-crusher/static/js/main.c973f04f.js.map",
+    "main.ec12099e.js.map": "/word-crusher/static/js/main.ec12099e.js.map",
     "787.f380c47a.chunk.js.map": "/word-crusher/static/js/787.f380c47a.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.b6fad137.css",
-    "static/js/main.c973f04f.js"
+    "static/js/main.ec12099e.js"
   ]
 }
